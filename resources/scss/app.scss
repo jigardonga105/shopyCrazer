@@ -1,0 +1,872 @@
+@import './variables';
+@import '~noty/src/noty.scss';
+@import '~noty/src/themes/mint.scss';
+body {
+    font-family: 'Lato', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: $dark;
+    width: auto;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black !important;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+.closebtn {
+    font-size: 50px !important;
+}
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+@media screen and (max-height: 450px) {
+    .sidebar a {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 1044px) {
+    .navbar-brand {
+        margin-left: 23px !important;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .navbar-brand {
+        margin: auto !important;
+    }
+}
+
+//=====================================================
+//=====================================================
+//=====================================================
+// Seller text border blinking css
+.seller-bord-blink {
+    border: 1px solid;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px #ff0000;
+}
+
+@keyframes blink {
+    0% {
+        color: #cfd6e1 !important;
+        border-color: #ff0000;
+    }
+    50% {
+        color: #ff0000 !important;
+        border-color: #65d88b;
+    }
+}
+
+.seller-bord-blink {
+    /*or other element you want*/
+    animation: blink .5s step-end infinite alternate;
+}
+
+.seller-account {
+    background: #F8F8F8;
+    height: 88vh;
+}
+
+@media screen and (max-width: 706px) {
+    .seller-account {
+        flex-direction: column;
+        height: auto;
+    }
+    .seller-account-poster {
+        margin: 0 auto;
+        margin-bottom: 60px;
+    }
+    .seller-account-adder {
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 281px) {
+    .seller-account-adder-btn {
+        flex-direction: column
+    }
+}
+
+.seller-account-adder-btn a {
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 15px !important;
+}
+
+.log-seller-account-adder-btn a {
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 15px !important;
+}
+
+.seller-account-adder-btn a:hover {
+    color: #198754 !important
+}
+
+.seller-account-adder-btn button:hover {
+    background: #256d4b !important
+}
+
+.log-seller-account-adder-btn button:hover {
+    background: #256d4b !important
+}
+
+.seller-account {
+    background: #F8F8F8;
+    height: 88vh;
+}
+
+.log-seller-account-adder-btn a:hover {
+    color: #198754 !important
+}
+
+@media screen and (max-width: 706px) {
+    .seller-account {
+        flex-direction: column;
+        height: auto;
+    }
+    .seller-account-poster {
+        margin: 0 auto;
+        margin-bottom: 60px;
+        margin-top: 60px;
+    }
+    .seller-account-adder {
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 281px) {
+    .seller-account-adder-btn {
+        flex-direction: column
+    }
+}
+
+.seller-account label {
+    font-size: 15px !important;
+}
+
+.seller-account-poster span button a {
+    text-decoration: none;
+    color: white;
+}
+
+.log-seller-account-poster span button a {
+    text-decoration: none;
+    color: white;
+}
+
+.seller-account-poster span button:hover {
+    background: #305a49;
+}
+
+.log-seller-account-poster span button:hover {
+    background: #305a49;
+}
+
+@media screen and (max-width: 1300px) {
+    .seller-account {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (max-width: 999px) {
+    .seller-account {
+        display: flex;
+        flex-direction: column;
+    }
+    .seller-account-poster {
+        margin: 0 auto;
+    }
+    .seller-account-adder {
+        margin: 5% 18%;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .seller-account {
+        display: flex;
+        flex-direction: column;
+    }
+    .seller-account-poster {
+        margin: 0 auto;
+    }
+    .seller-account-adder {
+        margin: 5% 7%;
+    }
+}
+
+@media screen and (max-width: 689px) {
+    .seller-account-adder form div {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .seller-account-adder form {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 322px) {
+    .seller-account-adder form div input {
+        width: 96% !important;
+    }
+}
+
+@media screen and (max-width: 416px) {
+    .log-seller-account {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+/* Seller store add Page CSS Style */
+
+.add-store-adder-form-btn {
+    display: table !important;
+}
+
+.add-store {
+    background: #F8F8F8;
+    height: 105vh;
+}
+
+.show-store {
+    background: #F8F8F8;
+}
+
+.store-image {
+    width: 750px;
+    height: 500px;
+}
+
+.store-img {
+    height: 100px;
+    width: 160px;
+}
+
+@media (max-width: 698px) {
+    .add-store {
+        flex-direction: column;
+    }
+    .add-store-null {
+        margin: 0 auto;
+    }
+    .add-store-adder {
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 324px) {
+    .add-store {
+        width: 324px;
+    }
+}
+
+@media screen and (max-width: 1308px) {
+    .show-store-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media screen and (max-width: 488px) {
+    .show-store {
+        flex-direction: column-reverse;
+        width: 488px;
+    }
+    .show-store-add {
+        margin: 0 auto;
+    }
+    .show-store-list {
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .store-details {
+        padding-left: 10px;
+    }
+    .store-details-img {
+        margin-right: 3rem;
+    }
+}
+
+@media screen and (max-width: 775px) {
+    .store-details {
+        flex-direction: column;
+    }
+    .store-details {
+        margin: 0 auto;
+    }
+    .store-details-img {
+        margin: 0 auto;
+        // margin-right: 0rem;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .store-item-list {
+        display: flex;
+        flex-direction: column;
+    }
+    .store-items {
+        margin: 0 auto;
+    }
+    .new-store-item {
+        margin: 0 auto;
+        margin-top: 2rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .store-items {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 268px) {
+    #stock {
+        width: 50%;
+    }
+    #changedprice {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 268px) {
+    .changedprice {
+        flex-direction: column;
+    }
+    .changedprice-btn {
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 590px) {
+    .store-list-main {
+        flex-direction: column-reverse
+    }
+    .show-store-list {
+        margin: auto !important;
+    }
+    .show-store-add {
+        margin: 0 auto;
+        margin-bottom: 60px;
+    }
+    .your-store-header {
+        margin: auto !important;
+    }
+}
+
+.show-store-list div {
+    height: 27rem;
+    width: 84%;
+}
+
+.show-store-list a {
+    text-decoration: none;
+    color: black;
+}
+
+.show-store-list .list-disc {
+    width: 93%;
+}
+
+.store-dtil-btn button {
+    color: black !important;
+}
+
+.store-dtil-btn button:hover {
+    background: rgb(7, 180, 99);
+    color: white !important;
+}
+
+@media screen and (max-width: 1498px) {
+    .show-store-list div {
+        height: 30rem;
+        width: 84%;
+    }
+    .show-store-list .list-disc {
+        width: 120%;
+    }
+    .store-dtil-btn {
+        display: flex;
+        flex-direction: column;
+    }
+    .store-dtil-btn a {
+        display: contents;
+    }
+    .store-dtil-btn button {
+        margin-left: 0px;
+        margin-top: 5px;
+        margin: auto auto !important;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .your-store-header {
+        margin-left: 5rem;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .show-store-list {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+    .show-store-add {
+        height: 720px;
+    }
+}
+
+@media screen and (max-width: 486px) {
+    .store {
+        width: 486px;
+    }
+}
+
+//Category Navbar CSS
+#cat-nav-ul {
+    margin-bottom: 0px !important;
+}
+
+#cat-nav-li {
+    list-style: none;
+    display: inline-block;
+    padding: 10px 20px;
+}
+
+#cat-nav-li:hover {
+    cursor: pointer;
+    /* color: rgb(148, 224, 34); */
+    font-weight: bold !important;
+    background: rgb(89, 171, 110);
+}
+
+#cat-nav-li:hover #cat-dropdown {
+    cursor: pointer;
+    visibility: visible;
+}
+
+#cat-dropdown {
+    width: 290px;
+    height: 300px;
+    overflow-y: scroll;
+    position: absolute;
+    visibility: hidden;
+    z-index: 10;
+    padding-left: 0px !important;
+    background: black;
+    border-radius: 5px;
+    margin-left: -25px;
+    margin-top: 10px;
+}
+
+#cat-dropdown li {
+    color: rgb(255, 255, 255);
+    list-style: none;
+    padding: 5px 0px;
+}
+
+#cat-dropdown li a {
+    color: rgb(255, 255, 255);
+}
+
+#cat-dropdown li:hover a {
+    color: rgb(89, 171, 110) !important;
+}
+
+// Item Page CSS Style
+.itemSlider {
+    width: 1500px;
+}
+
+.item-details button {
+    background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+}
+
+.item-details-Images button {
+    background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+}
+
+.item-details button:hover {
+    background-color: #07b463;
+    color: white;
+}
+
+.item-details-Images button:hover {
+    background-color: #07b463;
+    color: white;
+}
+
+.item-updating input {
+    // width: 190px;
+}
+
+.item-updating .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-updating-container-span1 {
+    background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+}
+
+.change-details-btn-div a button:hover {
+    color: #fff !important;
+}
+
+.color-show-div:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 1239px) {
+    .item-details {
+        flex-direction: column;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    .item-img {
+        margin-left: 60%;
+    }
+    .item-data {
+        width: 600px;
+        margin: auto;
+    }
+    .item-images-shower {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media screen and (max-width: 1070px) {
+    .itemSlider {
+        width: 790px;
+    }
+}
+
+@media screen and (max-width: 928px) {
+    .item-details-Images {
+        flex-direction: column-reverse;
+    }
+    .upload-more-img {
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+}
+
+@media screen and (max-width: 845px) {
+    .item-details {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+    .item-img {
+        margin-left: 12% !important;
+    }
+}
+
+@media screen and (max-width: 716px) {
+    .item-img {
+        margin: 0 auto;
+    }
+    .item-data {
+        width: 455px;
+        margin: 0 auto !important;
+    }
+}
+
+@media screen and (max-width: 423px) {
+    .shower-main-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (min-width: 1060px) {
+    .add-store {
+        height: 44rem;
+    }
+    .add-store-adder-header {
+        margin-left: 35%;
+    }
+    .add-store-adder-form-btn {
+        margin-left: 88%;
+    }
+}
+
+@media only screen and (max-width: 1060px) {
+    .add-store {
+        flex-direction: column;
+        height: auto;
+        padding-top: 20px;
+    }
+    .add-store-null {
+        margin-left: 40%;
+    }
+    .add-store-adder {
+        margin-left: 16%;
+        height: 118%;
+    }
+    .add-store-adder-header {
+        margin: auto;
+        margin: 10px auto;
+    }
+    .add-store-adder-form {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+    .add-store-adder-form-btn {
+        margin-left: 42%;
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and ( max-width: 699px) {
+    .add-store-null {
+        margin-left: 20%;
+    }
+}
+
+@media only screen and ( max-width: 535px) {
+    .add-store-adder-header {
+        width: 12rem;
+    }
+    .add-store-adder-header-span {
+        margin: auto 0;
+    }
+    .add-store-adder-form-div {
+        width: 12rem;
+    }
+    #country {
+        width: 12rem;
+    }
+    .add-store-adder-form-btn {
+        margin-left: 26%;
+        margin-bottom: 20px;
+    }
+    .add-store-adder-form input {
+        width: 50%;
+    }
+    .add-store-adder-form textarea {
+        width: 50%;
+    }
+    .add-store-adder-header {
+        width: 66% !important;
+        margin-left: 1px !important;
+        margin-right: 1px !important;
+    }
+}
+
+@media only screen and ( max-width:415px) {
+    #add-store {
+        width: auto;
+    }
+    .add-store-null {
+        width: 180px;
+    }
+    .add-store-adder {
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    #more-offer-div input {
+        width: 420px;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    #forms2 select {
+        width: 300px !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #forms2 select {
+        width: 200px !important;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .form1_2 {
+        flex-direction: column !important;
+    }
+    .forms2 {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .cat-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media screen and (max-width: 514px) {
+    .cat-form {
+        grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+}
+
+.cat-form {
+    /* width: 51%; */
+    border: 1px solid #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.forms1 {
+    border: 1px solid #fff;
+    padding: 10px;
+}
+
+.forms2 {
+    border: 1px solid #fff;
+    padding: 10px;
+}
+
+.form2_1 div {
+    border-radius: 8px;
+    padding: 6px !important;
+}
+
+.form2_2 div {
+    border-radius: 8px;
+    padding: 6px !important;
+}
+
+.forms3 div {
+    border-radius: 8px;
+    padding: 6px !important;
+}
+
+#forms2 select {
+    width: 412px;
+    margin: 0 10px;
+    margin-bottom: 10px;
+}
+
+// Snakbar CSS:
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgb(39, 173, 57);
+    color: #fff;
+    text-align: center;
+    border-radius: 30px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 90%;
+    /* bottom: 30px; */
+    font-size: 17px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        /* bottom: 30px; */
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+    to {
+        /* bottom: 30px; */
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        /* bottom: 30px; */
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        /* bottom: 30px; */
+        opacity: 1;
+    }
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}

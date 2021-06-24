@@ -1,0 +1,351 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        @media screen and (max-width: 793px) {
+            body {
+                width: 793px !important;
+            }
+        }
+    </style>
+</head>
+
+
+<div id="snackbar"><span id="snackbar-span"></span></div>
+<section>
+    <div class="item-updating border-2 rounded item-data-change px-10 py-10 bg-gray-800 shadow-xl">
+
+
+        <div class="delete-prd-div">
+            <form action="/seller/deletePrd/<%= product._id %>" method="POST" class="delete-prd-form hidden">
+                <!-- this is for delete Product form -->
+            </form>
+            <button class="bg-red-500 px-3 py-2 mt-3 float-right rounded-full hover:text-white hover:bg-red-600 focus:outline-none">
+                Delete Product&nbsp&nbsp<i class="fas fa-trash"></i>
+            </button>
+        </div>
+
+
+        <div class="container mx-auto">
+            <span class="font-bold py-3 px-3 bg-green-500 rounded">Update Product:</span>
+            <br>
+            <br>
+            <input id="itemdata" type="hidden" value="<%= JSON.stringify(product) %>">
+            <div id="forForm" class="hidden"></div>
+
+            <!-- For Change Category: -->
+            <form action="/seller/updateitem/<%= product._id %>" method="POST" class="cat-form grid grid-cols-3">
+                <div class="cat-select">
+                    <label class="block text-white text-sm font-bold mb-2" for="productcate">
+                            Product Category:
+                        </label>
+                    <select name="category" id="category" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required>
+                        <option disabled selected class="bg-black text-white">Select a Product Category</option>
+                        <option value="Electronics" class="bg-black text-white">Electronics</option>
+                        <option value="TVs & Appliances" class="bg-black text-white">TVs & Appliances</option>
+                        <option value="Men" class="bg-black text-white">Men</option>
+                        <option value="Women" class="bg-black text-white">Women</option>
+                        <option value="Baby & Kids" class="bg-black text-white">Baby & Kids</option>
+                        <option value="Home & Furniture" class="bg-black text-white">Home & Furniture</option>
+                        <option value="Sports, Books & More" class="bg-black text-white">Sports, Books & More</option>
+                    </select>
+                </div>
+                <div class="cat-select ml-5">
+                    <!-- For Change sub Category: -->
+                    <label class="block text-white text-sm font-bold mb-2" for="productcate">
+                        Product SubCategory:
+                    </label>
+                    <select name="subcategory" id="subcategory" disabled class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required></select>
+                </div>
+                <div class="inline-block">
+                    <button class="changedprice-btn h-10 float-right mt-3 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
+                            Update
+                        </button>
+                </div>
+            </form>
+
+            <div class="form1_2 flex flex-center flex-row">
+                <div class="forms1 mr-2">
+
+                    <!-- For Change Stock: -->
+                    <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                        <label class="block text-white text-sm font-bold mb-2" for="productstock">
+                            Change Stock Status:
+                        </label>
+                        <select name="stock" onchange="this.form.submit()" id="stock" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                            <option id="in" class="bg-black text-white" value="in">In Stock</option>
+                            <option id="out" class="bg-black text-white" value="out">Out of Stock</option>
+                        </select>
+                    </form>
+
+                    <!-- For Change Name: -->
+                    <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                        <label class="block text-white text-sm font-bold" for="productname">
+                            Change Name:
+                        </label>
+                        <div class="flex changedname">
+                            <input name="changedname" class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2" id="changename" type="text" placeholder="Name" required>
+                            <button class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- For Change Price: -->
+                    <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                        <label class="block text-white text-sm font-bold" for="productprice">
+                            Change Price:
+                        </label>
+                        <div class="flex changedprice">
+                            <input name="changedprice" class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2" id="changedprice" type="number" placeholder="Price" required>
+                            <button class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- For Change desc: -->
+                    <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                        <label class="inline-block text-white text-sm font-bold mb-2" for="productdesc">
+                            Change Descriptions:
+                        </label>
+                        <button class="changedprice-btn h-10 my-2 ml-24 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
+                            Update
+                        </button>
+                        <br>
+                        <textarea name="desc" id="changedesc" cols="36" rows="5" class="rounded focus:outline-none"></textarea>
+                    </form>
+
+                </div>
+
+
+                <div id="forms2" class="forms2 ml-2 grid grid-cols-2 gap-3">
+                    <div id="form2_1" class="form2_1">
+
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                            <div class="mb-4 bg-gray-400">
+                                <label class="inline-block text-white text-sm font-bold" for="offer">
+                                    Offers:
+                                </label>
+                                <select name="offer" id="offer" class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                    <option disabled selected class="bg-black text-white">Select a Option
+                                    </option>
+                                    <option value="ext" class="bg-black text-white">Update Existing</option>
+                                    <option value="add" class="bg-black text-white">Add New</option>
+                                    <option value="both" class="bg-black text-white">Both</option>
+                                </select>
+                                <div class="show-offer-div rounded  p-3 mt-1" style="display: none;"></div>
+                                <span id="plus-spanBtn-offer" class="show-offer-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right" style="display: none;"><strong>Add More</strong></span>
+                                <div id="more-offer-div"></div>
+                                <span id="btn" class="offer offer-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
+                                    Update
+                                </span>
+
+                            </div>
+                        </form>
+
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                            <div class="mb-4 bg-gray-400">
+                                <label class="inline-block text-white text-sm font-bold" for="size">
+                                    Sizes:
+                                </label>
+                                <select name="size" id="size" class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                    <option disabled selected class="bg-black text-white">Select a Option
+                                    </option>
+                                    <option value="ext" class="bg-black text-white">Update Existing</option>
+                                    <option value="add" class="bg-black text-white">Add New</option>
+                                    <option value="both" class="bg-black text-white">Both</option>
+                                </select>
+                                <div class="show-size-div rounded  p-3 mt-1" style="display: none;"></div>
+                                <span id="plus-spanBtn-size" class="show-size-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right" style="display: none;"><strong>Add More</strong></span>
+                                <div id="more-size-div"></div>
+                                <span id="btn" class="size size-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
+                                    Update
+                                </span>
+
+                            </div>
+                        </form>
+
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                            <div class="mb-4 bg-gray-400">
+                                <label class="inline-block text-white text-sm font-bold" for="highlight">
+                                    Highlights:
+                                </label>
+                                <select name="highlight" id="highlight" class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                    <option disabled selected class="bg-black text-white">Select a Option
+                                    </option>
+                                    <option value="ext" class="bg-black text-white">Update Existing</option>
+                                    <option value="add" class="bg-black text-white">Add New</option>
+                                    <option value="both" class="bg-black text-white">Both</option>
+                                </select>
+                                <div class="show-highlight-div rounded  p-3 mt-1" style="display: none;"></div>
+                                <span id="plus-spanBtn-highlight" class="show-highlight-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right" style="display: none;"><strong>Add More</strong></span>
+                                <div id="more-highlight-div"></div>
+                                <span id="btn" class="highlight highlight-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
+                                    Update
+                                </span>
+                            </div>
+                        </form>
+
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                            <div class="mb-4 bg-gray-400">
+                                <label class="inline-block text-white text-sm font-bold" for="service">
+                                    Services:
+                                </label>
+                                <select name="service" id="services" class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                    <option disabled selected class="bg-black text-white">Select a Option
+                                    </option>
+                                    <option value="ext" class="bg-black text-white">Update Existing</option>
+                                    <option value="add" class="bg-black text-white">Add New</option>
+                                    <option value="both" class="bg-black text-white">Both</option>
+                                </select>
+                                <div class="show-services-div rounded  p-3 mt-1" style="display: none;"></div>
+                                <span id="plus-spanBtn-services" class="show-services-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right" style="display: none;"><strong>Add More</strong></span>
+                                <div id="more-services-div"></div>
+                                <span id="btn" class="services services-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
+                                    Update
+                                </span>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div id="form2_2" class="form2_2">
+
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                            <div class="mb-4 bg-gray-400">
+                                <label class="inline-block text-white text-sm font-bold" for="warr">
+                                    Warranty/Garranty:
+                                </label>
+                                <select name="warr" id="warr" class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                    <option disabled selected class="bg-black text-white">Select a Option
+                                    </option>
+                                    <option value="ext" class="bg-black text-white">Update Existing</option>
+                                    <option value="add" class="bg-black text-white">Add New</option>
+                                    <option value="both" class="bg-black text-white">Both</option>
+                                </select>
+                                <div class="show-warr-div rounded  p-3 mt-1" style="display: none;"></div>
+                                <span id="plus-spanBtn-warr" class="show-warr-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right" style="display: none;"><strong>Add More</strong></span>
+                                <div id="more-warr-div"></div>
+                                <span id="btn" class="warr warr-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
+                                    Update
+                                </span>
+
+                            </div>
+                        </form>
+
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                            <div class="mb-4 bg-gray-400">
+                                <label class="inline-block text-white text-sm font-bold" for="color">
+                                    Colors:
+                                </label>
+                                <select name="color" id="color" class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                    <option disabled selected class="bg-black text-white">Select a Option
+                                    </option>
+                                    <option value="ext" class="bg-black text-white">Update Existing</option>
+                                    <option value="add" class="bg-black text-white">Add New</option>
+                                    <option value="both" class="bg-black text-white">Both</option>
+                                </select>
+                                <div class="show-color-div rounded  p-3 mt-1" style="display: none;"></div>
+                                <span id="plus-spanBtn-color" class="show-color-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right" style="display: none;"><strong>Add More</strong></span>
+                                <div id="more-color-div"></div>
+                                <span id="btn" class="color color-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
+                                    Update
+                                </span>
+                            </div>
+                        </form>
+
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                            <div class="mb-4 bg-gray-400">
+                                <label class="inline-block text-white text-sm font-bold" for="payops">
+                                    Payment Options:
+                                </label>
+                                <select name="payops" id="payops" class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                    <option disabled selected class="bg-black text-white">Select a Option
+                                    </option>
+                                    <option value="ext" class="bg-black text-white">Update Existing</option>
+                                    <option value="add" class="bg-black text-white">Add New</option>
+                                    <option value="both" class="bg-black text-white">Both</option>
+                                </select>
+                                <div class="show-payops-div rounded  p-3 mt-1" style="display: none;"></div>
+                                <span id="plus-spanBtn-payops" class="show-payops-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right" style="display: none;"><strong>Add More</strong></span>
+                                <div id="more-payops-div"></div>
+                                <span id="btn" class="payops payops-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
+                                    Update
+                                </span>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div id="forms3" class="forms3 border w-full mt-3 p-3 rounded">
+                <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                    <div class="mb-4 bg-gray-400">
+                        <label class="inline-block text-white text-sm font-bold" for="spec">
+                            Specification:
+                        </label>
+                        <br>
+                        <select name="spec" id="spec" class="select shadow border rounded w-52 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                            <option disabled selected class="bg-black text-white">Select a Option
+                            </option>
+                            <option value="ext" class="bg-black text-white">Update Existing</option>
+                            <option value="add" class="bg-black text-white">Add New</option>
+                            <option value="both" class="bg-black text-white">Both</option>
+                        </select>
+                        <div class="show-spec-div rounded  p-3 mt-1" style="display: none;"></div>
+                        <span id="plus-spanBtn-spec" class="show-spec-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right" style="display: none;"><strong>Add More</strong></span>
+                        <div id="firstSpec"></div>
+                        <div id="more-spec-div" style="display: none;"></div>
+                        <span id="btn" class="spec spec-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
+                            Update
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="item-details-Images flex justify-center">
+    <div class="shower-main-container w-8/12 flex flex-col justify-center border-2 rounded bg-gray-300 mt-20 pt-10 px-5 mx-auto">
+        <div class="mx-auto">
+            <span class="font-bold py-3 px-3 bg-gray-800 rounded text-green-400">Product Images</span>
+        </div>
+        <div class="item-images-shower grid grid-cols-3 gap-10 mx-auto py-10">
+            <% for (const img of product.image) { %>
+                <div>
+                    <a href="/uploadedImages/<%= img.img %>">
+                        <img class="rounded" src="../../../uploadedImages/<%= img.img %>" alt="item image"
+                            style="height: 13rem;">
+                    </a>
+                    <button id="<%= product._id %>" value="<%= img._id %>" data-item="<%= JSON.stringify(imageSet) %>" class="delete-item-btn changedprice-btn h-10 ml-24 mt-5 rounded text-black bg-green-500 font px-5 rounded focus:outline-none mx-auto" type="submit">
+                        Delete
+                    </button>
+                </div>
+                <% } %>
+        </div>
+    </div>
+    <div class="upload-more-img mt-20 border-2 w-96 h-52 p-5 bg-gray-800">
+        <form action="/product-add-img/<%= product._id %>" method="POST" enctype="multipart/form-data">
+            <span class="font-bold text-white">Upload more Images:</span><br><br>
+            <input name="image" multiple class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="username" type="file" accept=".jpg, .jpeg, .png" required>
+            <button class="changedprice-btn h-10 mt-2 ml-20 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
+                Upload
+            </button>
+        </form>
+    </div>
+</section>
+
+<script>
+    let deletePrdDiv = document.getElementsByClassName('delete-prd-div')[0];
+    deletePrdDiv.addEventListener('click', () => {
+        let result = confirm('Are you sure you want to delete this Store?');
+        // console.log(result);
+        if (result) {
+            deletePrdForm = document.getElementsByClassName('delete-prd-form')[0];
+            deletePrdForm.submit();
+        }
+    })
+</script>

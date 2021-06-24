@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        @media screen and (max-width:1148px) {
+            #mobile-field {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+        
+        @media screen and (max-width:882px) {
+            #mobile-field {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+        
+        @media screen and (max-width:548px) {
+            #mobile-field {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        
+        @media screen and (max-width:394px) {
+            #mobile-field {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            .mobile-sec {
+                margin: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>sanket</h1>
+    <section id="mobile-field" class="grid grid-cols-5 justify-between  bg-yellow-200">
+        <div class="mobile-sec container flex flex-col  mb-5 w-48">
+            <img src="phone.jpeg" alt="phone" class="h-52 w-28 mt-2  mx-auto">
+            <span class="mx-auto mt-2 font-bold ">Nokia 7.1</span>
+            <span class="mx-auto mt-2 ">&#8377;500</span>
+            <button class="inline w-28 border  mx-auto mt-2 bg-green-500 rounded-full px-2 py-2">Add to cart</button>
+        </div>
+    </section>
+    <form action="/1.html">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="file">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+        <input value="" type="text">
+    </form>
+</body>
+
+</html>

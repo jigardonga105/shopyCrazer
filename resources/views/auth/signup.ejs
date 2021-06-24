@@ -1,0 +1,32 @@
+<head>
+    <link rel="stylesheet" href="/css/authStyle.css">
+</head>
+
+<section id="auth-container" class="auth-container">
+    <div class="login-container">
+        <div class="circle circle-one"></div>
+        <div class="form-container">
+            <img src="/img/auth.png" alt="illustration" class="illustration" />
+            <h1 class="opacity">SIGNUP</h1>
+            <% if(messages.error) { %>
+                <span class="text-red-500 text-sm" style="color: red;">
+                    <%= messages.error %>
+                </span>
+                <% } %>
+                    <form action="/signup" method="POST" enctype="multipart/form-data">
+                        <input name="fname" type="text" placeholder="FIRSTNAME" />
+                        <input name="lname" type="text" placeholder="LASTNAME" />
+                        <input name="email" type="email" placeholder="EMAIL" />
+                        <input name="phone" type="tel" placeholder="PHONE" />
+                        <input name="password" type="password" placeholder="PASSWORD" />
+                        <input name="image" type="file" placeholder="PROFILEPIC" accept=".jpg, .jpeg, .png" />
+                        <button class="opacity">SUBMIT</button>
+                    </form>
+                    <div class="register-forget opacity">
+                        <a href="/login">LOGIN</a>
+                    </div>
+        </div>
+        <div class="circle circle-two"></div>
+    </div>
+    <div class="theme-btn-container"></div>
+</section>

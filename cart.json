@@ -1,0 +1,119 @@
+{
+    "cookie": {
+        "originalMaxAge": 86400000,
+        "expires": "2021-05-27T18:05:01.695Z",
+        "httpOnly": true,
+        "path": "/"
+    },
+    "flash": {},
+    "passport": { "user": "60a63ef4aa1e538c78669d28" },
+    "cart": {
+        "custID_60a63ef4aa1e538c78669d28_cart": {
+            "items": {
+                "5eee651f739f8c674fd736ee": {
+                    "item": {
+                        "_id": "5eee651f739f8c674fd736ee",
+                        "name": "Margherita",
+                        "image": "pizza.png",
+                        "price": 250,
+                        "size": "small"
+                    },
+                    "qty": 1
+                },
+                "5eee6671a27a66807cf2bea3": {
+                    "item": {
+                        "_id": "5eee6671a27a66807cf2bea3",
+                        "name": "Marinara",
+                        "image": "pizza.png",
+                        "price": 300,
+                        "size": "medium"
+                    },
+                    "qty": 1
+                },
+                "5eee6692a27a66807cf2bea4": {
+                    "item": {
+                        "_id": "5eee6692a27a66807cf2bea4",
+                        "name": "Carbonara",
+                        "image": "pizza.png",
+                        "price": 200,
+                        "size": "small"
+                    },
+                    "qty": 1
+                },
+                "5eee66a5a27a66807cf2bea5": {
+                    "item": {
+                        "_id": "5eee66a5a27a66807cf2bea5",
+                        "name": "Americana",
+                        "image": "pizza.png",
+                        "price": 500,
+                        "size": "large"
+                    },
+                    "qty": 1
+                }
+            },
+            "totalQty": 4,
+            "totalPrice": 1250
+        }
+    },
+    "rate": {
+        "custID_60a63ef4aa1e538c78669d28_rate": {
+            "products": {
+                "60ae98fab8c0cb4298034371": {
+                    "item": {
+                        "_id": "60ae98fab8c0cb4298034371"
+                    },
+                    "rate": "5"
+                }
+            }
+        },
+        "custID_60ae9b586f4acb45a86f2a8d_rate": {
+            "products": {
+                "60ae98fab8c0cb4298034371": {
+                    "item": {
+                        "_id": "60ae98fab8c0cb4298034371"
+                    },
+                    "rate": "1"
+                }
+            }
+        },
+        "custID_60aea58c6fa8010e9c09e769_rate": {
+            "products": {
+                "60ae98fab8c0cb4298034371": {
+                    "item": {
+                        "_id": "60ae98fab8c0cb4298034371"
+                    },
+                    "rate": "5"
+                }
+            }
+        }
+    },
+    "ProductsRate": {
+        "60ae98fab8c0cb4298034371": {
+            "_id": "60ae98fab8c0cb4298034371",
+            "rating": 11
+        }
+    },
+    "vote": {
+        "60ae98fab8c0cb4298034371": {
+            "_id": "60ae98fab8c0cb4298034371",
+            "vote": 3
+        }
+    },
+    {
+        "0": {
+            "Bank Offer": "₹6000 Instant Discount on HDFC Bank Credit Card and Debit Card (EMI)"
+        },
+        "1": {
+            "Bank Offer": "5% Unlimited Cashback on Flipkart Axis Bank Credit Card"
+        },
+        "2": {
+            "Bank Offer": "Flat ₹100 off on first Flipkart Pay Later order of ₹500 and above"
+        },
+        "3": {
+            "Special Price": "Extra ₹2000 off(price inclusive of discount)"
+        },
+        "4": {
+            "No cost EMI ₹12,984/month": "Standard EMI also available"
+        }
+    }
+}
