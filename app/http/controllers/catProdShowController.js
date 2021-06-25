@@ -16,9 +16,15 @@ function catProdShowController() {
         async viewProduct(req, res) {
             const product = await Product.find({ _id: req.params.prdID });
             const store = await Store.find({ _id: product[0]['storeId'] });
+
+            let category = product[0].category;
+            let subcategory = product[0].subcategory;
+            const relatedPrds = await Product.find({ category, subcategory });
+
             // console.log(product);
             // console.log(store);
-            return res.render('customers/shop-single', { product, store });
+            // console.log(relatedPrd);
+            return res.render('customers/shop-single', { product, store, relatedPrds });
         }
     }
 }

@@ -1,35 +1,10 @@
-<style>
-    .all-image-div a img {
-        height: 100px !important;
-    }
-    
-    .offer,
-    .warr,
-    .color,
-    .size,
-    .highlight,
-    .payops,
-    .service,
-    .desc {
-        margin-bottom: 25px;
-    }
-    
-    .offer img {
-        transform: scale(0.6);
-    }
-    
-    .card-body p {
-        font-size: 15px !important;
-        margin-bottom: 0px !important;
-    }
-</style>
-
 <% if(product){ %>
-    <% let prd = product[0] %>
-        <% let str = store[0] %>
+    <% let prd=product[0] %>
+        <% let str=store[0] %>
             <input id="prdInp" type="hidden" value="<%= JSON.stringify(prd) %>">
+            <input id="relaPrdInp" type="hidden" value="<%= JSON.stringify(relatedPrds) %>">
             <!-- Open Content -->
-            <section class="bg-light">
+            <section class="bg-light" style="padding-bottom: 3%;">
                 <div class="container pb-5">
                     <div class="row">
                         <div class="col-lg-5 mt-5">
@@ -55,62 +30,6 @@
                                 </div>
                                 <!--End Carousel Wrapper-->
 
-                                <script>
-                                    let prdInp = document.querySelector('#prdInp');
-                                    let prd = JSON.parse(prdInp.value);
-
-                                    let totalImgLen = prd.image.length;
-                                    totalImgLen = Math.trunc(totalImgLen / 3);
-
-                                    function oneImgAdd(i, prd, carouselItemDiv) {
-                                        let rowDiv = document.createElement('div');
-                                        rowDiv.classList.add('row');
-
-                                        for (let j = 0; j < 3; j++) {
-                                            if (prd.image[j + (i * 3)] != undefined) {
-                                                let col4Div = document.createElement('div');
-                                                col4Div.classList.add('col-4', 'all-image-div');
-
-                                                col4Div.innerHTML = `<a href="#">
-                                                                    <img class="card-img img-fluid" src="../uploadedImages/${prd.image[j + (i * 3)].img}" alt="Product Image ${j + (i * 3)}">
-                                                                </a>`;
-                                                rowDiv.appendChild(col4Div);
-                                            }
-                                        }
-
-                                        carouselItemDiv.appendChild(rowDiv);
-
-                                        return carouselItemDiv;
-                                    }
-
-                                    function addImageDiv(i, carouselDiv, prd) {
-
-                                        let carouselItemDiv = document.createElement('div');
-                                        if (i === 0) {
-                                            carouselItemDiv.classList.add('carousel-item');
-                                            carouselItemDiv.classList.add('active');
-
-                                            carouselDiv.appendChild(oneImgAdd(i, prd, carouselItemDiv));
-
-                                        } else {
-                                            carouselItemDiv.classList.add('carousel-item');
-
-                                            carouselDiv.appendChild(oneImgAdd(i, prd, carouselItemDiv));
-                                        }
-
-
-
-                                    }
-
-                                    let carouselDiv = document.querySelector('.carousel-div');
-
-                                    for (let i = 0; i < totalImgLen + 1; i++) {
-                                        addImageDiv(i, carouselDiv, prd);
-                                    }
-
-                                    console.log(carouselDiv);
-                                </script>
-
                                 <!--Start Controls-->
                                 <div class="col-1 align-self-center">
                                     <a href="#multi-item-example" role="button" data-bs-slide="next">
@@ -119,6 +38,39 @@
                                     </a>
                                 </div>
                                 <!--End Controls-->
+                            </div>
+                            <div class="cart-btns-div">
+                                <div class="row quantity-div">
+                                    <div class="col-auto">
+                                        <ul class="list-inline pb-3">
+                                            <li class="list-inline-item text-right">
+                                                Quantity
+                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                            </li>
+                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+                                            <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
+                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button id="cart-button" class="btn cart-buy-button">
+                                            <svg class="_1KOMV2" width="25" height="25" viewBox="0 0 16 15"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path class=""
+                                                    d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86"
+                                                    fill="#fff"></path>
+                                            </svg>
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button id="buy-button" class="btn cart-buy-button">
+                                            ⚡︁ Buy Now
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- col end -->
@@ -129,63 +81,74 @@
                                         <%= prd.name %>
                                     </h1>
                                     <span class="h3 py-2">₹
-                                    <%= prd.price %>
-                                </span>
+                                        <%= prd.price %>
+                                    </span>
                                     <br>
                                     <span class="py-2">
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star text-secondary"></i>
-                                    <span class="list-inline-item text-dark">Rating <%= prd.rating %> | 36 Comments</span>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-star text-secondary"></i>
+                                        <span class="list-inline-item text-dark">Rating <%= prd.rating %> | 36
+                                                Comments</span>
                                     </span>
                                     <br>
                                     <br>
                                     <h6>Avaliable Offers:</h6>
                                     <div class="offer">
-                                        <% let offer = prd['offer'][0] %>
-                                            <% if(Object.keys(offer).length > 0) { %>
+                                        <% let offer=prd['offer'][0] %>
+                                            <% if(Object.keys(offer).length> 0) { %>
                                                 <% for(i=0; i< Object.keys(offer).length; i++) { %>
 
                                                     <% for(let key in offer[i]) { %>
                                                         <p>
                                                             <span><img src="../img/offerTag.png" alt="offerTag"></span>
-                                                            <strong><%= key %></strong>
-                                                            <span><%= offer[i][key] %></span>
+                                                            <strong>
+                                                                <%= key %>
+                                                            </strong>
+                                                            <span>
+                                                                <%= offer[i][key] %>
+                                                            </span>
                                                         </p>
                                                         <% } %>
 
                                                             <% } %>
                                                                 <% } else { %>
-                                                                    <p style="margin-left: 40px;"><strong>No</strong> offers available</p>
+                                                                    <p class="ml-40">
+                                                                        <strong>No</strong> offers available
+                                                                    </p>
                                                                     <% } %>
 
                                     </div>
 
                                     <h6>Warranty/Garranty:</h6>
                                     <div class="warr">
-                                        <% let warr = prd['Warr_Garr'][0] %>
-                                            <% if(Object.keys(warr).length > 0) { %>
+                                        <% let warr=prd['Warr_Garr'][0] %>
+                                            <% if(Object.keys(warr).length> 0) { %>
                                                 <% for(i=0; i< Object.keys(warr).length; i++) { %>
 
-                                                    <p style="margin-left: 40px; margin-top: 15px;">
+                                                    <p id="warr-p" class="ml-40">
                                                         <% for(let key in warr[i]) { %>
 
-                                                            <% if(key == 'type'){ %>
-                                                                <span style="font-weight: bold; border: 1px solid; padding: 5px;"><%= warr[i][key] %></span>
+                                                            <% if(key=='type' ){ %>
+                                                                <span id="warr-span-type">
+                                                                    <%= warr[i][key] %>
+                                                                </span>
                                                                 <% } %>
 
-                                                                    <% if(key == 'duration'){ %>
-                                                                        <span><%= warr[i][key] %></span>
+                                                                    <% if(key=='duration' ){ %>
+                                                                        <span>
+                                                                            <%= warr[i][key] %>
+                                                                        </span>
                                                                         <% } %>
 
-                                                                            <% if(key == 'description'){ %>
+                                                                            <% if(key=='description' ){ %>
                                                                                 <br>
                                                                                 <br>
                                                                                 <span>
-                                                                                <%= warr[i][key] %>
-                                                                            </span>
+                                                                                    <%= warr[i][key] %>
+                                                                                </span>
                                                                                 <% } %>
 
                                                                                     <% } %>
@@ -193,28 +156,38 @@
 
                                                     <% } %>
                                                         <% } else { %>
-                                                            <p style="margin-left: 40px;"><strong>No</strong> Warranty/Garranty available</p>
+                                                            <p class="ml-40"><strong>No</strong> Warranty/Garranty available
+                                                            </p>
                                                             <% } %>
                                     </div>
 
 
-                                    <% if(prd.color.length > 0) { %>
+                                    <% if(prd.color.length> 0) { %>
                                         <h6>Color:</h6>
                                         <div class="color">
-                                            <% prd.color.map(color => { %>
-                                                <span style="padding: 10px; border: 1px solid black;margin-left: 40px;"><%= color %></span>
-                                                <% }) %>
+                                            <ul id="color" class="">
+                                                <% prd.color.map(color=> { %>
+                                                    <li class="color-span-main ml-40">
+                                                        <img id="color-img" class="color-img" src="../uploadedImages/<%= prd.image[0].img %>" alt="<%= prd.name %> image" id="product-detail">
+                                                        <span id="color-name-span">
+                                                            <%= color %>
+                                                        </span>
+                                                    </li>
+                                                    <% }) %>
+                                            </ul>
                                         </div>
                                         <% } %>
 
-                                            <% if(prd.size.length > 0) { %>
+                                            <% if(prd.size.length> 0) { %>
                                                 <h6>Size:</h6>
                                                 <div class="size">
-                                                    <div class="col-auto" style="margin-left: 40px;">
+                                                    <div class="col-auto ml-40">
                                                         <ul class="list-inline pb-3">
-                                                            <% prd.size.map(size => { %>
+                                                            <% prd.size.map(size=> { %>
                                                                 <li class="list-inline-item">
-                                                                    <span class="btn btn-success btn-size"><%= size %></span>
+                                                                    <span class="btn btn-success btn-size">
+                                                                        <%= size %>
+                                                                    </span>
                                                                 </li>
                                                                 <% }) %>
                                                         </ul>
@@ -224,11 +197,11 @@
 
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <% if(prd.highlight.length > 0) { %>
+                                                            <% if(prd.highlight.length> 0) { %>
                                                                 <h6>Highlight:</h6>
                                                                 <div class="highlight">
-                                                                    <% prd.highlight.map(highlight => { %>
-                                                                        <li style="font-size: 15px !important;margin-left: 40px;">
+                                                                    <% prd.highlight.map(highlight=> { %>
+                                                                        <li class="fs-15 ml-40">
                                                                             <%= highlight %>
                                                                         </li>
                                                                         <% }) %>
@@ -236,11 +209,11 @@
                                                                 <% } %>
                                                         </div>
                                                         <div class="col-6">
-                                                            <% if(prd.payment_ops.length > 0) { %>
+                                                            <% if(prd.payment_ops.length> 0) { %>
                                                                 <h6>Payment Options:</h6>
                                                                 <div class="payops">
-                                                                    <% prd.payment_ops.map(payment_ops => { %>
-                                                                        <li style="font-size: 15px !important;margin-left: 40px;">
+                                                                    <% prd.payment_ops.map(payment_ops=> { %>
+                                                                        <li class="fs-15 ml-40">
                                                                             <%= payment_ops %>
                                                                         </li>
                                                                         <% }) %>
@@ -251,11 +224,11 @@
 
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <% if(prd.service.length > 0) { %>
+                                                            <% if(prd.service.length> 0) { %>
                                                                 <h6>Service:</h6>
                                                                 <div class="service">
-                                                                    <% prd.service.map(service => { %>
-                                                                        <li style="font-size: 15px !important;margin-left: 40px;">
+                                                                    <% prd.service.map(service=> { %>
+                                                                        <li class="fs-15 ml-40">
                                                                             <%= service %>
                                                                         </li>
                                                                         <% }) %>
@@ -264,45 +237,56 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <h6>Seller:</h6>
-                                                            <span style="font-size: 15px !important;margin-left: 40px;color: #5252f7;font-weight: bold !important;">
-                                                                <%= str.storename %>
-                                                            </span>
-                                                            <span style="font-size: 15px !important;color: white;background: blue;padding: 1px 10px;border-radius: 10px;">
-                                                                <%= str.rating %>&nbsp;<i class="fa fa-star" style="transform: scale(0.8)"></i>
-                                                            </span>
+                                                            <div class="seller">
+                                                                <span class="fs-15 ml-40 seller-span-strName">
+                                                                    <%= str.storename %>
+                                                                </span>
+                                                                <span class="fs-15 ml-40 seller-span-strRating">
+                                                                    <%= str.rating %>&nbsp;<i class="fa fa-star"></i>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
 
                                                     <h6>Description:</h6>
                                                     <div class="desc">
-                                                        <p style="margin-left: 40px;">
+                                                        <p class="ml-40">
                                                             <%= prd.desc %>
                                                         </p>
                                                     </div>
 
                                                     <div class="spec">
-                                                        <% let spec = prd['specification'][0] %>
-                                                            <div class="head" style="border: 1px solid #eceff1;padding: 20px 12px !important;">
-                                                                <h3 style="margin-bottom: 0px !important;">Specification:</h3>
+                                                        <% let spec=prd['specification'][0] %>
+                                                            <div class="head">
+                                                                <h3>Specification:</h3>
                                                             </div>
-                                                            <div class="body">
+                                                            <div class="body" id="specBody">
                                                                 <% for (let title in spec) { %>
-                                                                    <div style="padding: 20px 12px !important;border: 1px solid #eceff1;border-top-color: white;">
+                                                                    <div class="body-main-div">
                                                                         <h5>
                                                                             <%= title %>
                                                                         </h5>
                                                                         <% for (let keyVal in spec[title]) { %>
                                                                             <div class="row">
                                                                                 <div class="col-4">
-                                                                                    <span style="font-size: 15px !important;color: #90a4ae;"><%= keyVal %></span>
+                                                                                    <span class="fs-15 row-span1">
+                                                                                        <%= keyVal %>
+                                                                                    </span>
                                                                                 </div>
                                                                                 <div class="col-8">
-                                                                                    <span style="font-size: 15px !important;font-weight: 400;"><%= spec[title][keyVal] %></span>
+                                                                                    <span class="fs-15 row-span2">
+                                                                                        <%= spec[title][keyVal] %>
+                                                                                    </span>
                                                                                 </div>
                                                                             </div>
                                                                             <% } %>
                                                                     </div>
                                                                     <% } %>
+                                                            </div>
+                                                            <div class="footer">
+                                                                <span id="spec-readmore" class="btn">
+                                                                    Read More
+                                                                </span>
                                                             </div>
                                                     </div>
                                 </div>
@@ -310,479 +294,30 @@
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- Close Content -->
+                <!-- Close Content -->
 
-            <!-- Start Article -->
-            <section class="py-5">
-                <div class="container">
-                    <div class="row text-left p-2 pb-3">
-                        <h4>Related Products</h4>
+                <% if(relatedPrds) { %>
+                    <div class="related-prd">
+                        <h3>Similar products</h3>
+                        <div id="carousel">
+                            <div id="content">
+                                <div class="card-group">
+                                </div>
+                            </div>
+                        </div>
+                        <button id="prev">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="none" d="M0 0h24v24H0V0z" />
+                                <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+                            </svg>
+                        </button>
+                        <button id="next">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="none" d="M0 0h24v24H0V0z" />
+                                <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+                            </svg>
+                        </button>
                     </div>
-
-                    <!--Start Carousel Wrapper-->
-                    <div id="carousel-related-product">
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_08.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$20.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_09.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">White Shirt</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$25.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_10.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$45.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_11.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Black Fashion</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$60.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_08.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li class="">M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$80.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_09.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$110.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_10.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$125.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_11.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$160.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_08.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$180.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_09.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$220.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_10.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$250.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-2 pb-3">
-                            <div class="product-wap card rounded-0">
-                                <div class="card rounded-0">
-                                    <img class="card-img rounded-0 img-fluid" src="/img/shop_11.jpg">
-                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                        <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>M/L/X/XL</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0">$300.00</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
+                    <% } %>
             </section>
-            <!-- End Article -->
             <% } %>

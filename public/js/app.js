@@ -2296,6 +2296,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _seller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./seller */ "./resources/js/seller.js");
 /* harmony import */ var _addProd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./addProd */ "./resources/js/addProd.js");
 /* harmony import */ var _updateProd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./updateProd */ "./resources/js/updateProd.js");
+/* harmony import */ var _shopSingle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shopSingle */ "./resources/js/shopSingle.js");
+
 
 
 
@@ -2304,6 +2306,7 @@ __webpack_require__.r(__webpack_exports__);
 (0,_seller__WEBPACK_IMPORTED_MODULE_1__.handleStore)();
 (0,_addProd__WEBPACK_IMPORTED_MODULE_2__.addProd)();
 (0,_updateProd__WEBPACK_IMPORTED_MODULE_3__.updateProd)();
+(0,_shopSingle__WEBPACK_IMPORTED_MODULE_4__.shopSingle)();
 
 /***/ }),
 
@@ -2547,6 +2550,143 @@ function handleStore() {
     }));
     return _deleteStrImg.apply(this, arguments);
   }
+}
+
+/***/ }),
+
+/***/ "./resources/js/shopSingle.js":
+/*!************************************!*\
+  !*** ./resources/js/shopSingle.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "shopSingle": () => (/* binding */ shopSingle)
+/* harmony export */ });
+function shopSingle() {
+  //This is for Image of Product
+  var prdInp = document.querySelector('#prdInp');
+  var prd = JSON.parse(prdInp.value);
+  document.getElementById("color").style.gridTemplateColumns = "repeat(".concat(prd.color.length, ", minmax(0, 1fr))");
+  var totalImgLen = prd.image.length;
+  totalImgLen = Math.trunc(totalImgLen / 3);
+
+  function oneImgAdd(i, prd, carouselItemDiv) {
+    var rowDiv = document.createElement('div');
+    rowDiv.classList.add('row');
+
+    for (var j = 0; j < 3; j++) {
+      if (prd.image[j + i * 3] != undefined) {
+        var col4Div = document.createElement('div');
+        col4Div.classList.add('col-4', 'all-image-div');
+        col4Div.innerHTML = "<a href=\"#\">\n                                        <img class=\"card-img img-fluid\" src=\"../uploadedImages/".concat(prd.image[j + i * 3].img, "\" alt=\"Product Image ").concat(j + i * 3, "\">\n                                    </a>");
+        rowDiv.appendChild(col4Div);
+      }
+    }
+
+    carouselItemDiv.appendChild(rowDiv);
+    return carouselItemDiv;
+  }
+
+  function addImageDiv(i, carouselDiv, prd) {
+    var carouselItemDiv = document.createElement('div');
+
+    if (i === 0) {
+      carouselItemDiv.classList.add('carousel-item');
+      carouselItemDiv.classList.add('active');
+      carouselDiv.appendChild(oneImgAdd(i, prd, carouselItemDiv));
+    } else {
+      carouselItemDiv.classList.add('carousel-item');
+      carouselDiv.appendChild(oneImgAdd(i, prd, carouselItemDiv));
+    }
+  }
+
+  var carouselDiv = document.querySelector('.carousel-div');
+
+  for (var i = 0; i < totalImgLen + 1; i++) {
+    addImageDiv(i, carouselDiv, prd);
+  } // console.log(carouselDiv);
+  // ==================================================================
+  // ==================================================================
+  //this is for read more specification
+
+
+  function showHideSpec(btn) {
+    if (btn.innerHTML == 'Read More') {
+      spec_readmore.innerHTML = 'Collapse';
+      document.getElementById("specBody").style.height = "100%";
+    } else {
+      spec_readmore.innerHTML = 'Read More';
+      document.getElementById("specBody").style.height = "300px";
+    }
+  }
+
+  var spec_readmore = document.querySelector('#spec-readmore');
+  spec_readmore.addEventListener('click', function () {
+    showHideSpec(spec_readmore);
+  }); // ==================================================================
+  // ==================================================================
+  //this is for related products
+
+  var relaPrdInp = document.querySelector('#relaPrdInp');
+  var relaPrd = JSON.parse(relaPrdInp.value);
+  var cardGroup = document.querySelector('.card-group');
+
+  for (var _i = 0; _i < relaPrd.length; _i++) {
+    for (var key in relaPrd) {
+      var id = relaPrd[_i]._id;
+      var imgPath = relaPrd[_i].image[0].img;
+      var name = relaPrd[_i].name;
+
+      if (name.length > 16) {
+        name = name.substring(0, 16);
+        name = name + '...';
+      }
+
+      var rating = relaPrd[_i].rating;
+      var vote = relaPrd[_i].vote;
+      var price = relaPrd[_i].price;
+    }
+
+    cardGroup.innerHTML += "<div class=\"card cardCss\">\n                                    <div class=\"inner-card\">\n                                        <a href=\"/productview/".concat(id, "\">\n                                            <div class=\"card-img-div\">\n                                                <img src=\"../../uploadedImages/").concat(imgPath, "\" class=\"card-img-top\" alt=\"...\" />\n                                            </div>\n                                        </a>\n                                        <div class=\"card-body\">\n                                            <a href=\"/productview/").concat(id, "\">\n                                                <h6 class=\"card-title\">").concat(name, "</h6>\n                                            </a>\n                                            <ul class=\"rating-vote-ul\">\n                                                <li class=\"rating-vote-li1\">\n                                                    ").concat(rating, "&nbsp;<i class=\"text-muted fa fa-star\"></i>\n                                                </li>\n                                                <li class=\"rating-vote-li2\">\n                                                    (").concat(vote, ")\n                                                </li>\n                                            </ul>\n                                            <span class=\"rela-priceSpan\">\u20B9").concat(price, "</span>\n                                        </div>\n                                    </div>\n                                </div>");
+  } // ===========================================================
+  // ===========================================================
+  //this is for related products carousel preq-next Button
+
+
+  var gap = 16;
+  var carousel = document.getElementById("carousel"),
+      content = document.getElementById("content"),
+      next = document.getElementById("next"),
+      prev = document.getElementById("prev");
+  next.addEventListener("click", function (e) {
+    carousel.scrollBy(width + gap, 0);
+
+    if (carousel.scrollWidth !== 0) {
+      prev.style.display = "flex";
+    }
+
+    if (content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+      next.style.display = "none";
+    }
+  });
+  prev.addEventListener("click", function (e) {
+    carousel.scrollBy(-(width + gap), 0);
+
+    if (carousel.scrollLeft - width - gap <= 0) {
+      prev.style.display = "none";
+    }
+
+    if (!content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+      next.style.display = "flex";
+    }
+  });
+  var width = carousel.offsetWidth;
+  window.addEventListener("resize", function (e) {
+    return width = carousel.offsetWidth;
+  });
 }
 
 /***/ }),
