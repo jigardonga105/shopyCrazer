@@ -2296,7 +2296,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _seller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./seller */ "./resources/js/seller.js");
 /* harmony import */ var _addProd__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./addProd */ "./resources/js/addProd.js");
 /* harmony import */ var _updateProd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./updateProd */ "./resources/js/updateProd.js");
-/* harmony import */ var _shopSingle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shopSingle */ "./resources/js/shopSingle.js");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home */ "./resources/js/home.js");
+/* harmony import */ var _shopSingle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shopSingle */ "./resources/js/shopSingle.js");
+
 
 
 
@@ -2306,7 +2308,8 @@ __webpack_require__.r(__webpack_exports__);
 (0,_seller__WEBPACK_IMPORTED_MODULE_1__.handleStore)();
 (0,_addProd__WEBPACK_IMPORTED_MODULE_2__.addProd)();
 (0,_updateProd__WEBPACK_IMPORTED_MODULE_3__.updateProd)();
-(0,_shopSingle__WEBPACK_IMPORTED_MODULE_4__.shopSingle)();
+(0,_home__WEBPACK_IMPORTED_MODULE_4__.home)();
+(0,_shopSingle__WEBPACK_IMPORTED_MODULE_5__.shopSingle)();
 
 /***/ }),
 
@@ -2376,6 +2379,68 @@ function authJS() {
   };
 
   displayThemeButtons();
+}
+
+/***/ }),
+
+/***/ "./resources/js/home.js":
+/*!******************************!*\
+  !*** ./resources/js/home.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "home": () => (/* binding */ home)
+/* harmony export */ });
+function home() {
+  var catArr = ['Electronics', 'TVs & Appliances', 'Men', 'Women', 'Baby & Kids', 'Home & Furniture', 'Sports, Books & More'];
+  var subCatObj = {
+    'elecArr': ['Mobiles', 'Mobile Accessories', 'Smart Wearable Tech', 'Health Care Appliances', 'Laptops', 'Desktop PCs', 'Gaming Accessories', 'Computer Accessories', 'Computer Peripherals', 'Tablets', 'Speakers', 'Smart Home Automation', 'Camera', 'Camera Accessories', 'Network Components'],
+    'tvsAppArr': ['Television', 'Washing Machine', 'Air Conditioners', 'Refrigerators', 'Kitchen Appliances', 'Healthy Living Appliances', 'Small Home Appliances'],
+    'menArr': ['Footwear', 'Mens Grooming', 'Top Wear', 'Bottom Wear', 'Suits, Blazers & Waistcoats', 'Ties, Socks, Cops & More', 'Fabrics', 'Winter Wear', 'Ethnic Wear', 'Innerwear & Loungewear', 'Raincoats & Windcheaters', 'Watches', 'Sports & Fitness Store', 'Smart Watches', 'Personal Care Appliances'],
+    'womanArr': ['Ethnic wear', 'Ethnic bottoms', 'footware', 'sandals', 'shoes', 'bllerians', 'slippers & Flip -flops', 'watches', 'smart watches', 'personal care Applications', 'eauty & Grooming', 'jewllery'],
+    'babyArr': ['kids clothings', 'boys clothing', 'girls clothing', 'baby boys clothing', 'kinds footware', 'boys footware', 'girls footware', 'infant footware', 'kids footware', 'character shoes', 'kids winter wear', 'boys winter wear', 'girls winter wear', 'toys', 'schools supplies', 'baby care'],
+    'homeArr': ['kitchen,cookware& serveware', 'Tableware &Dinner', 'kitchen storage', 'Furniture Top Offers', 'bed Room Furniture', 'Living Room Furmiture', 'Office & Study Furniture', 'DIY Furniture', 'Furnishing', 'Smart Home Automation', 'Home Improvement', 'home Decor ', 'Honme LIghting', 'Festival Decor& Gifts', 'pet Supplies', 'Durability Certified Furniture', 'Chrismas Store', 'Gardening Store'],
+    'sportArr': ['Food Essentials', 'Health & Nutrition', 'books', 'Stationery', 'Auto Accessories', 'industriall & Scientific tools', 'Medical Supplies', 'Music', 'Gaming', 'Grocery']
+  };
+
+  function addSubCategory(subCatKey, category) {
+    var ul = document.createElement("ul");
+    ul.setAttribute('id', 'cat-dropdown');
+    var subCatObjKeyArr = eval("subCatObj.".concat(subCatKey)); // console.log(subCatObjKeyArr);
+
+    subCatObjKeyArr.map(function (subCat) {
+      var li = document.createElement("li");
+      li.setAttribute('class', 'cat-dropdown-li');
+      var a = document.createElement("a");
+      a.innerHTML = subCat;
+      a.setAttribute('href', "/category/".concat(category, "/").concat(subCat));
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function addCategory(category, catNavUl, subCatKey) {
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    li.setAttribute('id', 'cat-nav-li');
+    a.setAttribute('href', "/category/".concat(category));
+    a.innerHTML = category;
+    li.appendChild(a);
+    li.appendChild(addSubCategory(subCatKey, category));
+    catNavUl.appendChild(li);
+  }
+
+  var catNavUl = document.querySelector('#cat-nav-ul');
+  var subCatArr = Object.keys(subCatObj); //using this you can get array of all key in subCatObj => ["elecArr", "tvsAppArr", "menArr", "womanArr", "babyArr", "homeArr", "sportArr"]
+
+  catArr.map(function (category, index) {
+    var subCatKey = subCatArr[index];
+    addCategory(category, catNavUl, subCatKey);
+  });
 }
 
 /***/ }),
@@ -2610,6 +2675,37 @@ function shopSingle() {
   } // console.log(carouselDiv);
   // ==================================================================
   // ==================================================================
+  //This is for select color
+
+
+  function selectColor(colorImg) {
+    colorImg.style.padding = '3px';
+    colorImg.style.boxShadow = '1px 1px 10px 5px #b8ffa6';
+    colorImg.style.border = '2px solid #10ff00';
+    colorImg.classList.add('select');
+  }
+
+  var colorImg = document.querySelectorAll('.color-img');
+
+  var _loop = function _loop(_i) {
+    colorImg[_i].addEventListener('click', function () {
+      for (var j = 0; j < colorImg.length; j++) {
+        if (colorImg[j].style.border) {
+          colorImg[j].classList.remove('select');
+          colorImg[j].style.boxShadow = 'none';
+          colorImg[j].style.padding = '0px';
+          colorImg[j].style.border = 'none';
+        }
+      }
+
+      selectColor(colorImg[_i]);
+    });
+  };
+
+  for (var _i = 0; _i < colorImg.length; _i++) {
+    _loop(_i);
+  } // ==================================================================
+  // ==================================================================
   //this is for read more specification
 
 
@@ -2634,20 +2730,20 @@ function shopSingle() {
   var relaPrd = JSON.parse(relaPrdInp.value);
   var cardGroup = document.querySelector('.card-group');
 
-  for (var _i = 0; _i < relaPrd.length; _i++) {
+  for (var _i2 = 0; _i2 < relaPrd.length; _i2++) {
     for (var key in relaPrd) {
-      var id = relaPrd[_i]._id;
-      var imgPath = relaPrd[_i].image[0].img;
-      var name = relaPrd[_i].name;
+      var id = relaPrd[_i2]._id;
+      var imgPath = relaPrd[_i2].image[0].img;
+      var name = relaPrd[_i2].name;
 
       if (name.length > 16) {
         name = name.substring(0, 16);
         name = name + '...';
       }
 
-      var rating = relaPrd[_i].rating;
-      var vote = relaPrd[_i].vote;
-      var price = relaPrd[_i].price;
+      var rating = relaPrd[_i2].rating;
+      var vote = relaPrd[_i2].vote;
+      var price = relaPrd[_i2].price;
     }
 
     cardGroup.innerHTML += "<div class=\"card cardCss\">\n                                    <div class=\"inner-card\">\n                                        <a href=\"/productview/".concat(id, "\">\n                                            <div class=\"card-img-div\">\n                                                <img src=\"../../uploadedImages/").concat(imgPath, "\" class=\"card-img-top\" alt=\"...\" />\n                                            </div>\n                                        </a>\n                                        <div class=\"card-body\">\n                                            <a href=\"/productview/").concat(id, "\">\n                                                <h6 class=\"card-title\">").concat(name, "</h6>\n                                            </a>\n                                            <ul class=\"rating-vote-ul\">\n                                                <li class=\"rating-vote-li1\">\n                                                    ").concat(rating, "&nbsp;<i class=\"text-muted fa fa-star\"></i>\n                                                </li>\n                                                <li class=\"rating-vote-li2\">\n                                                    (").concat(vote, ")\n                                                </li>\n                                            </ul>\n                                            <span class=\"rela-priceSpan\">\u20B9").concat(price, "</span>\n                                        </div>\n                                    </div>\n                                </div>");

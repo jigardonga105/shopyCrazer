@@ -58,6 +58,32 @@ export function shopSingle() {
     // ==================================================================
     // ==================================================================
 
+    //This is for select color
+    function selectColor(colorImg) {
+        colorImg.style.padding = '3px';
+        colorImg.style.boxShadow = '1px 1px 10px 5px #b8ffa6';
+        colorImg.style.border = '2px solid #10ff00';
+        colorImg.classList.add('select');
+    }
+    let colorImg = document.querySelectorAll('.color-img');
+    for (let i = 0; i < colorImg.length; i++) {
+
+        colorImg[i].addEventListener('click', () => {
+            for (let j = 0; j < colorImg.length; j++) {
+                if (colorImg[j].style.border) {
+
+                    colorImg[j].classList.remove('select');
+                    colorImg[j].style.boxShadow = 'none';
+                    colorImg[j].style.padding = '0px';
+                    colorImg[j].style.border = 'none';
+                }
+            }
+            selectColor(colorImg[i]);
+        })
+    }
+    // ==================================================================
+    // ==================================================================
+
     //this is for read more specification
     function showHideSpec(btn) {
         if (btn.innerHTML == 'Read More') {

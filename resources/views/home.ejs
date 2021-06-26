@@ -2,68 +2,6 @@
     <ul id="cat-nav-ul" align="center"></ul>
 </div>
 
-<script>
-    let catArr = ['Electronics', 'TVs & Appliances', 'Men', 'Women', 'Baby & Kids', 'Home & Furniture', 'Sports, Books & More'];
-
-    let subCatObj = {
-        'elecArr': ['Mobiles', 'Mobile Accessories', 'Smart Wearable Tech', 'Health Care Appliances', 'Laptops', 'Desktop PCs', 'Gaming Accessories', 'Computer Accessories', 'Computer Peripherals', 'Tablets', 'Speakers', 'Smart Home Automation', 'Camera', 'Camera Accessories', 'Network Components'],
-
-        'tvsAppArr': ['Television', 'Washing Machine', 'Air Conditioners', 'Refrigerators', 'Kitchen Appliances', 'Healthy Living Appliances', 'Small Home Appliances'],
-
-        'menArr': ['Footwear', 'Mens Grooming', 'Top Wear', 'Bottom Wear', 'Suits, Blazers & Waistcoats', 'Ties, Socks, Cops & More', 'Fabrics', 'Winter Wear', 'Ethnic Wear', 'Innerwear & Loungewear', 'Raincoats & Windcheaters', 'Watches', 'Sports & Fitness Store', 'Smart Watches', 'Personal Care Appliances'],
-
-        'womanArr': ['Ethnic wear', 'Ethnic bottoms', 'footware', 'sandals', 'shoes', 'bllerians', 'slippers & Flip -flops', 'watches', 'smart watches', 'personal care Applications', 'eauty & Grooming', 'jewllery'],
-
-        'babyArr': ['kids clothings', 'boys clothing', 'girls clothing', 'baby boys clothing', 'kinds footware', 'boys footware', 'girls footware', 'infant footware', 'kids footware', 'character shoes', 'kids winter wear', 'boys winter wear', 'girls winter wear', 'toys', 'schools supplies', 'baby care'],
-
-        'homeArr': ['kitchen,cookware& serveware', 'Tableware &Dinner', 'kitchen storage', 'Furniture Top Offers', 'bed Room Furniture', 'Living Room Furmiture', 'Office & Study Furniture', 'DIY Furniture', 'Furnishing', 'Smart Home Automation', 'Home Improvement', 'home Decor ', 'Honme LIghting', 'Festival Decor& Gifts', 'pet Supplies', 'Durability Certified Furniture', 'Chrismas Store', 'Gardening Store'],
-
-        'sportArr': ['Food Essentials', 'Health & Nutrition', 'books', 'Stationery', 'Auto Accessories', 'industriall & Scientific tools', 'Medical Supplies', 'Music', 'Gaming', 'Grocery']
-    }
-
-    function addSubCategory(subCatKey, category) {
-        let ul = document.createElement("ul");
-        ul.setAttribute('id', 'cat-dropdown');
-
-
-        let subCatObjKeyArr = eval(`subCatObj.${subCatKey}`);
-        // console.log(subCatObjKeyArr);
-        subCatObjKeyArr.map(subCat => {
-            let li = document.createElement("li");
-            li.setAttribute('class', 'cat-dropdown-li');
-
-            let a = document.createElement("a");
-
-            a.innerHTML = subCat
-            a.setAttribute('href', `/category/${category}/${subCat}`);
-            li.appendChild(a);
-            ul.appendChild(li);
-        })
-        return ul;
-    }
-
-    function addCategory(category, catNavUl, subCatKey) {
-        let li = document.createElement("li");
-        let a = document.createElement("a");
-
-
-        li.setAttribute('id', 'cat-nav-li');
-        a.setAttribute('href', `/category/${category}`);
-        a.innerHTML = category;
-        li.appendChild(a);
-        li.appendChild(addSubCategory(subCatKey, category));
-        catNavUl.appendChild(li);
-    }
-
-    let catNavUl = document.querySelector('#cat-nav-ul');
-    let subCatArr = Object.keys(subCatObj); //using this you can get array of all key in subCatObj => ["elecArr", "tvsAppArr", "menArr", "womanArr", "babyArr", "homeArr", "sportArr"]
-
-    catArr.map((category, index) => {
-        let subCatKey = subCatArr[index];
-        addCategory(category, catNavUl, subCatKey);
-    })
-</script>
-
 <!-- Start Banner Hero -->
 <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel" style="z-index: 1;">
     <ol class="carousel-indicators">
@@ -85,7 +23,8 @@
                             <p>
                                 Zay Shop is an eCommerce HTML5 CSS template with latest version of Bootstrap 5 (beta 1). This template is 100% free provided by <a rel="sponsored" class="text-success" href="https://templatemo.com" target="_blank">TemplateMo</a>                                website. Image credits go to <a rel="sponsored" class="text-success" href="https://stories.freepik.com/" target="_blank">Freepik Stories</a>,
                                 <a rel="sponsored" class="text-success" href="https://unsplash.com/" target="_blank">Unsplash</a> and
-                                <a rel="sponsored" class="text-success" href="https://icons8.com/" target="_blank">Icons 8</a>.
+                                <a rel="sponsored" class="text-success" href="https://icons8.com/" target="_blank">Icons
+                                    8</a>.
                             </p>
                         </div>
                     </div>
@@ -103,7 +42,8 @@
                             <h1 class="h1">Proident occaecat</h1>
                             <h3 class="h2">Aliquip ex ea commodo consequat</h3>
                             <p>
-                                You are permitted to use this Zay CSS template for your commercial websites. You are <strong>not permitted</strong> to re-distribute the template ZIP file in any kind of template collection websites.
+                                You are permitted to use this Zay CSS template for your commercial websites. You are
+                                <strong>not permitted</strong> to re-distribute the template ZIP file in any kind of template collection websites.
                             </p>
                         </div>
                     </div>
