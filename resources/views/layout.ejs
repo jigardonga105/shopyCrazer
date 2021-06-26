@@ -23,6 +23,10 @@
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="/css/slick.min.css">
     <link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
+
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -39,7 +43,7 @@
                 <div>
 
                     <% if(user) {%>
-                        <% if(user.role === 'seller') { %>
+                        <% if(user.role==='seller' ) { %>
                             <a class="seller-bord-blink text-light p-2" href="/seller/sellerStr" style="text-decoration: none;">Profile</a>
                             <%} else {%>
                                 <a class="seller-bord-blink text-light p-2" href="/sellerReg" style="text-decoration: none;">Seller</a>
@@ -55,10 +59,14 @@
                                                 <% } else { %>
                                                     <a class="text-light p-2" href="/logout" style="text-decoration: none;">Logout</a>
                                                     <% } %>
-                                                        <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
-                                                        <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                                                        <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                                                        <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                                                        <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
+                                                                class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                                                        <a class="text-light" href="https://www.instagram.com/" target="_blank"><i
+                                                                class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                                                        <a class="text-light" href="https://twitter.com/" target="_blank"><i
+                                                                class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                                                        <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i
+                                                                class="fab fa-linkedin fa-sm fa-fw"></i></a>
                 </div>
             </div>
         </div>
@@ -70,10 +78,15 @@
     <div>
         <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Clients</a>
-            <a href="#">Contact</a>
+            <a href="#">All Categories</a>
+            <a href="#">Offer Zone</a>
+            <a href="/sellerReg">Sell on Zay</a>
+            <hr>
+            <a href="#">My Orders</a>
+            <a href="#">My Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">My Account</a>
+            <a href="#">My Notification</a>
         </div>
 
         <div id="main" style="display: inline;position: absolute;z-index: 5;left: -16px;top: 45px;">
@@ -136,11 +149,14 @@
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" style="text-decoration: none;">
+                    <a class="nav-icon d-none d-lg-inline" href="/myAccount" style="text-decoration: none;">
                         <% if(user) { %>
                             <span class="flex">
-                                <img class="mr-2" src="/uploadedImages/<%= user.image[0].img %>" alt="User Image" width="35" height="35" style="border-radius: 25px;">
-                                <span class="mt-1"><%= user.first_name %></span>
+                                <img class="mr-2" src="/uploadedImages/<%= user.image[0].img %>" alt="User Image"
+                                    width="35" height="35" style="border-radius: 25px;">
+                                <span class="mt-1">
+                                    <%= user.first_name %>
+                                </span>
                             </span>
                             <% } %>
                     </a>

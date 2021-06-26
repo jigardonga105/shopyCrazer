@@ -9,13 +9,13 @@ body {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
     color: black;
 }
 
 a:hover {
     text-decoration: none;
-    color: black !important;
+    color: black;
 }
 
 .sidebar {
@@ -40,8 +40,8 @@ a:hover {
     transition: 0.3s;
 }
 
-.sidebar a:hover {
-    color: #f1f1f1;
+#mySidebar a:hover {
+    color: rgb(89, 171, 110) !important;
 }
 
 .sidebar .closebtn {

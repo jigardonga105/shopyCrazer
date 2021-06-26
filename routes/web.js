@@ -4,6 +4,7 @@ const catProdShowController = require('../app/http/controllers/catProdShowContro
 const sellerAuthController = require('../app/http/controllers/seller/sellerAuthController')
 const sellerStoreController = require('../app/http/controllers/seller/storeController')
 const sellerProductController = require('../app/http/controllers/seller/prodController')
+const myAccountController = require('../app/http/controllers/myAccountController')
 
 const guest = require('../app/http/middlewares/guest')
 const admin = require('../app/http/middlewares/admin')
@@ -56,6 +57,9 @@ function initRoutes(app) {
     app.get('/category/:category', catProdShowController().showCategory)
     app.get('/category/:category/:subCategory', catProdShowController().showSubCategory)
     app.get('/productview/:prdID', catProdShowController().viewProduct)
+
+    //this is for my Account
+    app.get('/myAccount', myAccountController().index);
 
 }
 
