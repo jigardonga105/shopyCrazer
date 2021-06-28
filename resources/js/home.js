@@ -48,7 +48,9 @@ export function home() {
         a.innerHTML = category;
         li.appendChild(a);
         li.appendChild(addSubCategory(subCatKey, category));
-        catNavUl.appendChild(li);
+        if (catNavUl) {
+            catNavUl.appendChild(li);
+        }
     }
 
     let catNavUl = document.querySelector('#cat-nav-ul');

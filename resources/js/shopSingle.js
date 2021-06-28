@@ -1,12 +1,17 @@
 export function shopSingle() {
     //This is for Image of Product
     let prdInp = document.querySelector('#prdInp');
-    let prd = JSON.parse(prdInp.value);
+    let prd;
+    if (prdInp) {
+        prd = JSON.parse(prdInp.value);
 
-    document.getElementById("color").style.gridTemplateColumns = `repeat(${prd.color.length}, minmax(0, 1fr))`;
+        if (document.getElementById("color")) {
+            document.getElementById("color").style.gridTemplateColumns = `repeat(${prd.color.length}, minmax(0, 1fr))`;
+        }
 
-    let totalImgLen = prd.image.length;
-    totalImgLen = Math.trunc(totalImgLen / 3);
+        var totalImgLen = prd.image.length;
+        totalImgLen = Math.trunc(totalImgLen / 3);
+    }
 
     function oneImgAdd(i, prd, carouselItemDiv) {
         let rowDiv = document.createElement('div');
@@ -95,54 +100,60 @@ export function shopSingle() {
         }
     }
     let spec_readmore = document.querySelector('#spec-readmore');
-    spec_readmore.addEventListener('click', () => {
-        showHideSpec(spec_readmore);
-    })
+    if (spec_readmore) {
+        spec_readmore.addEventListener('click', () => {
+            showHideSpec(spec_readmore);
+        })
+    }
 
     // ==================================================================
     // ==================================================================
 
     //this is for related products
     let relaPrdInp = document.querySelector('#relaPrdInp');
-    let relaPrd = JSON.parse(relaPrdInp.value);
-    let cardGroup = document.querySelector('.card-group');
+    if (relaPrdInp) {
+        var relaPrd = JSON.parse(relaPrdInp.value);
+        let cardGroup = document.querySelector('.card-group');
 
-    for (let i = 0; i < relaPrd.length; i++) {
-        for (let key in relaPrd) {
-            var id = relaPrd[i]._id;
-            var imgPath = relaPrd[i].image[0].img;
-            var name = relaPrd[i].name;
-            if (name.length > 16) {
-                name = name.substring(0, 16);
-                name = name + '...';
+        for (let i = 0; i < relaPrd.length; i++) {
+            for (let key in relaPrd) {
+                var id = relaPrd[i]._id;
+                var imgPath = relaPrd[i].image[0].img;
+                var name = relaPrd[i].name;
+                if (name.length > 16) {
+                    name = name.substring(0, 16);
+                    name = name + '...';
+                }
+                var rating = relaPrd[i].rating;
+                var vote = relaPrd[i].vote;
+                var price = relaPrd[i].price;
             }
-            var rating = relaPrd[i].rating;
-            var vote = relaPrd[i].vote;
-            var price = relaPrd[i].price;
-        }
-        cardGroup.innerHTML += `<div class="card cardCss">
-                                    <div class="inner-card">
-                                        <a href="/productview/${id}">
-                                            <div class="card-img-div">
-                                                <img src="../../uploadedImages/${imgPath}" class="card-img-top" alt="..." />
-                                            </div>
-                                        </a>
-                                        <div class="card-body">
+            if (cardGroup) {
+                cardGroup.innerHTML += `<div class="card cardCss">
+                                        <div class="inner-card">
                                             <a href="/productview/${id}">
-                                                <h6 class="card-title">${name}</h6>
+                                                <div class="card-img-div">
+                                                    <img src="../../uploadedImages/${imgPath}" class="card-img-top" alt="..." />
+                                                </div>
                                             </a>
-                                            <ul class="rating-vote-ul">
-                                                <li class="rating-vote-li1">
-                                                    ${rating}&nbsp;<i class="text-muted fa fa-star"></i>
-                                                </li>
-                                                <li class="rating-vote-li2">
-                                                    (${vote})
-                                                </li>
-                                            </ul>
-                                            <span class="rela-priceSpan">₹${price}</span>
+                                            <div class="card-body">
+                                                <a href="/productview/${id}">
+                                                    <h6 class="card-title">${name}</h6>
+                                                </a>
+                                                <ul class="rating-vote-ul">
+                                                    <li class="rating-vote-li1">
+                                                        ${rating}&nbsp;<i class="text-muted fa fa-star"></i>
+                                                    </li>
+                                                    <li class="rating-vote-li2">
+                                                        (${vote})
+                                                    </li>
+                                                </ul>
+                                                <span class="rela-priceSpan">₹${price}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>`;
+                                    </div>`;
+            }
+        }
     }
 
 
@@ -157,25 +168,32 @@ export function shopSingle() {
         next = document.getElementById("next"),
         prev = document.getElementById("prev");
 
-    next.addEventListener("click", (e) => {
-        carousel.scrollBy(width + gap, 0);
-        if (carousel.scrollWidth !== 0) {
-            prev.style.display = "flex";
-        }
-        if (content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
-            next.style.display = "none";
-        }
-    });
-    prev.addEventListener("click", (e) => {
-        carousel.scrollBy(-(width + gap), 0);
-        if (carousel.scrollLeft - width - gap <= 0) {
-            prev.style.display = "none";
-        }
-        if (!content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
-            next.style.display = "flex";
-        }
-    });
+    if (next) {
+        next.addEventListener("click", (e) => {
+            carousel.scrollBy(width + gap, 0);
+            if (carousel.scrollWidth !== 0) {
+                prev.style.display = "flex";
+            }
+            if (content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+                next.style.display = "none";
+            }
+        });
+    }
+    if (prev) {
+        prev.addEventListener("click", (e) => {
+            carousel.scrollBy(-(width + gap), 0);
+            if (carousel.scrollLeft - width - gap <= 0) {
+                prev.style.display = "none";
+            }
+            if (!content.scrollWidth - width - gap <= carousel.scrollLeft + width) {
+                next.style.display = "flex";
+            }
+        });
+    }
 
-    let width = carousel.offsetWidth;
-    window.addEventListener("resize", (e) => (width = carousel.offsetWidth));
+    if (carousel) {
+
+        let width = carousel.offsetWidth;
+        window.addEventListener("resize", (e) => (width = carousel.offsetWidth));
+    }
 }

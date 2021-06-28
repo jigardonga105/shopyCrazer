@@ -23,94 +23,238 @@
         #myacc-order:hover {
             cursor: pointer;
         }
+        
+        .text-color-gray {
+            color: rgb(196, 194, 194);
+        }
+        
+        .show-err {
+            color: red;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+        }
+        
+        .form-control {
+            -webkit-transition: none;
+            transition: none;
+            width: 40px;
+            height: 32px;
+            text-align: center
+        }
+        
+        .form-control:focus {
+            color: #3F4254;
+            background-color: #ffffff;
+            border-color: #884377;
+            outline: 0;
+        }
+        
+        .form-control.form-control-solid {
+            background-color: #F3F6F9;
+            border-color: #F3F6F9;
+            color: #3F4254;
+            transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        
+        .form-control.form-control-solid:active,
+        .form-control.form-control-solid.active,
+        .form-control.form-control-solid:focus,
+        .form-control.form-control-solid.focus {
+            background-color: #EBEDF3;
+            border-color: #EBEDF3;
+            color: #3F4254;
+            transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        
+        .showMSG-p {
+            display: none;
+            margin-left: 25px;
+            margin-bottom: 0px !important;
+            color: #4ab74a;
+            font-weight: 400 !important;
+        }
     </style>
 </head>
 
-<section>
-    <div class="myAcc m-5 p-2 bg-gray-100 border rounded">
-        <h1>My Account</h1>
-        <div class="details grid grid-cols-4" id="details">
-            <div class="left col-span-1 grid">
-                <div class="bg-white inline-block rounded p-2 mb-2">
-                    <img class="w-16 h-16 rounded-full inline-block" src="/img/product_single_02.jpg" alt="">
-                    <div class="inline-block">
-                        <span class="text-sm">Hello,</span>
-                        <br>
-                        <span class="font-medium">Laddy</span>
-                    </div>
-                </div>
-                <div class="bg-white inline-block rounded p-2 mb-2">
-                    <div class="ml-5">
-                        <div class="head">
-                            <i class="fas fa-folder"></i>
-                            <span id="myacc-order" class="text-gray-400 text-2xl font-bold ml-5 ">My Orders</span>
+<% if(user){ %>
+    <input type="hidden" name="user" id="user" value="<%= JSON.stringify(user) %>">
+    <% } %>
+
+        <section>
+            <div class="myAcc m-5 p-2 bg-gray-100 border rounded">
+                <h1>My Account</h1>
+                <div class="details grid grid-cols-4" id="details">
+                    <div class="left col-span-1 grid">
+                        <div class="bg-white inline-block rounded p-2 mb-2">
+                            <img class="w-16 h-16 rounded-full inline-block" src="/img/product_single_02.jpg" alt="">
+                            <div class="inline-block">
+                                <span class="text-sm">Hello,</span>
+                                <br>
+                                <span class="font-medium">Laddy</span>
+                            </div>
+                        </div>
+                        <div class="bg-white inline-block rounded p-2 mb-2">
+                            <div class="ml-5">
+                                <div class="head">
+                                    <i class="fas fa-folder"></i>
+                                    <span id="myacc-order" class="text-gray-400 text-2xl font-bold ml-5 ">My
+                                        Orders</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white inline-block rounded p-2">
+                            <div class="ml-5">
+                                <div class="head">
+                                    <i class="fas fa-user"></i>
+                                    <span class="text-gray-400 text-2xl font-bold ml-5">Account Settings</span>
+                                </div>
+                                <div class="ml-8 mt-2 leading-loose">
+                                    <a href="#">Profile information</a>
+                                    <a href="#">Manage Addresses</a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="mt-4 ml-5">
+                                <div class="head">
+                                    <i class="fas fa-id-card"></i>
+                                    <span class="text-gray-400 text-2xl font-bold ml-5">My Stuff</span>
+                                </div>
+                                <div class="ml-8 mt-2 leading-loose">
+                                    <a href="#">My Coupons</a>
+                                    <a href="#">My Reviews & Ratings</a>
+                                    <a href="#">All Notifications</a>
+                                    <a href="#">My Wishlist</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white inline-block rounded p-2 mt-2">
+                            <div class="mt-3 ml-5">
+                                <div class="head">
+                                    <i class="fas fa-power-off"></i>
+                                    <span id="myacc-logout" class="text-gray-400 text-2xl font-bold ml-5 ">Logout</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="bg-white inline-block rounded p-2">
-                    <div class="ml-5">
-                        <div class="head">
-                            <i class="fas fa-user"></i>
-                            <span class="text-gray-400 text-2xl font-bold ml-5">Account Settings</span>
-                        </div>
-                        <div class="ml-8 mt-2 leading-loose">
-                            <a href="">Profile information</a>
-                            <a href="">Manage Addresses</a>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="mt-4 ml-5">
-                        <div class="head">
-                            <i class="fas fa-id-card"></i>
-                            <span class="text-gray-400 text-2xl font-bold ml-5">My Stuff</span>
-                        </div>
-                        <div class="ml-8 mt-2 leading-loose">
-                            <a href="">My Coupons</a>
-                            <a href="">My Reviews & Ratings</a>
-                            <a href="">All Notifications</a>
-                            <a href="">My Wishlist</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white inline-block rounded p-2 mt-2">
-                    <div class="mt-3 ml-5">
-                        <div class="head">
-                            <i class="fas fa-power-off"></i>
-                            <span id="myacc-logout" class="text-gray-400 text-2xl font-bold ml-5 ">Logout</span>
+
+                    <div class="right col-span-3 ml-5 bg-white inline-block rounded p-4">
+                        <div class="per-info">
+                            <div>
+                                <span class="font-medium">Personal Information</span>
+                                <a href="#">
+                                    <span id="per-info-a-span" class="text-blue-500 ml-5 text-sm font-bold">Edit</span>
+                                </a>
+
+                                <div class="mt-4">
+                                    <input type="text" name="fname" id="fname" disabled class="cursor-not-allowed text-color-gray border w-60 h-12 focus:outline-none bg-gray-100 rounded">
+                                    <input type="text" name="lname" id="lname" disabled class="cursor-not-allowed text-color-gray border w-60 h-12 focus:outline-none bg-gray-100 rounded ml-2">
+                                    <button id="per-info-save-btn" class="bg-green-400 w-28 h-12 rounded-full ml-5 focus:outline-none">Save</button>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <span class="text-base">Your Gender</span>
+                                <br>
+                                <div class="mt-3 ml-3">
+                                    <div class="form-check form-check-inline">
+                                        <input disabled checked class="cursor-not-allowed text-color-gray form-check-input" type="radio" name="gender" id="inlineRadio1" value="Male">
+                                        <label class="form-check-label" for="inlineRadio1">👦 Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline ml-4">
+                                        <input disabled class="cursor-not-allowed text-color-gray form-check-input" type="radio" name="gender" id="inlineRadio2" value="Female">
+                                        <label class="form-check-label" for="inlineRadio2">👧 Female</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <span class="font-medium">Email Address</span>
+                                <a href="#">
+                                    <span id="email-span" class="text-blue-500 ml-5 text-sm font-bold">Edit</span>
+                                </a>
+                                <a href="#">
+                                    <span id="pass-span" class="text-blue-500 ml-5 text-sm font-bold">
+                                        Change Password
+                                    </span>
+                                </a>
+
+                                <div class="mt-4">
+                                    <input disabled type="email" name="email" id="email" class="cursor-not-allowed text-color-gray border w-60 h-12 focus:outline-none bg-gray-100 rounded">
+                                    <button id="email-var-btn" class="text-sm bg-green-400 w-28 h-12 rounded-full ml-5 focus:outline-none">
+                                        Get Varification Code
+                                    </button>
+                                </div>
+                                <div class="mt-3" id="email-var-div">
+                                    <p class="mb-0">Enter varification code:</p>
+                                    <input type="tel" maxlength="6" name="varCode" id="varCode" class="border w-40 h-8 focus:outline-none bg-gray-100 rounded">
+                                    <button id="email-pass-save-btn" class="bg-green-400 w-28 h-8 rounded-full ml-5 focus:outline-none">Update</button>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <span class="font-medium">Mobile Number</span>
+                                <a href="#">
+                                    <span id="phone-span" class="text-blue-500 ml-5 text-sm font-bold">Edit</span>
+                                </a>
+
+                                <div class="mt-4">
+                                    <input disabled type="tel" name="phone" id="phone" class="cursor-not-allowed text-color-gray border w-60 h-12 focus:outline-none bg-gray-100 rounded">
+                                    <button id="phone-otp-btn" class="bg-green-400 w-28 h-12 rounded-full ml-5 focus:outline-none">
+                                        Send OTP
+                                    </button>
+                                    <br>
+
+                                    <div id="a-div-sms" class="hidden"></div>
+
+                                    <div class="mb-6 text-center" id="phoneOtp">
+                                        <div id="otp" class="flex justify-center">
+                                            <input type="tel" id="first" class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" maxlength="1" />
+                                            <input type="tel" id="second" class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" maxlength="1" />
+                                            <input type="tel" id="third" class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" maxlength="1" />
+                                            <input type="tel" id="fourth" class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" maxlength="1" />
+                                            <input type="tel" id="fifth" class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" maxlength="1" />
+                                            <input type="tel" id="sixth" class="m-2 text-center form-control form-control-solid rounded focus:border-blue-400 focus:shadow-outline" maxlength="1" />
+                                        </div>
+                                    </div>
+                                    <button id="phone-save-btn" class="bg-green-400 w-40 h-12 rounded-full ml-5 focus:outline-none">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="right col-span-3 ml-5 bg-white inline-block rounded p-4">
-                <div class="per-info">
-                    <span class="font-medium">Personal Information</span>
-                    <a href="">
-                        <span class="text-blue-500 ml-5 text-sm font-bold">Edit</span>
-                    </a>
-
-                    <div class="mt-4">
-                        <input type="text" name="fname" id="fname" class="border w-60 h-12 focus:outline-none bg-gray-100 rounded">
-                        <input type="text" name="lname" id="lname" class="border w-60 h-12 focus:outline-none bg-gray-100 rounded ml-2">
-                        <button class="bg-green-400 w-28 h-12 rounded-full ml-5 focus:outline-none">Save</button>
-                    </div>
-
-                    <div class="mt-4">
-                        <span class="text-base">Your Gender</span>
-                        <br>
-                        <div class="mt-3 ml-3">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                <label class="form-check-label" for="inlineRadio1">👦 Male</label>
-                            </div>
-                            <div class="form-check form-check-inline ml-4">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">👧 Female</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <script>
+            function OTPInput() {
+                const inputs = document.querySelectorAll('#otp > *[id]');
+                for (let i = 0; i < inputs.length; i++) {
+                    // console.log(inputs[i]);
+                    inputs[i].addEventListener('keydown', function(event) {
+                        if (event.key === "Backspace") {
+                            inputs[i].value = '';
+                            if (i !== 0)
+                                inputs[i - 1].focus();
+                        } else {
+                            if (i === inputs.length - 1 && inputs[i].value !== '') {
+                                return true;
+                            } else if (event.keyCode > 47 && event.keyCode < 58) {
+                                inputs[i].value = event.key;
+                                if (i !== inputs.length - 1)
+                                    inputs[i + 1].focus();
+                                event.preventDefault();
+                            } else if (event.keyCode > 64 && event.keyCode < 91) {
+                                inputs[i].value = String.fromCharCode(event.keyCode);
+                                if (i !== inputs.length - 1)
+                                    inputs[i + 1].focus();
+                                event.preventDefault();
+                            }
+                        }
+                    });
+                }
+            }
+            OTPInput();
+        </script>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>

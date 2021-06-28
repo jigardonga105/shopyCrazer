@@ -60,6 +60,8 @@ function initRoutes(app) {
 
     //this is for my Account
     app.get('/myAccount', myAccountController().index);
+    app.post('/otp', myAccountController().otp);
+    app.post('/changeMyAcc', myAccountController().changeMyAcc);
 
 }
 
