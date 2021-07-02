@@ -2468,6 +2468,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var validator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(validator__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var otp_generator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! otp-generator */ "./node_modules/otp-generator/index.js");
 /* harmony import */ var otp_generator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(otp_generator__WEBPACK_IMPORTED_MODULE_1__);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 
 
@@ -2478,7 +2484,7 @@ function myAcc() {
   var oldEmail = user.email;
   var oldPhoneNum = user.phone; // ========================================================================
   // ========================================================================
-  //General Functions
+  //General Functions Start
 
   function putDataInField() {
     document.getElementById("fname").value = user.first_name;
@@ -2558,7 +2564,18 @@ function myAcc() {
       Subject: subject,
       Body: body
     });
-  } // ========================================================================
+  }
+
+  var allAddDiv = document.getElementById('allAddDiv');
+
+  function addAllAddress() {
+    user.address.forEach(function (address, index) {
+      var key = Object.keys(user.address)[index];
+      var addStr = "<div class=\"border p-4 mt-4\">\n                                <div id=\"edit-del-add-div\" class=\"float-right\">\n                                    <div id=\"addEdit-".concat(key, "\" class=\"addEdit bg-green-100 rounded-full p-1 inline-block hover:bg-green-300 cursor-pointer\" style=\"font-size: 14px !important;\">\n                                        Edit</div>\n                                    <div id=\"addDel-").concat(key, "\" class=\"addDel bg-green-100 rounded-full p-1 inline-block hover:bg-green-300 cursor-pointer\" style=\"font-size: 14px !important;\">\n                                        Delete</div>\n                                </div>\n                                <span class=\"bg-gray-200 text-sm p-1 rounded text-gray-600\">").concat(address['add-type'], "</span>\n                                <div class=\"mt-1\">\n                                    <span class=\"text-base font-bold mr-2\">").concat(address['add-name'], "</span>\n                                    <span class=\"text-base font-bold ml-2\">").concat(address['add-phone'], "</span>\n                                </div>\n                                <div class=\"mt-1\">\n                                    <div class=\"w-3/4\">\n                                        <span class=\"text-base\">").concat(address['add-area&street'], "</span>,\n                                        <span class=\"text-base\">").concat(address['add-locality'], "</span>\n                                        <br>\n                                        <span class=\"text-base\">").concat(address['add-city'], " District</span>,\n                                        <span class=\"text-base\">").concat(address['add-state'], "</span>, -\n                                        <span class=\"font-bold\">").concat(address['add-pin'], "</span>\n                                    </div>\n                                </div>\n                            </div>");
+      allAddDiv.innerHTML += addStr;
+    });
+  } //General Functions End
+  // ========================================================================
   // ========================================================================
 
 
@@ -2615,6 +2632,40 @@ function myAcc() {
       emailVarDiv.style.display = 'none';
     }
   });
+
+  function OTPInput() {
+    var inputs = document.querySelectorAll('#otp > *[id]');
+
+    if (inputs) {
+      var _loop = function _loop(i) {
+        // console.log(inputs[i]);
+        inputs[i].addEventListener('keydown', function (event) {
+          if (event.key === "Backspace") {
+            inputs[i].value = '';
+            if (i !== 0) inputs[i - 1].focus();
+          } else {
+            if (i === inputs.length - 1 && inputs[i].value !== '') {
+              return true;
+            } else if (event.keyCode > 47 && event.keyCode < 58) {
+              inputs[i].value = event.key;
+              if (i !== inputs.length - 1) inputs[i + 1].focus();
+              event.preventDefault();
+            } else if (event.keyCode > 64 && event.keyCode < 91) {
+              inputs[i].value = String.fromCharCode(event.keyCode);
+              if (i !== inputs.length - 1) inputs[i + 1].focus();
+              event.preventDefault();
+            }
+          }
+        });
+      };
+
+      for (var i = 0; i < inputs.length; i++) {
+        _loop(i);
+      }
+    }
+  }
+
+  OTPInput();
   document.getElementById("phone-save-btn").style.display = "none";
   document.getElementById("phoneOtp").style.display = "none";
   document.getElementById("phone-otp-btn").style.display = "none";
@@ -2636,20 +2687,32 @@ function myAcc() {
       document.getElementById("phone-save-btn").style.display = "none";
     }
   }); //==========================================================================
+  //Profile Pic.
+  //==========================================================================
+
+  var img_userID = document.getElementById('img-userID');
+  img_userID.value = user._id;
+  var changeIMG = document.getElementById('changeIMG');
+  changeIMG.setAttribute('src', "/uploadedImages/".concat(user.image[0].img));
+  changeIMG.setAttribute('alt', "".concat(user.first_name, " image"));
+  var newImg = document.getElementById('newImg');
+  newImg.addEventListener('change', function (event) {
+    changeIMG.setAttribute('src', "".concat(URL.createObjectURL(event.target.files[0])));
+  }); //==========================================================================
   //Name and Gender
   //==========================================================================
 
   var genderInp = document.getElementsByName('gender');
   var gender;
 
-  var _loop = function _loop(i) {
+  var _loop2 = function _loop2(i) {
     genderInp[i].addEventListener('click', function () {
       gender = genderInp[i].value;
     });
   };
 
   for (var i = 0; i < genderInp.length; i++) {
-    _loop(i);
+    _loop2(i);
   }
 
   document.getElementById('per-info-save-btn').addEventListener('click', function () {
@@ -2788,6 +2851,9 @@ function myAcc() {
         document.querySelector('#phone-span').click();
         putDataInField();
         showMSG(document.getElementById('phone-span'), '#4ab74a');
+        var subject = 'Successfully changed your Contact Number';
+        var body = "<div>\n                                    <img src=\"/img/apple-icon.png\" style=\"margin: auto;\">\n                                    <span>\n                                        <h1>You have successfully changed your Contact Number</h1>\n                                        <br>\n                                        <h2>Your new Contact Number is: ".concat(user.phone, "</h2>\n                                        <br>\n                                        <h3>Thank you for using Zay Shop.</h3>\n                                    </span>\n                                </div>");
+        sendEmail(user.email, subject, body);
       }, function (error) {
         console.log(error);
         showMSG(document.getElementById('phone-span'), 'red');
@@ -2796,7 +2862,388 @@ function myAcc() {
       showErrField('Please Enter valid OTP!');
     }
   }); //==================================================================================
+  //Address
   //==================================================================================
+  //fill options in State select tag
+
+  var stateArray = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"];
+  stateArray.map(function (state) {
+    var option = document.createElement("option");
+    option.text = state;
+    option.value = state;
+    document.getElementById('add-state').options.add(option);
+  }); //Set value of address type (Home/Work)
+
+  var addTypes = document.getElementsByName("add-type");
+  var addType;
+
+  var _loop3 = function _loop3(_i2) {
+    addTypes[_i2].addEventListener('click', function () {
+      addType = addTypes[_i2].value; // console.log(addType);
+    });
+  };
+
+  for (var _i2 = 0; _i2 < addTypes.length; _i2++) {
+    _loop3(_i2);
+  }
+
+  function newAddFieldMsg(str) {
+    document.getElementById('requiredMSGSpan').innerHTML = str;
+    setTimeout(function () {
+      document.getElementById('requiredMSGSpan').innerHTML = '';
+    }, 3000);
+    document.getElementById('addNewAddressBtnDiv').style.display = 'none';
+    document.getElementById('addNewAddressBox').style.display = 'block';
+  } //when add new address save button click send data with POST method
+
+
+  var addFieldArr = ['add-name', 'add-phone', 'add-pin', 'add-locality', 'add-area&street', 'add-city', 'add-state', 'add-landmark', 'add-altphone', 'add-type'];
+  document.getElementById('add-save-btn').addEventListener('click', function () {
+    var sendAddData = false; //check if fields value is not empty
+
+    var _iterator = _createForOfIteratorHelper(addFieldArr),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var addField = _step.value;
+
+        // console.log(addField);
+        if (addField != 'add-type') {
+          if (addField != 'add-landmark' && addField != 'add-altphone') {
+            window["".concat(addField)] = document.getElementById(addField);
+
+            if (window["".concat(addField)].value == '') {
+              sendAddData = false;
+              newAddFieldMsg('<sup>*</sup>Some fields are required');
+              break;
+            } else if (addField == 'add-state' && window["".concat(addField)].value == 'null') {
+              sendAddData = false;
+              newAddFieldMsg('<sup>*</sup>Please select a State');
+              break;
+            } else if (addField == 'add-phone' && window["".concat(addField)].value.length != 10) {
+              sendAddData = false;
+              newAddFieldMsg('<sup>*</sup>Please enter valid Phone number');
+              break;
+            } else if (addField == 'add-phone') {
+              window["".concat(addField)].value = parseInt(window["".concat(addField)].value);
+
+              if (window["".concat(addField)].value.length != 10) {
+                sendAddData = false;
+                newAddFieldMsg('<sup>*</sup>Please enter valid Phone number');
+                break;
+              }
+            } else {
+              document.getElementById('requiredMSGSpan').innerHTML = '';
+              sendAddData = true;
+            }
+          }
+        }
+      } // console.log(sendAddData);
+      //If sendAddData is true, send the data to the server
+
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    if (sendAddData) {
+      var address = {}; //find all fields value using array and fill into address = {}
+
+      addFieldArr.map(function (addField) {
+        if (addField != 'add-type') {
+          window["".concat(addField)] = document.getElementById(addField);
+          address[addField] = window["".concat(addField)].value;
+        } else {
+          if (addType == undefined) {
+            addType = 'Home';
+          }
+
+          address[addField] = addType;
+        }
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/changeMyAcc', {
+        userID: userID,
+        address: address
+      }).then(function (response) {
+        // console.log(response.data);
+        showErrMSG(response.data);
+        document.getElementById('addNewAddressBtnDiv').style.display = 'block';
+        document.getElementById('addNewAddressBox').style.display = 'none';
+        allAddDiv.innerHTML = '';
+        addAllAddress();
+        editAddress();
+        deleteAddress();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }); //=================================================
+  //Add New Address box show-hide
+
+  var addNewAddressBtn = document.getElementById('addNewAddressBtn');
+  var addNewAddressBox = document.getElementById('addNewAddressBox');
+  addNewAddressBox.style.display = 'none';
+  addNewAddressBtn.addEventListener('click', function () {
+    document.getElementById('editAddDiv').innerHTML = '';
+    document.getElementById('addNewAddressBtnDiv').style.display = 'none';
+    addNewAddressBox.style.display = 'block';
+
+    if (document.getElementById('allAddDiv').style.display == 'none') {
+      document.getElementById('allAddDiv').style.display = 'block';
+    }
+  });
+  var add_cancel_btn = document.getElementById('add-cancel-btn');
+  add_cancel_btn.addEventListener('click', function () {
+    document.getElementById('addNewAddressBtnDiv').style.display = 'block';
+    addNewAddressBox.style.display = 'none';
+  }); //===================================================
+  //show all addresses
+
+  addAllAddress(); //===================================================
+  //fill edit address box
+
+  function editAddress() {
+    var editAddType;
+    var addEdit = document.getElementsByClassName('addEdit');
+    var editAddDiv = document.getElementById('editAddDiv');
+
+    var _loop4 = function _loop4(_i3) {
+      addEdit[_i3].addEventListener('click', function () {
+        allAddDiv.style.display = 'none';
+
+        var editIdKey = addEdit[_i3].id.replace('addEdit-', '');
+
+        user.address.forEach(function (address, index) {
+          var editKey = Object.keys(user.address)[index];
+
+          if (editIdKey == editKey) {
+            (function () {
+              document.getElementById('addNewAddressBtnDiv').style.display = 'block';
+              document.getElementById('addNewAddressBox').style.display = 'none'; // console.log(editKey);
+
+              var editAddStr = "<div id=\"editAddressBox\" class=\"border p-2 mt-4 bg-green-100\">\n                                            <span class=\"text-sm font-bold\">EDIT ADDRESS</span>\n                                            <span id=\"editClear\" class=\"text-sm float-right cursor-pointer right-4\" style=\"margin-right: 25rem;\">Clear</span>\n                                            <span id=\"edit-requiredMSGSpan\" class=\"text-sm ml-4 text-red-500\"></span>\n                                            <div class=\"mt-3\">\n                                                <input type=\"text\" name=\"edit-add-name\" id=\"edit-add-name\" class=\"border w-72 h-10 focus:outline-none rounded p-1\" placeholder=\"Name\" value=\"".concat(address['add-name'], "\">\n                                                <input type=\"tel\" name=\"edit-add-phone\" id=\"edit-add-phone\" class=\"border w-72 h-10 focus:outline-none rounded p-1\" placeholder=\"10 digit Mobile Number\" maxlength=\"10\" value=\"").concat(address['add-phone'], "\">\n                                            </div>\n                                            <div class=\"mt-3\">\n                                                <input type=\"tel\" name=\"edit-add-pin\" id=\"edit-add-pin\" class=\"border w-72 h-10 focus:outline-none rounded p-1\" placeholder=\"Pincode\" maxlength=\"6\" value=\"").concat(address['add-pin'], "\">\n                                                <input type=\"text\" name=\"edit-add-locality\" id=\"edit-add-locality\" class=\"border w-72 h-10 focus:outline-none rounded p-1\" placeholder=\"Locality\" value=\"").concat(address['add-locality'], "\">\n                                            </div>\n                                            <div class=\"mt-3\">\n                                                <textarea name=\"edit-add-area&street\" id=\"edit-add-area&street\" class=\"border focus:outline-none rounded p-1\" cols=\"63\" rows=\"3\" placeholder=\"Address (Area and Street)\">").concat(address['add-area&street'], "</textarea>\n                                            </div>\n                                            <div class=\"mt-2\">\n                                                <input type=\"text\" name=\"edit-add-city\" id=\"edit-add-city\" class=\"border w-72 h-10 focus:outline-none rounded p-1\" placeholder=\"City/District/Town\" value=\"").concat(address['add-city'], "\">\n                                                <select name=\"edit-add-state\" id=\"edit-add-state\" class=\"border w-72 h-10 focus:outline-none rounded p-1\">\n                                                    <option value=\"null\">-Select State-</option>\n                                                </select>\n                                            </div>\n                                            <div class=\"mt-3\">\n                                                <input type=\"text\" name=\"edit-add-landmark\" id=\"edit-add-landmark\" class=\"border w-72 h-10 focus:outline-none rounded p-1\" placeholder=\"Landmark (optional)\" value=\"").concat(address['add-landmark'], "\">\n                                                <input type=\"tel\" name=\"edit-add-altphone\" id=\"edit-add-altphone\" class=\"border w-72 h-10 focus:outline-none rounded p-1\" placeholder=\"Alternate Phone (optional)\" maxlength=\"10\" value=\"").concat(address['add-altphone'], "\">\n                                            </div>\n                                            <div class=\"mt-3\">\n                                                <span class=\"text-sm\">Address type</span>\n                                                <br>\n                                                <div class=\"form-check form-check-inline\">\n                                                    <input class=\"form-check-input\" type=\"radio\" name=\"edit-add-type\" id=\"edit-add-type\" value=\"Home\">\n                                                    <label class=\"form-check-label\" for=\"home\">Home</label>\n                                                </div>\n                                                <div class=\"form-check form-check-inline ml-4\">\n                                                    <input class=\"form-check-input\" type=\"radio\" name=\"edit-add-type\" id=\"edit-add-type\" value=\"Work\">\n                                                    <label class=\"form-check-label\" for=\"work\">Work</label>\n                                                </div>\n                                            </div>\n                                            <div class=\"mt-3\">\n                                                <button id=\"edit-add-save-btn\" class=\"bg-green-400 w-56 h-12 rounded ml-5 focus:outline-none\">\n                                                    Save\n                                                </button>\n                                                <button id=\"edit-add-cancel-btn\" class=\" ml-5 focus:outline-none\">\n                                                    Cancel\n                                                </button>\n                                            </div>\n                                        </div>");
+              editAddDiv.innerHTML = editAddStr;
+              stateArray.map(function (state) {
+                var option = document.createElement("option");
+                option.text = state;
+                option.value = state;
+                document.getElementById('edit-add-state').options.add(option);
+              });
+              var addTypes = document.querySelectorAll('#edit-add-type');
+              var addType; // address['add-type']
+
+              for (var _i4 = 0; _i4 < addTypes.length; _i4++) {
+                if (addTypes[_i4].value == address['add-type']) {
+                  addTypes[_i4].setAttribute('checked', '');
+                }
+              } //============================================================================
+              //Set value of address type (Home/Work) for edit Address Box
+
+
+              var editAddTypes = document.getElementsByName("edit-add-type");
+
+              if (editAddTypes) {
+                var _loop5 = function _loop5(_i5) {
+                  editAddTypes[_i5].addEventListener('click', function () {
+                    editAddType = editAddTypes[_i5].value; // console.log(editAddType);
+                  });
+                };
+
+                for (var _i5 = 0; _i5 < editAddTypes.length; _i5++) {
+                  _loop5(_i5);
+                }
+              } //============================================================================
+
+
+              var edit_add_cancel_btn = document.getElementById('edit-add-cancel-btn');
+
+              if (edit_add_cancel_btn) {
+                edit_add_cancel_btn.addEventListener('click', function () {
+                  editAddDiv.innerHTML = '';
+                  allAddDiv.style.display = 'block';
+                });
+              }
+            })();
+          }
+        }); // ===================================================
+
+        function editAddFieldMsg(str) {
+          document.getElementById('edit-requiredMSGSpan').innerHTML = str;
+          setTimeout(function () {
+            document.getElementById('edit-requiredMSGSpan').innerHTML = '';
+          }, 3000); // document.getElementById('addNewAddressBtnDiv').style.display = 'none';
+          // document.getElementById('addNewAddressBox').style.display = 'block';
+        } //send edit address data to the server
+
+
+        var editAddFieldArr = ['edit-add-name', 'edit-add-phone', 'edit-add-pin', 'edit-add-locality', 'edit-add-area&street', 'edit-add-city', 'edit-add-state', 'edit-add-landmark', 'edit-add-altphone', 'edit-add-type'];
+        var editAddSaveBtn = document.getElementById('edit-add-save-btn');
+
+        if (editAddSaveBtn) {
+          editAddSaveBtn.addEventListener('click', function () {
+            var sendEditAddData = false; //check if fields value is not empty
+
+            var _iterator2 = _createForOfIteratorHelper(editAddFieldArr),
+                _step2;
+
+            try {
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                var addField = _step2.value;
+
+                if (addField != 'edit-add-type') {
+                  if (addField != 'edit-add-landmark' && addField != 'edit-add-altphone') {
+                    window["".concat(addField)] = document.getElementById(addField);
+
+                    if (window["".concat(addField)].value == '') {
+                      sendEditAddData = false;
+                      editAddFieldMsg('<sup>*</sup>Some fields are required');
+                      break;
+                    } else if (addField == 'edit-add-state' && window["".concat(addField)].value == 'null') {
+                      sendEditAddData = false;
+                      editAddFieldMsg('<sup>*</sup>Please select a State');
+                      break;
+                    } else if (addField == 'edit-add-phone' && window["".concat(addField)].value.length != 10) {
+                      sendEditAddData = false;
+                      editAddFieldMsg('<sup>*</sup>Please enter valid Phone number');
+                      break;
+                    } else if (addField == 'edit-add-phone') {
+                      window["".concat(addField)].value = parseInt(window["".concat(addField)].value);
+
+                      if (window["".concat(addField)].value.length != 10) {
+                        sendEditAddData = false;
+                        editAddFieldMsg('<sup>*</sup>Please enter valid Phone number');
+                        break;
+                      }
+                    } else {
+                      document.getElementById('edit-requiredMSGSpan').innerHTML = '';
+                      sendEditAddData = true;
+                    }
+                  }
+                }
+              } // console.log(sendEditAddData);
+
+            } catch (err) {
+              _iterator2.e(err);
+            } finally {
+              _iterator2.f();
+            }
+
+            if (sendEditAddData) {
+              var address = {}; //find all fields value using array and fill into address = {}
+
+              editAddFieldArr.map(function (addField) {
+                var dbFiled = addField.replace('edit-', '');
+
+                if (addField != 'edit-add-type') {
+                  window["".concat(addField)] = document.getElementById(addField);
+                  address[dbFiled] = window["".concat(addField)].value;
+                } else {
+                  // console.log(editAddType);
+                  if (editAddType == undefined) {
+                    editAddType = 'Home';
+                  }
+
+                  address[dbFiled] = editAddType;
+                }
+              }); // console.log(address);
+
+              var editAddressData = address;
+              var editKey = _i3;
+              axios__WEBPACK_IMPORTED_MODULE_0___default().post('/changeMyAcc', {
+                userID: userID,
+                editAddressData: editAddressData,
+                editKey: editKey
+              }).then(function (response) {
+                // console.log(response.data);
+                showErrMSG(response.data);
+                editAddDiv.innerHTML = '';
+                allAddDiv.style.display = 'block';
+                allAddDiv.innerHTML = '';
+                addAllAddress();
+                editAddress();
+                deleteAddress();
+              })["catch"](function (error) {
+                console.log(error);
+              });
+            }
+          });
+        } //user click on clear button clear all fields of edit Address box
+
+
+        var editClear = document.getElementById('editClear');
+        editClear.addEventListener('click', function () {
+          var _iterator3 = _createForOfIteratorHelper(editAddFieldArr),
+              _step3;
+
+          try {
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+              var addField = _step3.value;
+
+              if (addField != 'edit-add-state' && addField != 'edit-add-type') {
+                window["".concat(addField)] = document.getElementById(addField);
+                window["".concat(addField)].value = '';
+                window["".concat(addField)].innerHTML = '';
+              }
+            }
+          } catch (err) {
+            _iterator3.e(err);
+          } finally {
+            _iterator3.f();
+          }
+        });
+      });
+    };
+
+    for (var _i3 = 0; _i3 < addEdit.length; _i3++) {
+      _loop4(_i3);
+    }
+  }
+
+  editAddress(); //===================================================
+  //Delete address POST
+
+  function deleteAddress() {
+    var addDel = document.getElementsByClassName('addDel');
+
+    var _loop6 = function _loop6(_i6) {
+      addDel[_i6].addEventListener('click', function () {
+        var delIdKey = addDel[_i6].id.replace('addDel-', '');
+
+        user.address.forEach(function (address, index) {
+          var delKey = Object.keys(user.address)[index];
+
+          if (delIdKey == delKey) {
+            var askDel = confirm('Are you sure you want to delete this address');
+
+            if (askDel) {
+              var delAddress = address;
+              axios__WEBPACK_IMPORTED_MODULE_0___default().post('/changeMyAcc', {
+                userID: userID,
+                delAddress: delAddress
+              }).then(function (response) {
+                // console.log(response.data);
+                showErrMSG(response.data);
+                allAddDiv.innerHTML = '';
+                addAllAddress();
+                editAddress();
+                deleteAddress();
+              })["catch"](function (error) {
+                console.log(error);
+              });
+            }
+          }
+        });
+      });
+    };
+
+    for (var _i6 = 0; _i6 < addDel.length; _i6++) {
+      _loop6(_i6);
+    }
+  }
+
+  deleteAddress(); //==================================================================================
 }
 
 /***/ }),

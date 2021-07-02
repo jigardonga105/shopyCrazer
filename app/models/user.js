@@ -9,7 +9,8 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     role: { type: String, default: 'customer' },
     gender: { type: String },
-    image: [{ img: { type: String, required: true } }]
+    image: [{ img: { type: String, required: true } }],
+    address: { type: [Object] }
 }, { timestamps: true })
 
 module.exports = mongoose.model('User', userSchema)

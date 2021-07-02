@@ -1,5 +1,6 @@
 const User = require('../../models/user');
 const otpGenerator = require('otp-generator')
+const fs = require('fs');
 
 const accountSid = 'AC910b3239a6b235851c5ad7a88a93954c';
 const authToken = 'c18d7172988690cda3471e12fad0d757';
@@ -73,6 +74,86 @@ function myAccountController() {
                     // console.log(result);
                 if (result) {
                     const user = await User.findById({ _id: userID })
+                    res.send(user);
+                } else {
+                    sendErr(res)
+                }
+            }
+            if (req.files) {
+                let productPictures = [];
+
+                if (req.files.length > 0) {
+                    productPictures = req.files.map((file) => {
+                        return { img: file.filename };
+                    });
+                }
+
+                const user = await User.findById({ _id: req.body.userID });
+                for (let i = 0; i < user.image.length; i++) {
+                    // console.log(user.image[i].img);
+                    let img = user.image[i].img;
+                    fs.unlink(`public/uploadedImages/${img}`, (err, res) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    })
+                }
+
+                const result = await User.updateOne({ _id: req.body.userID }, { $set: { image: productPictures } })
+                if (result) {
+                    res.redirect(`/myAccount`)
+                } else {
+                    res.redirect('/myAccount?unsuccessfull')
+                }
+            }
+            if (req.body.address) {
+                // console.log(req.body.address);
+                const result = await User.updateOne({ _id: req.body.userID }, { $push: { address: req.body.address } });
+                // console.log(result);
+                if (result) {
+                    const user = await User.findById({ _id: req.body.userID })
+                    res.send(user);
+                } else {
+                    sendErr(res)
+                }
+            }
+            if (req.body.editAddressData) {
+
+                let userID = req.body.userID
+                let address = req.body.editAddressData
+                let editKey = req.body.editKey
+
+                const result = await User.updateOne({ _id: userID }, {
+                    $set: {
+                        [`address.${editKey}`]: address
+                    }
+                });
+                if (result) {
+                    const user = await User.findById({ _id: req.body.userID });
+                    res.send(user);
+                } else {
+                    sendErr(res)
+                }
+
+            }
+            if (req.body.delAddress) {
+                let address = req.body.delAddress;
+                const result = await User.updateOne({ _id: req.body.userID }, {
+                    $pull: {
+                        address: {
+                            "add-name": address['add-name'],
+                            "add-phone": address['add-phone'],
+                            "add-pin": address['add-pin'],
+                            "add-locality": address['add-locality'],
+                            "add-area&street": address['add-area&street'],
+                            "add-city": address['add-city'],
+                            "add-state": address['add-state'],
+                            "add-type": address['add-type'],
+                        }
+                    }
+                });
+                if (result) {
+                    const user = await User.findById({ _id: req.body.userID })
                     res.send(user);
                 } else {
                     sendErr(res)

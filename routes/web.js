@@ -59,9 +59,10 @@ function initRoutes(app) {
     app.get('/productview/:prdID', catProdShowController().viewProduct)
 
     //this is for my Account
-    app.get('/myAccount', myAccountController().index);
+    app.get('/myAccount', auth, myAccountController().index);
     app.post('/otp', myAccountController().otp);
     app.post('/changeMyAcc', myAccountController().changeMyAcc);
+    // app.post('/changeMyAccImg', myAccountController().changeMyAccImg);
 
 }
 

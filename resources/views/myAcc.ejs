@@ -28,6 +28,10 @@
             color: rgb(196, 194, 194);
         }
         
+        #changePP:hover {
+            font-weight: bold;
+        }
+        
         .show-err {
             color: red;
             font-size: 15px !important;
@@ -73,6 +77,10 @@
             color: #4ab74a;
             font-weight: 400 !important;
         }
+        
+        #editClear:hover {
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -84,16 +92,23 @@
             <div class="myAcc m-5 p-2 bg-gray-100 border rounded">
                 <h1>My Account</h1>
                 <div class="details grid grid-cols-4" id="details">
-                    <div class="left col-span-1 grid">
-                        <div class="bg-white inline-block rounded p-2 mb-2">
-                            <img class="w-16 h-16 rounded-full inline-block" src="/img/product_single_02.jpg" alt="">
-                            <div class="inline-block">
-                                <span class="text-sm">Hello,</span>
-                                <br>
-                                <span class="font-medium">Laddy</span>
+                    <div class="left col-span-1 grid" style="height: 35rem;">
+                        <div class="h-20 bg-white inline-block rounded p-2 mb-0 flex flex-row">
+                            <div class="flex flex-row">
+                                <img class="w-16 h-16 rounded-full inline-block" src="/uploadedImages/<%= user.image[0].img %>" alt="<%= user.first_namr %> Image" style="box-shadow: 0px 1px 7px 0px #c7c7c7;">
+                                <div class="inline-block ml-4">
+                                    <span class="text-sm">Hello,</span>
+                                    <br>
+                                    <span class="font-medium">
+                                        <%= user.first_name %>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="m-auto cursor-pointer">
+                                <span class="text-sm" id="changePP">Change Profile Picture</span>
                             </div>
                         </div>
-                        <div class="bg-white inline-block rounded p-2 mb-2">
+                        <div class="h-12 bg-white inline-block rounded p-2 mt-2">
                             <div class="ml-5">
                                 <div class="head">
                                     <i class="fas fa-folder"></i>
@@ -102,15 +117,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white inline-block rounded p-2">
+                        <div class="h-84 bg-white inline-block rounded p-2 mt-2">
                             <div class="ml-5">
                                 <div class="head">
                                     <i class="fas fa-user"></i>
                                     <span class="text-gray-400 text-2xl font-bold ml-5">Account Settings</span>
                                 </div>
                                 <div class="ml-8 mt-2 leading-loose">
-                                    <a href="#">Profile information</a>
-                                    <a href="#">Manage Addresses</a>
+                                    <a href="#" id="changePI">Profile information</a>
+                                    <a href="#" id="changeAdd">Manage Addresses</a>
                                 </div>
                             </div>
                             <hr>
@@ -127,18 +142,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white inline-block rounded p-2 mt-2">
+                        <div class="h-20 bg-white inline-block rounded p-2 mt-2">
                             <div class="mt-3 ml-5">
                                 <div class="head">
                                     <i class="fas fa-power-off"></i>
-                                    <span id="myacc-logout" class="text-gray-400 text-2xl font-bold ml-5 ">Logout</span>
+                                    <span id="myacc-logout" class="text-gray-400 text-2xl font-bold ml-5" onclick="window.location.href='/logout'">Logout</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="right col-span-3 ml-5 bg-white inline-block rounded p-4">
-                        <div class="per-info">
+                        <div id="changeImg" class="change-img">
+                            <img id="changeIMG" class="inline-block w-72 h-72">
+
+                            <form id="newImgForm" action="/changeMyAcc" enctype="multipart/form-data" method="POST" class="inline-block">
+                                <input type="hidden" name="userID" id="img-userID">
+                                <input type="file" accept="image/jpg, image/jpeg, image/png" name="image" id="newImg" class="border w-60 h-12 focus:outline-none bg-gray-100 rounded p-2">
+                                <button id="newImgBtn" class="bg-green-400 w-28 h-12 rounded-full ml-5 focus:outline-none">Update</button>
+                            </form>
+                        </div>
+                        <!-- ================================================================== -->
+                        <div id="perInfo" class="per-info">
                             <div>
                                 <span class="font-medium">Personal Information</span>
                                 <a href="#">
@@ -222,39 +247,100 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- ================================================================== -->
+                        <div id="manageAdd" class="manageAdd">
+                            <div>
+                                <span class="font-bold">Manage Address</span>
+                                <div id="addNewAddressBtnDiv" class="border p-2 mt-4">
+                                    <a id="addNewAddressBtn" class="text-blue-500 cursor-pointer" style="font-weight: 400 !important;">
+                                        + Add a new address
+                                    </a>
+                                </div>
+                                <div id="addNewAddressBox" class="border p-2 mt-4 bg-green-100">
+                                    <span class="text-sm font-bold">ADD A NEW ADDRESS</span>
+                                    <span id="requiredMSGSpan" class="text-sm ml-4 text-red-500"></span>
+                                    <div class="mt-3">
+                                        <input type="text" name="add-name" id="add-name" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="Name">
+                                        <input type="tel" name="add-phone" id="add-phone" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="10 digit Mobile Number" maxlength="10">
+                                    </div>
+                                    <div class="mt-3">
+                                        <input type="tel" name="add-pin" id="add-pin" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="Pincode" maxlength="6">
+                                        <input type="text" name="add-locality" id="add-locality" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="Locality">
+                                    </div>
+                                    <div class="mt-3">
+                                        <textarea name="add-area&street" id="add-area&street" class="border focus:outline-none rounded p-1" cols="63" rows="3" placeholder="Address (Area and Street)"></textarea>
+                                    </div>
+                                    <div class="mt-2">
+                                        <input type="text" name="add-city" id="add-city" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="City/District/Town">
+                                        <select name="add-state" id="add-state" class="border w-72 h-10 focus:outline-none rounded p-1">
+                                            <option value="null">-Select State-</option>
+                                        </select>
+                                    </div>
+                                    <div class="mt-3">
+                                        <input type="text" name="add-landmark" id="add-landmark" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="Landmark (optional)">
+                                        <input type="tel" name="add-altphone" id="add-altphone" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="Alternate Phone (optional)" maxlength="10">
+                                    </div>
+                                    <div class="mt-3">
+                                        <span class="text-sm">Address type</span>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input checked class="form-check-input" type="radio" name="add-type" id="add-type" value="Home">
+                                            <label class="form-check-label" for="home">Home</label>
+                                        </div>
+                                        <div class="form-check form-check-inline ml-4">
+                                            <input class="form-check-input" type="radio" name="add-type" id="add-type" value="Work">
+                                            <label class="form-check-label" for="work">Work</label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <button id="add-save-btn" class="bg-green-400 w-56 h-12 rounded ml-5 focus:outline-none">
+                                            Save
+                                        </button>
+                                        <button id="add-cancel-btn" class=" ml-5 focus:outline-none">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="editAddDiv"></div>
+                                <div id="allAddDiv"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
 
         <script>
-            function OTPInput() {
-                const inputs = document.querySelectorAll('#otp > *[id]');
-                for (let i = 0; i < inputs.length; i++) {
-                    // console.log(inputs[i]);
-                    inputs[i].addEventListener('keydown', function(event) {
-                        if (event.key === "Backspace") {
-                            inputs[i].value = '';
-                            if (i !== 0)
-                                inputs[i - 1].focus();
-                        } else {
-                            if (i === inputs.length - 1 && inputs[i].value !== '') {
-                                return true;
-                            } else if (event.keyCode > 47 && event.keyCode < 58) {
-                                inputs[i].value = event.key;
-                                if (i !== inputs.length - 1)
-                                    inputs[i + 1].focus();
-                                event.preventDefault();
-                            } else if (event.keyCode > 64 && event.keyCode < 91) {
-                                inputs[i].value = String.fromCharCode(event.keyCode);
-                                if (i !== inputs.length - 1)
-                                    inputs[i + 1].focus();
-                                event.preventDefault();
-                            }
-                        }
-                    });
+            let allIdArr = ['changeImg', 'perInfo', 'manageAdd'];
+            let leftMenusArr = ['changePP', 'changePI', 'changeAdd']
+
+            function hideRight() {
+                for (let i = 0; i < allIdArr.length; i++) {
+                    window[`${allIdArr[i]}`] = document.getElementById(allIdArr[i]);
+                    eval(`${allIdArr[i]}.style.display = 'none'`);
                 }
             }
-            OTPInput();
+            hideRight()
+
+            function myAccShowDiv(div) {
+                if (document.getElementById(div).style.display == 'none') {
+                    document.getElementById(div).style.display = 'block';
+                } else {
+                    document.getElementById(div).style.display = 'none';
+                }
+            }
+
+            leftMenusArr.map((elem, i) => {
+                window[`${elem}`] = document.getElementById(elem);
+
+                eval(`${elem}.addEventListener("click", () => {
+                    hideRight()
+                    allIdArr.map((element, index) => {
+                        if(${i} == index){
+                            myAccShowDiv(element)
+                        }
+                    })
+                })`);
+            })
         </script>
-        <script src="https://smtpjs.com/v3/smtp.js"></script>
