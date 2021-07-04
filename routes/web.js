@@ -5,6 +5,7 @@ const sellerAuthController = require('../app/http/controllers/seller/sellerAuthC
 const sellerStoreController = require('../app/http/controllers/seller/storeController')
 const sellerProductController = require('../app/http/controllers/seller/prodController')
 const myAccountController = require('../app/http/controllers/myAccountController')
+const cartController = require('../app/http/controllers/customers/cartController')
 
 const guest = require('../app/http/middlewares/guest')
 const admin = require('../app/http/middlewares/admin')
@@ -62,8 +63,10 @@ function initRoutes(app) {
     app.get('/myAccount', auth, myAccountController().index);
     app.post('/otp', myAccountController().otp);
     app.post('/changeMyAcc', myAccountController().changeMyAcc);
-    // app.post('/changeMyAccImg', myAccountController().changeMyAccImg);
 
+    //Add Product into cart
+    app.get('/cart', cartController().cart)
+    app.post('/updateCart', cartController().updateCart)
 }
 
 module.exports = initRoutes

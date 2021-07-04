@@ -5,6 +5,7 @@ import { updateProd } from './updateProd'
 import { home } from './home'
 import { shopSingle } from './shopSingle'
 import { myAcc } from './myAcc'
+import { cart } from './cart'
 
 authJS()
 handleStore()
@@ -13,3 +14,4 @@ updateProd()
 home()
 shopSingle()
 myAcc()
+cart()

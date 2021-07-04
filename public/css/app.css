@@ -796,14 +796,8 @@ a:hover {
   margin-left: -25px;
   margin-top: 10px;
   /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;
   /* IE and Edge */
-  scrollbar-width: none;
   /* Firefox */
-}
-
-#cat-dropdown::-webkit-scrollbar {
-  display: none;
 }
 
 #cat-dropdown li {

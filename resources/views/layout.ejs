@@ -165,7 +165,12 @@
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/cart">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+
+                        <% if(user && session.cart) { %>
+                            <input type="hidden" id="cartData" value="<%= JSON.stringify(session.cart) %>" data-user="<%= JSON.stringify(user) %>">
+                            <% } %>
+
+                                <span id="cartCounter" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/notifications">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -290,6 +295,24 @@
 
         </footer>
         <!-- End Footer -->
+
+        <script>
+            //set cart value
+            let cartCounterSpan = document.getElementById('cartCounter');
+            let cartData = document.getElementById('cartData');
+            if (cartData) {
+                let user = JSON.parse(cartData.dataset.user);
+                cartData = JSON.parse(cartData.value);
+
+                if (!cartData['custID_' + user['_id'] + '_cart']) {
+                    cartCounterSpan.innerText = '';
+                } else {
+                    cartCounterSpan.innerText = cartData['custID_' + user['_id'] + '_cart'].totalQty;
+                }
+            } else {
+                cartCounterSpan.innerText = '';
+            }
+        </script>
 
         <!-- Start Script -->
         <script src="/js/jquery-1.11.0.min.js"></script>
