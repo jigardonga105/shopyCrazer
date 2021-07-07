@@ -87,38 +87,61 @@ function cartController() {
         },
         updateCart(req, res){
             if(req.body.plus){
+
                 let cart = req.session.cart;
+                let qty;
+                let totalQty;
+                let totalPrice;
 
                 for (const key in cart) {
                     if (key == `custID_${req.user._id}_cart`) {
                         for (const itemKey in cart[key].items) {
-    
+
                             if(itemKey == req.body.prdID){
                                 cart[key].items[itemKey].qty = cart[key].items[itemKey].qty + 1
-                                return res.json({
-                                    qty: cart[key].items[itemKey].qty
-                                })
+                                qty = cart[key].items[itemKey].qty
                             }
                         }
+                        cart['custID_' + req.user._id + '_cart'].totalQty = cart['custID_' + req.user._id + '_cart'].totalQty + 1
+                        totalQty = cart['custID_' + req.user._id + '_cart'].totalQty
+
+                        cart['custID_' + req.user._id + '_cart'].totalPrice = cart['custID_' + req.user._id + '_cart'].totalPrice + req.body.prdPrice
+                        totalPrice = cart['custID_' + req.user._id + '_cart'].totalPrice
                     }
                 }
+                return res.json({
+                    qty,
+                    totalQty,
+                    totalPrice
+                })
             }
             if(req.body.min){
                 let cart = req.session.cart;
+                let qty;
+                let totalQty;
+                let totalPrice;
 
                 for (const key in cart) {
                     if (key == `custID_${req.user._id}_cart`) {
                         for (const itemKey in cart[key].items) {
-    
+
                             if(itemKey == req.body.prdID){
                                 cart[key].items[itemKey].qty = cart[key].items[itemKey].qty - 1
-                                return res.json({
-                                    qty: cart[key].items[itemKey].qty
-                                })
+                                qty = cart[key].items[itemKey].qty
                             }
                         }
+                        cart['custID_' + req.user._id + '_cart'].totalQty = cart['custID_' + req.user._id + '_cart'].totalQty - 1
+                        totalQty = cart['custID_' + req.user._id + '_cart'].totalQty
+
+                        cart['custID_' + req.user._id + '_cart'].totalPrice = cart['custID_' + req.user._id + '_cart'].totalPrice - req.body.prdPrice
+                        totalPrice = cart['custID_' + req.user._id + '_cart'].totalPrice
                     }
                 }
+                return res.json({
+                    qty,
+                    totalQty,
+                    totalPrice
+                })
             }
         }
     }

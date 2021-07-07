@@ -68,12 +68,12 @@ export function cart() {
 
                                 <div class="m-3 border-b-4 border-dotted">
                                     <div class="my-3">
-                                        <span>Price (${cartTotalQty} items)</span>
-                                        <span class="float-right">₹${cartTotalPrice}</span>
+                                        <span id="rightDivPriceItem">Price (${cartTotalQty} items)</span>
+                                        <span id="rightDivPrice" class="float-right">₹${cartTotalPrice}</span>
                                     </div>
                                     <div class="my-3">
                                         <span>Discount</span>
-                                        <span class="float-right text-green-600">- ₹${cartTotalDiscount}</span>
+                                        <span id="rightDivDisc" class="float-right text-green-600">- ₹${cartTotalDiscount}</span>
                                     </div>
                                     <div class="my-3">
                                         <span>Delivery Charges</span>
@@ -84,13 +84,13 @@ export function cart() {
                                 <div class="m-3 border-b-4 border-dotted">
                                     <div class="my-3">
                                         <span>Total Amount</span>
-                                        <span class="float-right font-bold">₹${ cartTotalPrice - cartTotalDiscount}</span>
+                                        <span id="rightDivFinalPrice" class="float-right font-bold">₹${ cartTotalPrice - cartTotalDiscount}</span>
                                     </div>
                                 </div>
 
                                 <div class="m-3">
                                     <div class="my-3">
-                                        <span class="text-green-700 font-bold">You will save ₹${cartTotalDiscount} on this order</span>
+                                        <span id="rightDivSavePrice" class="text-green-700 font-bold">You will save ₹${cartTotalDiscount} on this order</span>
                                     </div>
                                 </div>
                             </div>`;
@@ -130,9 +130,9 @@ export function cart() {
                                     <img class="w-40 cursor-pointer" src="/uploadedImages/${prd.image[0].img}" onclick="window.location.href = '/productview/${prd._id}'" alt="Mac">
                                 </div>
                                 <div class="mt-2 mx-auto">
-                                    <span id="cartMinBtn" data-prdID="${prd._id}" class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">-</span>
+                                    <span id="cartMinBtn" data-prd="${prd._id}" class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">-</span>
                                     <span id="cartItemLen" class="${prd._id}_qty bg-gray-100 px-4 py-2">3</span>
-                                    <span id="cartPlusBtn" data-prdID="${prd._id}" class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">+</span>
+                                    <span id="cartPlusBtn" data-prd="${prd._id}" class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">+</span>
                                 </div>
                             </div>
 
@@ -195,7 +195,7 @@ export function cart() {
                                     </span>
                                 </div>
                                 <div class="mt-4 float-right mr-16">
-                                    <button class="shadow px-2 py-1 rounded focus:outline-none">Remove</button>
+                                    <button class="cartItemRemBtn shadow px-2 py-1 rounded focus:outline-none">Remove</button>
                                 </div>
                             </div>
 
@@ -216,10 +216,11 @@ export function cart() {
             allCartProduct.innerHTML += prdStr;
 
             let cartItems = cartData['custID_' + user._id + '_cart'].items;
+            let cartItemsQty = cartItems[`${prd._id}`].qty
             let prdIdQty = document.getElementsByClassName(`${prd._id}_qty`)[0];
-            prdIdQty.innerHTML = cartItems[`${prd._id}`].qty;
+            prdIdQty.innerHTML = cartItemsQty;
 
-            cartTotalDiscount = cartTotalDiscount + Math.round(((prd.price / 100) * prd.discount));
+            cartTotalDiscount = cartTotalDiscount + Math.round([((prd.price / 100) * prd.discount)] * cartItemsQty);
 
         })
         let cartOfferUl = document.querySelectorAll('#cartOfferUl');
@@ -305,6 +306,30 @@ export function cart() {
             }
         }
 
+        function changeCartItemData(qty, totalQty, totalPrice, prdData){
+            document.getElementById('itemLength').innerHTML = `My Cart(${totalQty})`;
+            document.getElementById('rightDivPriceItem').innerHTML = `Price (${totalQty} items)`;
+
+            let cartTotalDiscount = 0;
+            prdData.map((prd, index) => {
+                cartTotalDiscount = cartTotalDiscount + Math.round([((prd.price / 100) * prd.discount)] * qty);
+            });
+
+            document.getElementById('rightDivPrice').innerHTML = `₹${totalPrice}`;
+            document.getElementById('rightDivDisc').innerHTML = `₹${cartTotalDiscount}`;
+            document.getElementById('rightDivFinalPrice').innerHTML = `₹${totalPrice - cartTotalDiscount}`;
+            document.getElementById('rightDivSavePrice').innerHTML = `You will save ₹${cartTotalDiscount} on this order`;
+        }
+
+        let product;
+        function findProduct(prdData, prdID){
+            prdData.map((prd, index) => {
+                if(prd._id == prdID){
+                    product = prd;
+                }
+            });
+        }
+
         //cartPlusBtn:
         for (let i = 0; i < cartPlusBtn.length; i++) {
 
@@ -312,13 +337,18 @@ export function cart() {
 
             cartPlusBtn[i].addEventListener("click", () => {
 
-                let prdID = cartPlusBtn[i].dataset.prdid;
+                let prdID = cartPlusBtn[i].dataset.prd;
+                findProduct(prdData, prdID);
+                let prdPrice = product.price;
                 let plus = true;
 
-                axios.post("/updateCart", { prdID, plus })
+                axios.post("/updateCart", { prdID, plus, prdPrice })
                     .then((response) => {
                         if (response.data.qty) {
+                            console.log(response.data);
+
                             cartItemLen[i].innerHTML = response.data.qty;
+                            changeCartItemData(response.data.qty, response.data.totalQty, response.data.totalPrice, prdData);
                             hideMinBtn(cartItemLen[i], cartPlusBtn[i], cartMinBtn[i]);
                         }
                     })
@@ -335,13 +365,16 @@ export function cart() {
 
             cartMinBtn[i].addEventListener("click", () => {
 
-                let prdID = cartMinBtn[i].dataset.prdid;
+                let prdID = cartMinBtn[i].dataset.prd;
+                findProduct(prdData, prdID);
+                let prdPrice = product.price;
                 let min = true;
 
-                axios.post("/updateCart", { prdID, min })
+                axios.post("/updateCart", { prdID, min, prdPrice })
                     .then((response) => {
                         if (response.data.qty) {
                             cartItemLen[i].innerHTML = response.data.qty;
+                            changeCartItemData(response.data.qty, response.data.totalQty, response.data.totalPrice, prdData);
                             hideMinBtn(cartItemLen[i], cartPlusBtn[i], cartMinBtn[i]);
                         }
                     })

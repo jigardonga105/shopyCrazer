@@ -45,6 +45,18 @@
             font-weight: 500 !important;
             color: black;
         }
+
+        .cartRightButton:hover {
+            color: white;
+            background: rgb(255, 124, 17);
+            transition: all 1s ease-in-out;
+            transform: scale(0.9);
+        }
+
+        .cartItemRemBtn:hover{
+            transition: all 1s ease-in-out;
+            transform: scale(0.9);
+        }
     </style>
 </head>
 
@@ -107,7 +119,13 @@
                     </div>
 
                     <!-- Right Side -->
-                    <div id="cartRightDiv" class="bg-white shadow h-80"></div>
+                    <div>
+                        <div id="cartRightDiv" class="bg-white shadow h-80"></div>
+                        <div class="m-16">
+                            <button class="cartRightButton bg-yellow-300 p-3 rounded focus:outline-none">Continue Shopping</button>
+                            <button class="cartRightButton bg-yellow-300 p-3 rounded focus:outline-none">Place Order</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         <% }else{ %>
