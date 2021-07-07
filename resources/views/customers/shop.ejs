@@ -72,7 +72,7 @@
                 <% if (products) { %>
                     <% if (products.length> 0) { %>
                         <% products.forEach((product)=> { %>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="cursor: pointer;">
                                 <div class="card mb-4 product-wap rounded-0">
                                     <div class="card rounded-0 image-card">
                                         <img class="card-img rounded-0 img-fluid" src="../../uploadedImages/<%= product.image[0].img %>">
@@ -106,8 +106,18 @@
                                                 <%= product.vote %> )
                                             </li>
                                         </ul>
-                                        <p class="text-center mb-0">₹
-                                            <%= product.price %>
+                                        <p class="text-center mb-0" style="font-weight: bold !important;font-size: 20px !important;">
+                                            <% if(product.discount !=0){ %>₹
+                                                <%= product.price - ((product.price/100)*product.discount) %>
+                                                    <span style="color: green; font-weight: bold; font-size: 12px;margin-left: 5px;">
+                                                        <%= product.discount %>% off
+                                                    </span>
+                                                    <p class="text-center mb-0" style="text-decoration: line-through;">₹
+                                                        <%= product.price %>
+                                                    </p>
+                                                    <% }else{ %>₹
+                                                        <%= product.price %>
+                                                            <% } %>
                                         </p>
                                     </div>
                                 </div>

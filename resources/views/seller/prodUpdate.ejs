@@ -38,8 +38,8 @@
             <form action="/seller/updateitem/<%= product._id %>" method="POST" class="cat-form grid grid-cols-3">
                 <div class="cat-select">
                     <label class="block text-white text-sm font-bold mb-2" for="productcate">
-                            Product Category:
-                        </label>
+                        Product Category:
+                    </label>
                     <select name="category" id="category" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required>
                         <option disabled selected class="bg-black text-white">Select a Product Category</option>
                         <option value="Electronics" class="bg-black text-white">Electronics</option>
@@ -60,8 +60,8 @@
                 </div>
                 <div class="inline-block">
                     <button class="changedprice-btn h-10 float-right mt-3 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
-                            Update
-                        </button>
+                        Update
+                    </button>
                 </div>
             </form>
 
@@ -100,6 +100,19 @@
                         <div class="flex changedprice">
                             <input name="changedprice" class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2" id="changedprice" type="number" placeholder="Price" required>
                             <button class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- For Change Discount: -->
+                    <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                        <label class="block text-white text-sm font-bold" for="productdiscount">
+                            Change Discount:
+                        </label>
+                        <div class="flex changeddiscount">
+                            <input name="changeddiscount" class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2" id="changeddiscount" type="number" placeholder="Discount" required>
+                            <button class="changeddiscount-btn h-10 mt-2 ml-2 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
                                 Update
                             </button>
                         </div>

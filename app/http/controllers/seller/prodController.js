@@ -1,6 +1,7 @@
 const Store = require('../../../models/store')
 const Product = require('../../../models/product')
 const fs = require('fs');
+// const Noty = require('noty');
 
 
 function prodController() {
@@ -18,7 +19,7 @@ function prodController() {
         },
 
         addProduct(req, res) {
-            let { storeID, category, subcategory, productname, price, productdesc, offer, warr, size, color, highlight, payops, service, specification } = req.body
+            let { storeID, category, subcategory, productname, price, discount, productdesc, offer, warr, size, color, highlight, payops, service, specification } = req.body
 
             offer = JSON.parse(offer)
             warr = JSON.parse(warr)
@@ -62,6 +63,7 @@ function prodController() {
                         image: productPictures,
                         name: productname,
                         price,
+                        discount,
                         offer,
                         Warr_Garr: warr,
                         size,
@@ -86,9 +88,6 @@ function prodController() {
                 console.log('error');
                 res.redirect(`/`)
             }
-
-
-
         },
 
         async showProduct(req, res) {
@@ -182,6 +181,17 @@ function prodController() {
                 let price = req.body.changedprice;
                 const result = await Product.updateOne({ _id: req.params.prdID }, { $set: { price } })
                 resultRedirect(result)
+            }
+            if (req.body.changeddiscount) {
+                let discount = req.body.changeddiscount;
+                discount = parseInt(discount);
+
+                if (discount >= 0 && discount <= 100) {
+                    const result = await Product.updateOne({ _id: req.params.prdID }, { $set: { discount } })
+                    resultRedirect(result)
+                } else {
+                    res.redirect(`/seller/productUpdate/${req.params.prdID}`)
+                }
             }
             if (req.body.desc) {
                 let desc = req.body.desc;

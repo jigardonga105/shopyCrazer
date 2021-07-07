@@ -31,6 +31,7 @@ export function updateProd() {
     let subcategory = document.querySelector('#subcategory');
     let changename = document.getElementById('changename');
     let changedprice = document.getElementById('changedprice');
+    let changeddiscount = document.getElementById('changeddiscount');
     let changedesc = document.getElementById('changedesc');
 
     if (itemdata) {
@@ -89,6 +90,10 @@ export function updateProd() {
         changename.value = product.name;
         changedprice.value = product.price;
         changedesc.value = product.desc;
+        if (product.discount) {
+            changeddiscount.value = product.discount;
+        }
+
 
         let stockOption1 = document.querySelector('#in')
         let stockOption2 = document.querySelector('#out')

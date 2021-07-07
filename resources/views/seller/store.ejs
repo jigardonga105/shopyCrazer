@@ -138,6 +138,13 @@
                                         </div>
 
                                         <div class="mb-4">
+                                            <label class="block text-white text-sm font-bold mb-2" for="productdesc">
+                                                Product Description:
+                                            </label>
+                                            <input name="productdesc" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="desc" value="<%= messages.productdesc %>" type="text" placeholder="Enter your Product Description">
+                                        </div>
+
+                                        <div class="mb-4">
                                             <label class="block text-white text-sm font-bold mb-2" for="price">
                                                 Price:
                                             </label>
@@ -145,11 +152,12 @@
                                         </div>
 
                                         <div class="mb-4">
-                                            <label class="block text-white text-sm font-bold mb-2" for="productdesc">
-                                                Product Description:
+                                            <label class="block text-white text-sm font-bold mb-2" for="discount">
+                                                Discount: (optional)
                                             </label>
-                                            <input name="productdesc" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="desc" value="<%= messages.productdesc %>" type="text" placeholder="Enter your Product Description">
+                                            <input name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="discount" type="tel" minlength="2" maxlength="4" value="<%= messages.discount %>" placeholder="Enter your Product discount... 45% ">
                                         </div>
+
 
                                         <div class="mb-6">
                                             <label class="block text-white text-sm font-bold mb-2" for="productimg">

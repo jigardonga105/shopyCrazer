@@ -66,6 +66,7 @@ function initRoutes(app) {
 
     //Add Product into cart
     app.get('/cart', cartController().cart)
+    app.post('/addToCart', cartController().addToCart)
     app.post('/updateCart', cartController().updateCart)
 }
 

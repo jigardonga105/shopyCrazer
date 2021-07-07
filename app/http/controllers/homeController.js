@@ -24,7 +24,8 @@ function homeController() {
             return res.render('customers/contact')
         },
         async shop(req, res) {
-            return res.render('customers/shop')
+            const products = await Product.find();
+            return res.render('customers/shop', { products })
         },
         async shopSingle(req, res) {
             return res.render('customers/shop-single')
