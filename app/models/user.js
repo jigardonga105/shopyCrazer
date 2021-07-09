@@ -10,7 +10,8 @@ const userSchema = new Schema({
     role: { type: String, default: 'customer' },
     gender: { type: String },
     image: [{ img: { type: String, required: true } }],
-    address: { type: [Object] }
+    address: { type: [Object] },
+    cart: { type: Object, default: {} }
 }, { timestamps: true })
 
 module.exports = mongoose.model('User', userSchema)

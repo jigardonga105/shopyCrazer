@@ -1,11 +1,12 @@
 const { json } = require("express");
+const User = require("../../../models/user");
 const Product = require("../../../models/product");
 const Store = require("../../../models/store");
 
 function cartController() {
     return {
         async cart(req, res) {
-            let cart = req.session.cart;
+            let cart = req.user.cart;
 
             let prdArr = [];
             for (const key in cart) {
@@ -25,7 +26,7 @@ function cartController() {
             }
             return res.render("customers/cart", { cartProduct, strNameArr });
         },
-        addToCart(req, res) {
+        async addToCart(req, res) {
             if (req.body.product) {
                 let {product, prdQty, color, size} = req.body
 
@@ -38,10 +39,10 @@ function cartController() {
                     size = product.size[0];
                 }
 
-                if (!req.session.cart) {
-                    req.session.cart = {};
+                if (!req.user.cart) {
+                    req.user.cart = {};
                 }
-                let cart = req.session.cart;
+                let cart = req.user.cart;
 
                 if (req.user) {
                     if (req.user.role == "customer") {
@@ -63,11 +64,14 @@ function cartController() {
                                     color,
                                     size
                                 },
-                                qty: prdQty,
+                                qty: prdQty
                             };
 
                             cart["custID_" + req.user._id + "_cart"].totalQty = cart["custID_" + req.user._id + "_cart"].totalQty + prdQty;
                             cart["custID_" + req.user._id + "_cart"].totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice + (product.price * prdQty);
+
+                            const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
+
                         } else {
                             let cartColor = cart["custID_" + req.user._id + "_cart"].items[product._id].feature['color']
                             let cartSize = cart["custID_" + req.user._id + "_cart"].items[product._id].feature['size']
@@ -82,8 +86,7 @@ function cartController() {
                         }
 
                         return res.json({
-                            totalQty:
-                                req.session.cart["custID_" + req.user._id + "_cart"].totalQty,
+                            totalQty: req.user.cart["custID_" + req.user._id + "_cart"].totalQty,
                         });
                     } else {
                         return res.json({
@@ -101,9 +104,9 @@ function cartController() {
                 });
             }
         },
-        updateCart(req, res) {
+        async updateCart(req, res) {
             if (req.body.plus) {
-                let cart = req.session.cart;
+                let cart = req.user.cart;
                 let qty;
                 let totalQty;
                 let totalPrice;
@@ -126,6 +129,7 @@ function cartController() {
                         totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice;
                     }
                 }
+                const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
                 return res.json({
                     qty,
                     totalQty,
@@ -133,7 +137,7 @@ function cartController() {
                 });
             }
             if (req.body.min) {
-                let cart = req.session.cart;
+                let cart = req.user.cart;
                 let qty;
                 let totalQty;
                 let totalPrice;
@@ -156,6 +160,7 @@ function cartController() {
                         totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice;
                     }
                 }
+                const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
                 return res.json({
                     qty,
                     totalQty,
@@ -163,12 +168,12 @@ function cartController() {
                 });
             }
         },
-        deleteCartPrd(req, res) {
+        async deleteCartPrd(req, res) {
             if (req.body.removePrdId && req.body.removePrdPrice) {
                 let removePrdId = req.body.removePrdId;
                 let removePrdPrice = parseInt(req.body.removePrdPrice);
 
-                let cart = req.session.cart;
+                let cart = req.user.cart;
                 let itemsObj = {};
 
                 for (const key in cart) {
@@ -189,10 +194,10 @@ function cartController() {
                 }
 
                 // console.log(itemsObj);
-                req.session.cart["custID_" + req.user._id + "_cart"].items = itemsObj;
-                // console.log(req.session.cart);
+                req.user.cart["custID_" + req.user._id + "_cart"].items = itemsObj;
+                // console.log(req.user.cart);
 
-
+                const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
                 res.redirect('/cart');
             }
         },

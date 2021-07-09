@@ -12,8 +12,18 @@
       "items": {
         "60c7b4953e953822aca12c4a": {
           "item": "60c7b4953e953822aca12c4a",
-          "feature": { "color": "Black", "size": "75 inc" },
-          "qty": 1
+          "feature": {
+            "0": {
+                "color": "Black",
+                "size": "75 inc",
+                "qty": 1
+            },
+            "1": {
+                "color": "Gray",
+                "size": "45 inc",
+                "qty": 3
+            }
+          }
         },
         "60bfbc42bd8f9f67cc166337": {
           "item": "60bfbc42bd8f9f67cc166337",
