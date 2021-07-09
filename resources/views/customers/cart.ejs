@@ -62,7 +62,8 @@
 
 <section>
     <% if(user){ %>
-        <% if(session.cart && session.cart['custID_' + user._id + '_cart' ]){ %>
+        <!-- if cart is awailable and product is awailable then show that product -->
+        <% if(session.cart && Object.keys(session.cart['custID_' + user._id + '_cart' ].items).length){ %>
             <input type="hidden" id="cartData" value="<%= JSON.stringify(session.cart) %>" data-user="<%= JSON.stringify(user) %>">
             <input type="hidden" id="prdData" value="<%= JSON.stringify(cartProduct) %>">
             <input type="hidden" id="strNameArr" value="<%= JSON.stringify(strNameArr) %>">
@@ -122,8 +123,12 @@
                     <div>
                         <div id="cartRightDiv" class="bg-white shadow h-80"></div>
                         <div class="m-16">
-                            <button class="cartRightButton bg-yellow-300 p-3 rounded focus:outline-none">Continue Shopping</button>
-                            <button class="cartRightButton bg-yellow-300 p-3 rounded focus:outline-none">Place Order</button>
+                            <a href="/">
+                                <button class="cartRightButton bg-yellow-300 text-black p-3 rounded focus:outline-none">Continue Shopping</button>
+                            </a>
+                            <a href="/">
+                                <button class="cartRightButton bg-yellow-300 text-black p-3 rounded focus:outline-none">Place Order</button>
+                            </a>
                         </div>
                     </div>
                 </div>

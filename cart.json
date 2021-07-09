@@ -1,26 +1,28 @@
 {
-    "cookie": {
-        "originalMaxAge": 86400000,
-        "expires": "2021-07-04T12:06:14.737Z",
-        "httpOnly": true,
-        "path": "/"
-    },
-    "flash": {},
-    "cart": {
-        "custID_60b0e65e9199db315480bebd_cart": {
-            "items": {
-                "60bfbc42bd8f9f67cc166337": {
-                    "item": "60bfbc42bd8f9f67cc166337",
-                    "qty": 2
-                },
-                "60cf7eda0467992b840f4f0b": {
-                    "item": "60cf7eda0467992b840f4f0b",
-                    "qty": 2
-                }
-            },
-            "totalQty": 4,
-            "totalPrice": 200748
+  "cookie": {
+    "originalMaxAge": 86400000,
+    "expires": "2021-07-09T17:09:42.547Z",
+    "httpOnly": true,
+    "path": "/"
+  },
+  "flash": {},
+  "passport": { "user": "60e13dad91d2583b344b3621" },
+  "cart": {
+    "custID_60e13dad91d2583b344b3621_cart": {
+      "items": {
+        "60c7b4953e953822aca12c4a": {
+          "item": "60c7b4953e953822aca12c4a",
+          "feature": { "color": "Black", "size": "75 inc" },
+          "qty": 1
+        },
+        "60bfbc42bd8f9f67cc166337": {
+          "item": "60bfbc42bd8f9f67cc166337",
+          "feature": { "color": "Black" },
+          "qty": 1
         }
-    },
-    "passport": { "user": "60b0e65e9199db315480bebd" }
+      },
+      "totalQty": 2,
+      "totalPrice": 679800
+    }
+  }
 }

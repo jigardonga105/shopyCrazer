@@ -65,9 +65,10 @@ function initRoutes(app) {
     app.post('/changeMyAcc', myAccountController().changeMyAcc);
 
     //Add Product into cart
-    app.get('/cart', cartController().cart)
+    app.get('/cart',auth, cartController().cart)
     app.post('/addToCart', cartController().addToCart)
     app.post('/updateCart', cartController().updateCart)
+    app.post('/deleteCartPrd', cartController().deleteCartPrd)
 }
 
 module.exports = initRoutes

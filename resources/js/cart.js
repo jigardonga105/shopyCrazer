@@ -15,8 +15,31 @@ export function cart() {
     }
 
     function updateCart(product) {
-        axios
-            .post("/addToCart", { product })
+        //if user click on shopSingle page counter
+        var prdQty;
+        let shopSingleCounter = document.getElementsByClassName('shopSingleCounter')[0];
+        if(shopSingleCounter){
+            prdQty = shopSingleCounter.innerHTML;
+        }
+        else{
+            prdQty = 1;
+        }
+
+        //if user select color
+        var color;
+        let colorImg = document.getElementsByClassName('select')[0];
+        if(colorImg){
+            color = colorImg.nextElementSibling.dataset.value;
+        }
+
+        //if user select size
+        var size
+        let selectedSize = document.getElementsByClassName('selectedSize')[0];
+        if(selectedSize){
+            size = selectedSize.dataset.value;
+        }
+
+        axios.post("/addToCart", { product, prdQty, color, size })
             .then((response) => {
                 if (response.data.msg) {
                     let msg = response.data.msg;
@@ -195,7 +218,11 @@ export function cart() {
                                     </span>
                                 </div>
                                 <div class="mt-4 float-right mr-16">
-                                    <button class="cartItemRemBtn shadow px-2 py-1 rounded focus:outline-none">Remove</button>
+                                    <form action="/deleteCartPrd" method="POST">
+                                        <input type="hidden" name="removePrdId" value="${prd._id}"/>
+                                        <input type="hidden" name="removePrdPrice" value="${prd.price}"/>
+                                        <button class="cartItemRemBtn shadow px-2 py-1 rounded focus:outline-none">Remove</button>
+                                    </form>
                                 </div>
                             </div>
 
@@ -239,7 +266,6 @@ export function cart() {
                 }
             }
         }
-
 
 
         forRightSideDiv(cartTotalQty, cartTotalPrice, cartTotalDiscount)
