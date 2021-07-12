@@ -6,6 +6,7 @@ const sellerStoreController = require('../app/http/controllers/seller/storeContr
 const sellerProductController = require('../app/http/controllers/seller/prodController')
 const myAccountController = require('../app/http/controllers/myAccountController')
 const cartController = require('../app/http/controllers/customers/cartController')
+const orderController = require('../app/http/controllers/customers/orderController')
 
 const guest = require('../app/http/middlewares/guest')
 const admin = require('../app/http/middlewares/admin')
@@ -69,6 +70,9 @@ function initRoutes(app) {
     app.post('/addToCart', cartController().addToCart)
     app.post('/updateCart', cartController().updateCart)
     app.post('/deleteCartPrd', cartController().deleteCartPrd)
+
+    //Place Order from Cart
+    app.get('/placeOrder', orderController().index)
 }
 
 module.exports = initRoutes

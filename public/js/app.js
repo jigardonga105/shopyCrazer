@@ -2519,22 +2519,31 @@ function cart() {
           prdService = service;
         }
       });
-      var prdStr = "<div class=\"grid grid-cols-6 my-4 pt-3 border-t\">\n                            <div class=\"flex flex-col col-span-1\">\n                                <div class=\"h-24 overflow-hidden mx-auto\">\n                                    <img class=\"w-40 cursor-pointer\" src=\"/uploadedImages/".concat(prd.image[0].img, "\" onclick=\"window.location.href = '/productview/").concat(prd._id, "'\" alt=\"Mac\">\n                                </div>\n                                <div class=\"mt-2 mx-auto\">\n                                    <span id=\"cartMinBtn\" data-prd=\"").concat(prd._id, "\" class=\"cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none\">-</span>\n                                    <span id=\"cartItemLen\" class=\"").concat(prd._id, "_qty bg-gray-100 px-4 py-2\">3</span>\n                                    <span id=\"cartPlusBtn\" data-prd=\"").concat(prd._id, "\" class=\"cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none\">+</span>\n                                </div>\n                            </div>\n\n                            <div class=\"col-span-3 px-2\">\n                                <div>\n                                    <div>\n                                        <span class=\"text-base font-bold cursor-pointer\" onclick=\"window.location.href = '/productview/").concat(prd._id, "'\">").concat(prd.name.substring(0, 45)).concat(prd.name.length > 45 ? '...' : '', "</span>\n                                    </div>\n                                    <div>\n                                        <span class=\"text-base text-muted\">Seller: ").concat(strNameArr[index], "</span>\n                                    </div>\n                                </div>\n                                <div class=\"mt-3\">\n                                    <span class=\"font-bold\">\u20B9").concat(priceAftDisc, "</span>\n                                    <span class=\"line-through text-base text-muted ml-2\">\u20B9").concat(prd.price, "</span>\n                                    <span class=\"text-green-800 font-bold text-sm ml-2\">").concat(prd.discount, "% off</span>\n                                    <span class=\"text-green-800 font-bold text-sm ml-2\">\n                                        ").concat(Object.keys(prd.offer[0]).length, " offer available\n                                        <i id=\"cartOfferIcon\" class=\"fas fa-info-circle cursor-pointer\"></i>\n                                        <div id=\"cartOfferDiv\" class=\"cartOfferDiv w-72 border absolute z-10 bg-white rounded\">\n                                            <div class=\"text-12 p-3\">\n                                                <div class=\"m-1 border-b-4 border-dotted\">\n                                                    <div class=\"my-1\">\n                                                        <span class=\"text-muted\">MRP</span>\n                                                        <span class=\"float-right line-through\">\u20B9").concat(prd.price, "</span>\n                                                    </div>\n                                                    <div class=\"my-1\">\n                                                        <span class=\"text-muted\">Selling Price</span>\n                                                        <span class=\"float-right\">\u20B9").concat(priceAftDisc, "</span>\n                                                    </div>\n                                                    <div class=\"my-1\">\n                                                        <span class=\"text-muted\">Extra Discount</span>\n                                                        <span class=\"float-right text-green-600\">").concat(prd.extraDiscount ? prd.extraDiscount : 0, "%</span>\n                                                    </div>\n                                                    <div class=\"my-1\">\n                                                        <span class=\"text-muted\">Special Price</span>\n                                                        <span class=\"float-right\">\u20B9").concat(priceAftDisc, "</span>\n                                                    </div>\n                                                </div>\n\n                                                <div class=\"m-1 border-b-4 border-dotted\">\n                                                    <div class=\"my-1\">\n                                                        <span class=\"text-muted\">Total</span>\n                                                        <span class=\"float-right font-bold\">\u20B9").concat(priceAftDisc, "</span>\n                                                    </div>\n                                                </div>\n\n                                                <div class=\"m-1\">\n                                                    <div class=\"my-1\">\n                                                        <span class=\"text-green-700 font-bold\">Save more\n                                                            with these offers</span>\n                                                    </div>\n                                                    <div class=\"my-1\">\n                                                        <ul id=\"cartOfferUl\" class=\"pl-0\">\n                                                        </ul>\n                                                    </div>\n                                                </div>\n                                            </div>\n                                        </div>\n                                    </span>\n                                </div>\n                                <div class=\"mt-4 float-right mr-16\">\n                                    <form action=\"/deleteCartPrd\" method=\"POST\">\n                                        <input type=\"hidden\" name=\"removePrdId\" value=\"").concat(prd._id, "\"/>\n                                        <input type=\"hidden\" name=\"removePrdPrice\" value=\"").concat(prd.price, "\"/>\n                                        <button class=\"cartItemRemBtn shadow px-2 py-1 rounded focus:outline-none\">Remove</button>\n                                    </form>\n                                </div>\n                            </div>\n\n                            <div class=\"col-span-2\">\n                                <div>\n                                    <span class=\"text-base\">\n                                        Delivery by ").concat(day, " ").concat(month, " ").concat(dateToday, " |\n                                        <span class=\"text-green-900\">Free</span>\n                                        <span class=\"line-through\">\u20B940</span>\n                                    </span>\n                                </div>\n                                <div>\n                                    <span class=\"text-muted text-sm\">").concat(prdService == undefined ? 'No Return Policy' : prdService, "</span>\n                                </div>\n                            </div>\n                            </div>");
-      allCartProduct.innerHTML += prdStr;
-      var cartItems = cartData['custID_' + user._id + '_cart'].items;
-      var cartItemsQty = cartItems["".concat(prd._id)].qty;
-      var prdIdQty = document.getElementsByClassName("".concat(prd._id, "_qty"))[0];
-      prdIdQty.innerHTML = cartItemsQty;
-      cartTotalDiscount = cartTotalDiscount + Math.round([prd.price / 100 * prd.discount] * cartItemsQty);
+      var feature = cartData["custID_".concat(user._id, "_cart")].items["".concat(prd._id)].feature;
+
+      for (var featureKey in feature) {
+        var prdStr = "<div class=\"grid grid-cols-6 my-4 pt-3 border-t\">\n                                <div class=\"flex flex-col col-span-1\">\n                                    <div class=\"h-24 overflow-hidden mx-auto\">\n                                        <img class=\"w-40 cursor-pointer\" src=\"/uploadedImages/".concat(prd.image[0].img, "\" onclick=\"window.location.href = '/productview/").concat(prd._id, "'\" alt=\"Product Image\">\n                                    </div>\n                                    <div class=\"mt-2 mx-auto\">\n                                        <span id=\"cartMinBtn\" data-prd='").concat(JSON.stringify({
+          id: prd._id,
+          featureKey: featureKey
+        }), "' class=\"cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none\">-</span>\n                                        <span id=\"cartItemLen\" class=\"").concat(prd._id, "_qty bg-gray-100 px-4 py-2\">").concat(feature[featureKey].qty, "</span>\n                                        <span id=\"cartPlusBtn\" data-prd='").concat(JSON.stringify({
+          id: prd._id,
+          featureKey: featureKey
+        }), "' class=\"cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none\">+</span>\n                                    </div>\n                                </div>\n    \n                                <div class=\"col-span-3 px-2\">\n                                    <div>\n                                        <div>\n                                            <span class=\"text-base font-bold cursor-pointer\" onclick=\"window.location.href = '/productview/").concat(prd._id, "'\">").concat(prd.name.substring(0, 45)).concat(prd.name.length > 45 ? '...' : '', "</span>\n                                        </div>\n                                        <div>\n                                            <span class=\"text-base text-muted\">Seller: ").concat(strNameArr[index], "</span>\n                                        </div>\n                                    </div>\n                                    <div class=\"mt-3\">\n                                        <span class=\"font-bold\">\u20B9").concat(priceAftDisc, "</span>\n                                        <span class=\"line-through text-base text-muted ml-2\">\u20B9").concat(prd.price, "</span>\n                                        <span class=\"text-green-800 font-bold text-sm ml-2\">").concat(prd.discount, "% off</span>\n                                        <span class=\"text-green-800 font-bold text-sm ml-2\">\n                                            ").concat(Object.keys(prd.offer[0]).length, " offer available\n                                            <i id=\"cartOfferIcon\" class=\"fas fa-info-circle cursor-pointer\"></i>\n                                            <div id=\"cartOfferDiv\" class=\"cartOfferDiv w-72 border absolute z-10 bg-white rounded\">\n                                                <div class=\"text-12 p-3\">\n                                                    <div class=\"m-1 border-b-4 border-dotted\">\n                                                        <div class=\"my-1\">\n                                                            <span class=\"text-muted\">MRP</span>\n                                                            <span class=\"float-right line-through\">\u20B9").concat(prd.price, "</span>\n                                                        </div>\n                                                        <div class=\"my-1\">\n                                                            <span class=\"text-muted\">Selling Price</span>\n                                                            <span class=\"float-right\">\u20B9").concat(priceAftDisc, "</span>\n                                                        </div>\n                                                        <div class=\"my-1\">\n                                                            <span class=\"text-muted\">Extra Discount</span>\n                                                            <span class=\"float-right text-green-600\">").concat(prd.extraDiscount ? prd.extraDiscount : 0, "%</span>\n                                                        </div>\n                                                        <div class=\"my-1\">\n                                                            <span class=\"text-muted\">Special Price</span>\n                                                            <span class=\"float-right\">\u20B9").concat(priceAftDisc, "</span>\n                                                        </div>\n                                                    </div>\n    \n                                                    <div class=\"m-1 border-b-4 border-dotted\">\n                                                        <div class=\"my-1\">\n                                                            <span class=\"text-muted\">Total</span>\n                                                            <span class=\"float-right font-bold\">\u20B9").concat(priceAftDisc, "</span>\n                                                        </div>\n                                                    </div>\n    \n                                                    <div class=\"m-1\">\n                                                        <div class=\"my-1\">\n                                                            <span class=\"text-green-700 font-bold\">Save more\n                                                                with these offers</span>\n                                                        </div>\n                                                        <div class=\"my-1\">\n                                                            <ul id=\"cartOfferUl\" data-prdInd=\"").concat(index, "\" class=\"pl-0\">\n                                                            </ul>\n                                                        </div>\n                                                    </div>\n                                                </div>\n                                            </div>\n                                        </span>\n                                    </div>\n                                    <div class=\"mt-4 float-right mr-16\">\n                                        <form action=\"/deleteCartPrd\" method=\"POST\">\n                                            <input type=\"hidden\" name=\"removePrdId\" value=\"").concat(prd._id, "\"/>\n                                            <input type=\"hidden\" name=\"removePrdPrice\" value=\"").concat(prd.price, "\"/>\n                                            <input type=\"hidden\" name=\"removePrdfeatKey\" value=\"").concat(featureKey, "\"/>\n                                            <button class=\"cartItemRemBtn shadow px-2 py-1 rounded focus:outline-none\">Remove</button>\n                                        </form>\n                                    </div>\n                                </div>\n    \n                                <div class=\"col-span-2\">\n                                    <div>\n                                        <span class=\"text-base\">\n                                            Delivery by ").concat(day, " ").concat(month, " ").concat(dateToday, " |\n                                            <span class=\"text-green-900\">Free</span>\n                                            <span class=\"line-through\">\u20B940</span>\n                                        </span>\n                                    </div>\n                                    <div>\n                                        <span class=\"text-muted text-sm\">").concat(prdService == undefined ? 'No Return Policy' : prdService, "</span>\n                                    </div>\n                                    <div class=\"mt-3 bg-gray-100 p-2 shadow\">\n                                        <div>\n                                            <span class=\"font-bold mr-2\">color:</span>").concat(feature[featureKey].color, "\n                                        </div>\n                                        <div>\n                                            <span class=\"font-bold mr-2\">size:</span>").concat(feature[featureKey].size ? feature[featureKey].size : '---', "\n                                        </div>\n                                    </div>\n                                </div>\n                                </div>");
+        allCartProduct.innerHTML += prdStr;
+        var cartItemsQty = feature[featureKey].qty;
+        cartTotalDiscount = cartTotalDiscount + Math.round([prd.price / 100 * prd.discount] * parseInt(cartItemsQty));
+      }
     });
     var cartOfferUl = document.querySelectorAll('#cartOfferUl');
 
     for (var _i = 0; _i < cartOfferUl.length; _i++) {
-      for (var offer in prdData[_i].offer[0]) {
-        for (var key in prdData[_i].offer[0][offer]) {
+      var prdInd = cartOfferUl[_i].dataset.prdind;
+
+      for (var offer in prdData[prdInd].offer[0]) {
+        for (var key in prdData[prdInd].offer[0][offer]) {
           var li = document.createElement("li");
           li.classList.add('m-1', 'list-disc');
-          li.innerHTML = "".concat(prdData[_i].offer[0][offer][key]);
+          li.innerHTML = "".concat(prdData[prdInd].offer[0][offer][key]);
 
           cartOfferUl[_i].appendChild(li);
         }
@@ -2604,6 +2613,7 @@ function cart() {
     function changeCartItemData(qty, totalQty, totalPrice, prdData) {
       document.getElementById('itemLength').innerHTML = "My Cart(".concat(totalQty, ")");
       document.getElementById('rightDivPriceItem').innerHTML = "Price (".concat(totalQty, " items)");
+      document.getElementById('cartCounter').innerHTML = qty;
       var cartTotalDiscount = 0;
       prdData.map(function (prd, index) {
         cartTotalDiscount = cartTotalDiscount + Math.round([prd.price / 100 * prd.discount] * qty);
@@ -2629,17 +2639,19 @@ function cart() {
       hideMinBtn(cartItemLen[_i2], cartPlusBtn[_i2], cartMinBtn[_i2]);
 
       cartPlusBtn[_i2].addEventListener("click", function () {
-        var prdID = cartPlusBtn[_i2].dataset.prd;
+        var data = JSON.parse(cartPlusBtn[_i2].dataset.prd);
+        var prdID = data['id'];
+        var featureKey = data['featureKey'];
         findProduct(prdData, prdID);
         var prdPrice = product.price;
         var plus = true;
         axios__WEBPACK_IMPORTED_MODULE_0___default().post("/updateCart", {
           prdID: prdID,
           plus: plus,
-          prdPrice: prdPrice
+          prdPrice: prdPrice,
+          featureKey: featureKey
         }).then(function (response) {
           if (response.data.qty) {
-            console.log(response.data);
             cartItemLen[_i2].innerHTML = response.data.qty;
             changeCartItemData(response.data.qty, response.data.totalQty, response.data.totalPrice, prdData);
             hideMinBtn(cartItemLen[_i2], cartPlusBtn[_i2], cartMinBtn[_i2]);
@@ -2659,14 +2671,17 @@ function cart() {
       hideMinBtn(cartItemLen[_i3], cartPlusBtn[_i3], cartMinBtn[_i3]);
 
       cartMinBtn[_i3].addEventListener("click", function () {
-        var prdID = cartMinBtn[_i3].dataset.prd;
+        var data = JSON.parse(cartMinBtn[_i3].dataset.prd);
+        var prdID = data['id'];
+        var featureKey = data['featureKey'];
         findProduct(prdData, prdID);
         var prdPrice = product.price;
         var min = true;
         axios__WEBPACK_IMPORTED_MODULE_0___default().post("/updateCart", {
           prdID: prdID,
           min: min,
-          prdPrice: prdPrice
+          prdPrice: prdPrice,
+          featureKey: featureKey
         }).then(function (response) {
           if (response.data.qty) {
             cartItemLen[_i3].innerHTML = response.data.qty;
@@ -2690,42 +2705,42 @@ function cart() {
 
   var deliverToImg = document.getElementById('deliverToImg');
   var url = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48ZWxsaXBzZSBjeD0iOSIgY3k9IjE0LjQ3OCIgZmlsbD0iI0ZGRTExQiIgcng9IjkiIHJ5PSIzLjUyMiIvPjxwYXRoIGZpbGw9IiMyODc0RjAiIGQ9Ik04LjYwOSA3LjAxYy0xLjA4IDAtMS45NTctLjgyNi0xLjk1Ny0xLjg0NSAwLS40ODkuMjA2LS45NTguNTczLTEuMzA0YTIuMDIgMi4wMiAwIDAgMSAxLjM4NC0uNTRjMS4wOCAwIDEuOTU2LjgyNSAxLjk1NiAxLjg0NCAwIC40OS0uMjA2Ljk1OS0uNTczIDEuMzA1cy0uODY0LjU0LTEuMzgzLjU0ek0zLjEzIDUuMTY1YzAgMy44NzQgNS40NzkgOC45MjIgNS40NzkgOC45MjJzNS40NzgtNS4wNDggNS40NzgtOC45MjJDMTQuMDg3IDIuMzEzIDExLjYzNCAwIDguNjA5IDAgNS41ODMgMCAzLjEzIDIuMzEzIDMuMTMgNS4xNjV6Ii8+PC9nPjwvc3ZnPg==';
-  deliverToImg.setAttribute('src', url);
-  var cartAddressSelect = document.getElementById('cartAddressSelect');
-  var moreCartAddress = document.getElementById('moreCartAddress');
-  cartAddressSelect.addEventListener('click', function () {
-    if (moreCartAddress.style.display = 'none') {
-      moreCartAddress.style.display = 'block';
-    } else {
-      moreCartAddress.style.display = 'none';
-    }
-  });
+
+  if (deliverToImg) {
+    deliverToImg.setAttribute('src', url);
+  } //================================================================
+  //================================================================
+
+
   var cartOfferIcon = document.querySelectorAll('#cartOfferIcon');
   var cartOfferDiv = document.querySelectorAll('#cartOfferDiv');
 
-  var _loop4 = function _loop4(_i4) {
-    cartOfferDiv[_i4].style.display = 'none';
-
-    cartOfferIcon[_i4].addEventListener('mouseover', function () {
-      cartOfferDiv[_i4].style.display = 'inline-block';
-    });
-
-    cartOfferDiv[_i4].addEventListener('mouseover', function () {
-      cartOfferDiv[_i4].style.display = 'inline-block';
-    });
-
-    cartOfferDiv[_i4].addEventListener('mouseout', function () {
+  if (cartOfferIcon) {
+    var _loop4 = function _loop4(_i4) {
       cartOfferDiv[_i4].style.display = 'none';
-    });
 
-    cartOfferIcon[_i4].addEventListener('mouseout', function () {
-      cartOfferDiv[_i4].style.display = 'none';
-    });
-  };
+      cartOfferIcon[_i4].addEventListener('mouseover', function () {
+        cartOfferDiv[_i4].style.display = 'inline-block';
+      });
 
-  for (var _i4 = 0; _i4 < cartOfferIcon.length; _i4++) {
-    _loop4(_i4);
-  }
+      cartOfferDiv[_i4].addEventListener('mouseover', function () {
+        cartOfferDiv[_i4].style.display = 'inline-block';
+      });
+
+      cartOfferDiv[_i4].addEventListener('mouseout', function () {
+        cartOfferDiv[_i4].style.display = 'none';
+      });
+
+      cartOfferIcon[_i4].addEventListener('mouseout', function () {
+        cartOfferDiv[_i4].style.display = 'none';
+      });
+    };
+
+    for (var _i4 = 0; _i4 < cartOfferIcon.length; _i4++) {
+      _loop4(_i4);
+    }
+  } //================================================================
+
 }
 
 /***/ }),

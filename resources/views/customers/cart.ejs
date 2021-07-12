@@ -28,6 +28,9 @@
         #moreCartAddress {
             display: none;
             z-index: 11;
+            position: absolute;
+            margin-left: 100px;
+            background: white;
         }
         
         .cartPlusMin {
@@ -63,7 +66,7 @@
 <section>
     <% if(user){ %>
         <!-- if cart is awailable and product is awailable then show that product -->
-        <% if(user.cart && Object.keys(user.cart['custID_' + user._id + '_cart' ].items).length){ %>
+        <% if(user.cart && user.cart['custID_' + user._id + '_cart' ] && Object.keys(user.cart['custID_' + user._id + '_cart' ].items).length){ %>
             <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>" data-user="<%= JSON.stringify(user) %>">
             <input type="hidden" id="prdData" value="<%= JSON.stringify(cartProduct) %>">
             <input type="hidden" id="strNameArr" value="<%= JSON.stringify(strNameArr) %>">
@@ -74,47 +77,6 @@
                     <div class="bg-white shadow col-span-2">
                         <div class="p-3">
                             <h4 id="itemLength" class="inline-block"></h4>
-                            <div id="deliverToDiv" class="float-right">
-                                <img id="deliverToImg" class="inline-block" alt="Deliver to">
-                                <span class="text-gray-400">Deliver to</span>
-                                <div class="inline-block" id="cartAddress">
-                                    <div id="cartAddressSelect" class="cartAddressSelect flex border p-2 cursor-pointer">
-                                        <div>
-                                            <span class="font-bold">Jigar Donga</span>
-                                        </div>
-                                        <div>
-                                            <span>, Pooja Park, Block-1...</span>
-                                        </div>
-                                        <div>
-                                            <span class="bg-gray-300 p-1 rounded-full ml-1">work</span>
-                                            <i class="fas fa-sort-down"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div id="moreCartAddress" class="float-right border p-2">
-                                    <div class="my-2">
-                                        <span class="text-muted text-base ml-3">
-                                            Select from saved addresses:
-                                        </span>
-                                    </div>
-                                    <div class="mt-2 moreCartAddressAll">
-                                        <div class="cartAddressSelect flex p-2 cursor-pointer">
-                                            <div>
-                                                <span class="font-bold">Jigar Donga</span>
-                                            </div>
-                                            <div>
-                                                <span>, Pooja Park, Block-1...</span>
-                                            </div>
-                                            <div>
-                                                <span class="bg-gray-300 p-1 rounded-full ml-1">work</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ====================================================================== -->
-                            <!-- ====================================================================== -->
                             <div class="allCartProduct" id="allCartProduct"></div>
                         </div>
                     </div>
@@ -123,10 +85,10 @@
                     <div>
                         <div id="cartRightDiv" class="bg-white shadow h-80"></div>
                         <div class="m-16">
-                            <a href="/">
+                            <a href="">
                                 <button class="cartRightButton bg-yellow-300 text-black p-3 rounded focus:outline-none">Continue Shopping</button>
                             </a>
-                            <a href="/">
+                            <a href="/placeOrder">
                                 <button class="cartRightButton bg-yellow-300 text-black p-3 rounded focus:outline-none">Place Order</button>
                             </a>
                         </div>

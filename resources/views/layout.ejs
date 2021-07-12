@@ -151,9 +151,9 @@
                     </div>
                     <a class="nav-icon d-none d-lg-inline" href="/myAccount" style="text-decoration: none;">
                         <% if(user) { %>
-                            <span class="flex">
-                                <img class="mr-2" src="/uploadedImages/<%= user.image[0].img %>" alt="User Image"
-                                    width="35" height="35" style="border-radius: 25px;">
+                            <span class="flex items-center">
+                                <img class="mr-2 w-10 h-10 rounded-full" src="/uploadedImages/<%= user.image[0].img %>" alt="User Image"
+                                    width="35" height="35" style="border-radius: 9999px;">
                                 <span class="mt-1">
                                     <%= user.first_name %>
                                 </span>

@@ -19,9 +19,7 @@ function cartController() {
             const cartProduct = await Product.find({ _id: prdArr });
             let strNameArr = [];
             for (const key in cartProduct) {
-                const storeName = await Store.findById({
-                    _id: cartProduct[key].storeId,
-                }).select({ storename: 1, _id: 0 });
+                const storeName = await Store.findById({ _id: cartProduct[key].storeId }).select({ storename: 1, _id: 0 });
                 strNameArr.push(storeName["storename"]);
             }
             return res.render("customers/cart", { cartProduct, strNameArr });
@@ -39,12 +37,13 @@ function cartController() {
                     size = product.size[0];
                 }
 
-                if (!req.user.cart) {
-                    req.user.cart = {};
-                }
-                let cart = req.user.cart;
-
+                
                 if (req.user) {
+                    if (!req.user.cart) {
+                        req.user.cart = {};
+                    }
+                    let cart = req.user.cart;
+
                     if (req.user.role == "customer") {
                         // console.log(req.user._id);
                         //Check if our current customer's cart is already exists
@@ -58,13 +57,16 @@ function cartController() {
 
                         // Check if item does not exist in cart
                         if (!cart["custID_" + req.user._id + "_cart"].items[product._id]) {
+
+                            let featureObj = {
+                                color,
+                                size,
+                                qty: prdQty
+                            }
+
                             cart["custID_" + req.user._id + "_cart"].items[product._id] = {
                                 item: product._id,
-                                feature: {
-                                    color,
-                                    size
-                                },
-                                qty: prdQty
+                                feature: [ { ...featureObj } ],
                             };
 
                             cart["custID_" + req.user._id + "_cart"].totalQty = cart["custID_" + req.user._id + "_cart"].totalQty + prdQty;
@@ -73,16 +75,38 @@ function cartController() {
                             const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
 
                         } else {
-                            let cartColor = cart["custID_" + req.user._id + "_cart"].items[product._id].feature['color']
-                            let cartSize = cart["custID_" + req.user._id + "_cart"].items[product._id].feature['size']
-                            if(cartColor == color && cartSize == size){
-                                cart["custID_" + req.user._id + "_cart"].items[product._id].qty = cart["custID_" + req.user._id + "_cart"].items[product._id].qty + prdQty;
+                            let feature = req.user.cart["custID_" + req.user._id + "_cart"].items[product._id].feature;
+                            let isMatch = false;
+                            let previousFeat = [];
+
+                            feature.map((prdFeature) => {
+                                previousFeat = [ ...previousFeat, { ...prdFeature } ];
+                                if(prdFeature['color'] == color && prdFeature['size'] == size){
+                                    isMatch = true;
+
+                                    prdFeature['qty'] = prdFeature['qty'] + prdQty;
+                                    cart["custID_" + req.user._id + "_cart"].totalQty = cart["custID_" + req.user._id + "_cart"].totalQty + prdQty;
+                                    cart["custID_" + req.user._id + "_cart"].totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice + (product.price * prdQty);
+
+                                }
+                            })
+                            if(!isMatch){
+
+                                let featureObj = {
+                                    color,
+                                    size,
+                                    qty: prdQty
+                                }
+
+                                cart["custID_" + req.user._id + "_cart"].items[product._id].feature = [ ...previousFeat, { ...featureObj } ];
+
                                 cart["custID_" + req.user._id + "_cart"].totalQty = cart["custID_" + req.user._id + "_cart"].totalQty + prdQty;
                                 cart["custID_" + req.user._id + "_cart"].totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice + (product.price * prdQty);
+                                
+                                const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
                             }
-                            else{
-                                console.log('error');
-                            }
+                            const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
+
                         }
 
                         return res.json({
@@ -115,17 +139,16 @@ function cartController() {
                     if (key == `custID_${req.user._id}_cart`) {
                         for (const itemKey in cart[key].items) {
                             if (itemKey == req.body.prdID) {
-                                cart[key].items[itemKey].qty = cart[key].items[itemKey].qty + 1;
-                                qty = cart[key].items[itemKey].qty;
+
+                                cart[key].items[itemKey].feature[req.body.featureKey].qty = cart[key].items[itemKey].feature[req.body.featureKey].qty + 1;
+                                qty = cart[key].items[itemKey].feature[req.body.featureKey].qty;
+
                             }
                         }
-                        cart["custID_" + req.user._id + "_cart"].totalQty =
-                            cart["custID_" + req.user._id + "_cart"].totalQty + 1;
+                        cart["custID_" + req.user._id + "_cart"].totalQty = cart["custID_" + req.user._id + "_cart"].totalQty + 1;
                         totalQty = cart["custID_" + req.user._id + "_cart"].totalQty;
 
-                        cart["custID_" + req.user._id + "_cart"].totalPrice =
-                            cart["custID_" + req.user._id + "_cart"].totalPrice +
-                            req.body.prdPrice;
+                        cart["custID_" + req.user._id + "_cart"].totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice + req.body.prdPrice;
                         totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice;
                     }
                 }
@@ -146,8 +169,8 @@ function cartController() {
                     if (key == `custID_${req.user._id}_cart`) {
                         for (const itemKey in cart[key].items) {
                             if (itemKey == req.body.prdID) {
-                                cart[key].items[itemKey].qty = cart[key].items[itemKey].qty - 1;
-                                qty = cart[key].items[itemKey].qty;
+                                cart[key].items[itemKey].feature[req.body.featureKey].qty = cart[key].items[itemKey].feature[req.body.featureKey].qty - 1;
+                                qty = cart[key].items[itemKey].feature[req.body.featureKey].qty;
                             }
                         }
                         cart["custID_" + req.user._id + "_cart"].totalQty =
@@ -172,30 +195,39 @@ function cartController() {
             if (req.body.removePrdId && req.body.removePrdPrice) {
                 let removePrdId = req.body.removePrdId;
                 let removePrdPrice = parseInt(req.body.removePrdPrice);
+                let removePrdfeatKey = req.body.removePrdfeatKey;
 
                 let cart = req.user.cart;
                 let itemsObj = {};
+                let featureArr = [];
+                let isSave = false;
 
                 for (const key in cart) {
                     if (key == `custID_${req.user._id}_cart`) {
                         for (const itemKey in cart[key].items) {
                             if (itemKey == removePrdId) {
-                                cart["custID_" + req.user._id + "_cart"].totalQty =
-                                    cart[key].totalQty - cart[key].items[itemKey].qty;
+                                
+                                cart["custID_" + req.user._id + "_cart"].totalQty = cart[key].totalQty - cart[key].items[itemKey].feature[removePrdfeatKey].qty;
+                                cart["custID_" + req.user._id + "_cart"].totalPrice = cart[key].totalPrice - removePrdPrice * cart[key].items[itemKey].feature[removePrdfeatKey].qty;
 
-                                cart["custID_" + req.user._id + "_cart"].totalPrice =
-                                    cart[key].totalPrice -
-                                    removePrdPrice * cart[key].items[itemKey].qty;
-                            } else {
-                                itemsObj[itemKey] = cart["custID_" + req.user._id + "_cart"].items[itemKey]
+                                let cartFeatureArr = cart[key].items[itemKey].feature;
+                                for(let featureKey in cartFeatureArr)
+                                {
+                                    let obj = cartFeatureArr[featureKey];
+                                    
+                                    if(cartFeatureArr.length === 1){
+                                        delete cart["custID_" + req.user._id + "_cart"].items[removePrdId]
+                                    }
+                                    else if(featureKey != removePrdfeatKey){
+                                        isSave = true;
+                                        featureArr = [...featureArr, {...obj}];
+                                    }
+                                }
                             }
                         }
                     }
                 }
-
-                // console.log(itemsObj);
-                req.user.cart["custID_" + req.user._id + "_cart"].items = itemsObj;
-                // console.log(req.user.cart);
+                isSave ? cart[`custID_${req.user._id}_cart`].items[removePrdId].feature = featureArr : null;
 
                 const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
                 res.redirect('/cart');
