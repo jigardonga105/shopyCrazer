@@ -6,43 +6,26 @@
         #emptyCartDiv {
             width: 75rem;
         }
-        
+
         .mx {
             margin: 0rem 31.5rem;
         }
-        
+
         #emptyCartBtn:hover {
             transition: all 1s ease-in-out;
             transform: scale(0.9);
         }
-        
-        .cartAddressSelect span {
-            font-size: 17px !important;
-        }
-        
-        .moreCartAddressAll:hover {
-            background: rgb(204, 248, 242);
-            border-radius: 10px;
-        }
-        
-        #moreCartAddress {
-            display: none;
-            z-index: 11;
-            position: absolute;
-            margin-left: 100px;
-            background: white;
-        }
-        
+
         .cartPlusMin {
             background: rgb(231, 226, 226);
             font-size: 15px;
         }
-        
+
         .text-12 span {
             font-size: 12px !important;
             font-weight: bold;
         }
-        
+
         .text-12 li {
             font-size: 12px !important;
             font-weight: 500 !important;
@@ -56,7 +39,12 @@
             transform: scale(0.9);
         }
 
-        .cartItemRemBtn:hover{
+        .cartItemRemBtn:hover {
+            transition: all 1s ease-in-out;
+            transform: scale(0.9);
+        }
+
+        .cartItemOnlyBtn:hover {
             transition: all 1s ease-in-out;
             transform: scale(0.9);
         }
@@ -85,36 +73,39 @@
                     <div>
                         <div id="cartRightDiv" class="bg-white shadow h-80"></div>
                         <div class="m-16">
-                            <a href="">
-                                <button class="cartRightButton bg-yellow-300 text-black p-3 rounded focus:outline-none">Continue Shopping</button>
+                            <a href="/shop">
+                                <button
+                                    class="cartRightButton bg-yellow-300 text-black p-3 rounded focus:outline-none">Continue
+                                    Shopping</button>
                             </a>
                             <a href="/placeOrder">
-                                <button class="cartRightButton bg-yellow-300 text-black p-3 rounded focus:outline-none">Place Order</button>
+                                <button id="placeOrderBtn" class="cartRightButton bg-yellow-300 text-black p-3 rounded focus:outline-none">Place Order</button>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-        <% }else{ %>
-            <div class="bg-gray-100 p-20">
-                <div id="emptyCartDiv" class="bg-white m-auto p-2">
-                    <div class="p-3">
-                        <h4>My Cart</h4>
-                    </div>
-                    <div class="p-3">
-                        <img class="w-58 h-48 m-auto" src="/img/cart.png" alt="emptyCart">
-                    </div>
-                    <div class="mx">
-                        <span class="block font-bold text-xl m-auto">Your cart is empty!</span>
-                        <span class="block text-base mx-3 my-3">Add items to it now.</span>
-                        <a href="/">
-                            <button id="emptyCartBtn" class="bg-green-600 shadow text-white w-44 h-10 rounded mb-10">
-                                Shop Now
-                            </button>
-                        </a>
+            <% }else{ %>
+                <div class="bg-gray-100 p-20">
+                    <div id="emptyCartDiv" class="bg-white m-auto p-2">
+                        <div class="p-3">
+                            <h4>My Cart</h4>
+                        </div>
+                        <div class="p-3">
+                            <img class="w-58 h-48 m-auto" src="/img/cart.png" alt="emptyCart">
+                        </div>
+                        <div class="mx">
+                            <span class="block font-bold text-xl m-auto">Your cart is empty!</span>
+                            <span class="block text-base mx-3 my-3">Add items to it now.</span>
+                            <a href="/">
+                                <button id="emptyCartBtn"
+                                    class="bg-green-600 shadow text-white w-44 h-10 rounded mb-10">
+                                    Shop Now
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <% } %>
-    <% } %>
+                <% } %>
+                    <% } %>
 </section>

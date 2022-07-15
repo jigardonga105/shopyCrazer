@@ -61,18 +61,25 @@ function initRoutes(app) {
     app.get('/productview/:prdID', catProdShowController().viewProduct)
 
     //this is for my Account
-    app.get('/myAccount', auth, myAccountController().index);
+    app.get('/myAccount', auth, myAccountController().index)
     app.post('/otp', myAccountController().otp);
-    app.post('/changeMyAcc', myAccountController().changeMyAcc);
+    app.post('/changeMyAcc', myAccountController().changeMyAcc)
 
     //Add Product into cart
-    app.get('/cart',auth, cartController().cart)
+    app.get('/cart', auth, cartController().cart)
     app.post('/addToCart', cartController().addToCart)
     app.post('/updateCart', cartController().updateCart)
     app.post('/deleteCartPrd', cartController().deleteCartPrd)
 
     //Place Order from Cart
     app.get('/placeOrder', orderController().index)
+    app.get('/payBill/:add/:payMth', orderController().payBill)
+    app.get('/cust/myOrders', orderController().showPlacedOrder)
+    app.post('/cust/myOrders', orderController().placeOrder)
+    app.post('/payOnlineLater/:ordID/:feaInd/:prdID', orderController().payOnlineLater)
+    app.get('/orderDetails/:ordID/:feaInd/:prdID', orderController().showPlacedOrderDetails)
+    app.post('/cancelOrd/:ordID/:feaInd/:prdID', orderController().cancelOrd)
+
 }
 
 module.exports = initRoutes

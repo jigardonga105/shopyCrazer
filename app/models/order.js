@@ -12,7 +12,8 @@ const orderSchema = new Schema({
     address: { type: String, required: true },
     paymentType: { type: String, default: 'COD' },
     paymentStatus: { type: Boolean, default: false },
-    status: { type: String, default: 'order_placed' }
+    amount: { type: Number, required: true},
+    status: { type: String, default: 'placed' }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Order', orderSchema)

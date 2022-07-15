@@ -95,7 +95,17 @@
                     <div class="left col-span-1 grid" style="height: 35rem;">
                         <div class="h-20 bg-white inline-block rounded p-2 mb-0 flex flex-row">
                             <div class="flex flex-row">
-                                <img class="w-16 h-16 rounded-full inline-block" src="/uploadedImages/<%= user.image[0].img %>" alt="<%= user.first_namr %> Image" style="box-shadow: 0px 1px 7px 0px #c7c7c7;">
+                                <% if(user.image.length > 0) { %>
+                                    <img class="w-16 h-16 rounded-full inline-block" src="/uploadedImages/<%= user.image[0].img %>" alt="<%= user.first_namr %> Image" style="box-shadow: 0px 1px 7px 0px #c7c7c7;">
+                                    <% }else{ %>
+                                        <span class="flex items-center">
+                                            <% if (user.gender == "Male") { %>
+                                                <img id="smlIMG" class="w-16 h-16 rounded-full inline-block" src="/img/male.jpg" alt="<%= user.first_namr %> Image" style="box-shadow: 0px 1px 7px 0px #c7c7c7;">
+                                                <% }else{ %>
+                                                    <img id="smlIMG" class="w-16 h-16 rounded-full inline-block" src="/img/female.jpg" alt="<%= user.first_namr %> Image" style="box-shadow: 0px 1px 7px 0px #c7c7c7;">
+                                                <% } %>
+                                        </span>
+                                    <% } %>
                                 <div class="inline-block ml-4">
                                     <span class="text-sm">Hello,</span>
                                     <br>

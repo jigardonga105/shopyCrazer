@@ -38,16 +38,18 @@ function cartController() {
                 }
 
                 
+                // if user logged in
                 if (req.user) {
                     if (!req.user.cart) {
+                        // if cart array not found
                         req.user.cart = {};
                     }
                     let cart = req.user.cart;
 
+                    // check whether it is a customer or not
                     if (req.user.role == "customer") {
-                        // console.log(req.user._id);
-                        //Check if our current customer's cart is already exists
                         if (!cart["custID_" + req.user._id + "_cart"]) {
+                            //Check customer's cart is already exists if not then make cartObject
                             cart["custID_" + req.user._id + "_cart"] = {
                                 items: {},
                                 totalQty: 0,
@@ -58,44 +60,54 @@ function cartController() {
                         // Check if item does not exist in cart
                         if (!cart["custID_" + req.user._id + "_cart"].items[product._id]) {
 
+                            //if not then add item in to the cart
                             let featureObj = {
                                 color,
                                 size,
-                                qty: prdQty
+                                qty: prdQty,
+                                price: product.price,
+                                discount: product.discount
                             }
-
                             cart["custID_" + req.user._id + "_cart"].items[product._id] = {
                                 item: product._id,
                                 feature: [ { ...featureObj } ],
                             };
-
                             cart["custID_" + req.user._id + "_cart"].totalQty = cart["custID_" + req.user._id + "_cart"].totalQty + prdQty;
                             cart["custID_" + req.user._id + "_cart"].totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice + (product.price * prdQty);
 
+                            //update the cart in database
                             const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
 
                         } else {
+                            //if item already exist in the cart
                             let feature = req.user.cart["custID_" + req.user._id + "_cart"].items[product._id].feature;
                             let isMatch = false;
                             let previousFeat = [];
 
                             feature.map((prdFeature) => {
                                 previousFeat = [ ...previousFeat, { ...prdFeature } ];
+
+                                //check if feature already exists in the cart is same as new feature
                                 if(prdFeature['color'] == color && prdFeature['size'] == size){
+                                    //is same then only update that previously existing feature
                                     isMatch = true;
 
                                     prdFeature['qty'] = prdFeature['qty'] + prdQty;
+                                    prdFeature['price'] = product.price;
+                                    prdFeature['discount'] = product.discount;
                                     cart["custID_" + req.user._id + "_cart"].totalQty = cart["custID_" + req.user._id + "_cart"].totalQty + prdQty;
                                     cart["custID_" + req.user._id + "_cart"].totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice + (product.price * prdQty);
 
                                 }
                             })
                             if(!isMatch){
-
+                                //is not same then add new feature
                                 let featureObj = {
                                     color,
                                     size,
-                                    qty: prdQty
+                                    qty: prdQty,
+                                    price: product.price,
+                                    discount: product.discount
                                 }
 
                                 cart["custID_" + req.user._id + "_cart"].items[product._id].feature = [ ...previousFeat, { ...featureObj } ];
@@ -103,8 +115,10 @@ function cartController() {
                                 cart["custID_" + req.user._id + "_cart"].totalQty = cart["custID_" + req.user._id + "_cart"].totalQty + prdQty;
                                 cart["custID_" + req.user._id + "_cart"].totalPrice = cart["custID_" + req.user._id + "_cart"].totalPrice + (product.price * prdQty);
                                 
+                                //update the cart in database
                                 const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
                             }
+                            //update the cart in database
                             const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
 
                         }
@@ -113,16 +127,19 @@ function cartController() {
                             totalQty: req.user.cart["custID_" + req.user._id + "_cart"].totalQty,
                         });
                     } else {
+                        //user is not a customer
                         return res.json({
                             msg: "Currently you are not Customer.",
                         });
                     }
                 } else {
+                    //user is not logged in
                     return res.json({
                         msg: "You are not logged in",
                     });
                 }
             } else {
+                //data not submitted
                 return res.json({
                     msg: "We are facing some essuse. Please try again later 🙏",
                 });

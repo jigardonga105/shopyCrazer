@@ -1,0 +1,152 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<section class="px-40 py-5">
+    <div>
+        <input type="hidden" id="userPayBill" value="<%= JSON.stringify(user) %>">
+        <input type="hidden" id="add" value="<%= add %>">
+        <input type="hidden" id="payMth" value="<%= payMth %>">
+        <input type="hidden" id="totalAmount" value="<%= totalAmount %>">
+        <input type="hidden" id="totalDisAmount" value="<%= totalDisAmount %>">
+    </div>
+    <h1>Payment:</h1>
+    <div class="grid grid-cols-2 justify-items-center bg-gray-100 rounded p-2 shadow">
+        <div>
+            <div id="address"></div>
+            <div class="float-right"><a href="/placeOrder">change</a></div>
+
+            <div class="border rounded mt-5 bg-white">
+                <div class="p-3 border-b">
+                    <span class="text-muted">PRICE DETAILS</span>
+                </div>
+
+                <div class="m-3 border-b-4 border-dotted">
+                    <div class="my-3">
+                        <span id="rightDivPriceItem">Price (<%= user.cart['custID_' + user['_id'] + '_cart'].totalQty %> items)</span>
+                        <span id="rightDivPrice" class="float-right">₹<%= user.cart['custID_' + user['_id'] + '_cart'].totalPrice %></span>
+                    </div>
+                    <div class="my-3">
+                        <span>Discount</span>
+                        <span id="rightDivDisc" class="float-right text-green-600">- ₹<%= Math.round(totalDisAmount) %></span>
+                    </div>
+                    <div class="my-3">
+                        <span>Delivery Charges</span>
+                        <span class="float-right text-green-600">Free</span>
+                    </div>
+                </div>
+
+                <div class="m-3 border-b-4 border-dotted">
+                    <div class="my-3">
+                        <span>Total Amount</span>
+                        <span id="rightDivFinalPrice" class="float-right font-bold">₹<%= Math.round(totalAmount) %></span>
+                    </div>
+                </div>
+
+                <div class="m-3">
+                    <div class="my-3">
+                        <span id="rightDivSavePrice" class="text-green-700 font-bold">You will save ₹<%= Math.round(totalDisAmount) %> on this order</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div>
+            <h3>Credit/Debit Card:</h3>
+            <form action="/cust/myOrders" method="post">
+                <div>
+                    <label for="cardHoldName" class="block text-gray-900" style="font-size: 13px !important;">Card Holder Name</label>
+                    <input type="text" name="cardHoldName" id="cardHoldName" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none" placeholder="name" required style="width: 400px;">
+                </div>
+                <div>
+                    <label for="cardNum" class="block text-gray-900" style="font-size: 13px !important;">Card Number</label>
+                    <input type="number" name="cardNum" id="cardNum" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none" placeholder="____/____/____/____" required style="width: 400px;">
+                </div>
+                <div>
+                    <label for="expMonth" class="block text-gray-900" style="font-size: 13px !important;">Expiry Month</label>
+                    <input type="month" name="expMonth" id="expMonth" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none" placeholder="1-12" required style="width: 400px;">
+                </div>
+                <div>
+                    <label for="cvv" class="block text-gray-900" style="font-size: 13px !important;">CVV</label>
+                    <input type="number" name="cvv" id="cvv" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none" placeholder="ex. 123" required style="width: 400px;">
+                </div>
+
+                <input type="hidden" name="addressToDel" class="addressToDel" value="">
+                <input type="hidden" name="finalAmount" value="<%= totalAmount %>">
+
+                <div>
+                    <button class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Pay</button>
+                </div>
+            </form>
+
+            <!-- ----------------------------------------------- -->
+            <hr>
+
+            <h3>Cash on Delivery:</h3>
+            <form action="/cust/myOrders" method="post">
+                <input class="form-check-input" type="radio" name="finalPayMth" value="cod" id="finalPayMth" required>
+                <label class="form-check-label" for="finalPayMth"> Cash on Delivery </label>
+
+                <input type="hidden" name="addressToDel" class="addressToDel" value="">
+                <input type="hidden" name="finalAmount" value="<%= totalAmount %>">
+
+                <div>
+                    <button class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Buy now</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    let userPayBill = document.getElementById('userPayBill');
+    let add = document.getElementById('add').value;
+    let payMth = document.getElementById('payMth').value;
+    let totalAmount = document.getElementById('totalAmount').value;
+    let totalDisAmount = document.getElementById('userPayBill').value;
+    let addressToDel = document.getElementsByClassName('addressToDel');
+
+    let address;
+
+    userPayBill = JSON.parse(userPayBill.value);
+    let addresses = userPayBill.address
+
+    for (let i = 0; i < addresses.length; i++) {
+        if (i == (add-1)) {
+            let addDiv = document.getElementById('address');
+            address = addresses[i];
+            
+            addDiv.innerHTML = `<h3><span>Adress:</span></h3><div class="flex p-3 border rounded">
+                                    <label class="form-check-label ml-3" for="flexRadioDefault1">
+                                        <div> <span class="font-medium">${address['add-name']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-area&street']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-landmark'] ? address['add-landmark'] + '-' : ''}${address['add-locality']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-city']} ${address['add-state']}-${address['add-pin']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-phone']}${address['add-altphone'] ? ' / ' + address['add-altphone'] : ''}</span> </div>
+                                        <div> <span class="bg-gray-500 p-1 rounded font-bold text-white">${address['add-type']}</span> </div>
+                                    </label>
+                                </div>`;
+        }        
+    }
+
+    for (let i = 0; i < addressToDel.length; i++) {
+        addressToDel[i].value = JSON.stringify(address);
+    }
+</script>

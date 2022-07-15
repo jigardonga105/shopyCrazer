@@ -272,7 +272,16 @@ export function myAcc() {
         img_userID.value = user._id;
 
         let changeIMG = document.getElementById('changeIMG');
-        changeIMG.setAttribute('src', `/uploadedImages/${user.image[0].img}`);
+        if (user.image.length > 0) {
+            changeIMG.setAttribute('src', `/uploadedImages/${user.image[0].img}`);            
+        }else{
+            if (user.gender == 'Male') {
+                changeIMG.setAttribute('src', `/img/male.jpg`);            
+            }else
+            {
+                changeIMG.setAttribute('src', `/img/female.jpg`);            
+            }
+        }
         changeIMG.setAttribute('alt', `${user.first_name} image`);
 
         let newImg = document.getElementById('newImg');

@@ -8,7 +8,7 @@ const userSchema = new Schema({
     phone: { type: String },
     password: { type: String, required: true },
     role: { type: String, default: 'customer' },
-    gender: { type: String },
+    gender: { type: String, default: 'male' },
     image: [{ img: { type: String, required: true } }],
     address: { type: [Object] },
     cart: { type: Object, default: {} }

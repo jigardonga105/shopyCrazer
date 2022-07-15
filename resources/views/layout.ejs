@@ -16,17 +16,14 @@
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/fontawesome.min.css">
-    <!-- TemplateMo 559 Zay Shop https://templatemo.com/tm-559-zay-shop -->
 
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="/css/slick.min.css">
     <link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
 
-    <style>
-
-    </style>
+    <script src="https://kit.fontawesome.com/fc3dca529c.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -82,10 +79,10 @@
             <a href="#">Offer Zone</a>
             <a href="/sellerReg">Sell on Zay</a>
             <hr>
-            <a href="#">My Orders</a>
-            <a href="#">My Cart</a>
+            <a href="/cust/myOrders">My Orders</a>
+            <a href="/cart">My Cart</a>
             <a href="#">My Wishlist</a>
-            <a href="#">My Account</a>
+            <a href="/myAccount">My Account</a>
             <a href="#">My Notification</a>
         </div>
 
@@ -150,7 +147,8 @@
                         </div>
                     </div>
                     <a class="nav-icon d-none d-lg-inline" href="/myAccount" style="text-decoration: none;">
-                        <% if(user) { %>
+                        <% if(user){ %>
+                        <% if(user.image.length > 0) { %>
                             <span class="flex items-center">
                                 <img class="mr-2 w-10 h-10 rounded-full" src="/uploadedImages/<%= user.image[0].img %>" alt="User Image"
                                     width="35" height="35" style="border-radius: 9999px;">
@@ -158,6 +156,20 @@
                                     <%= user.first_name %>
                                 </span>
                             </span>
+                            <% }else{ %>
+                                <span class="flex items-center">
+                                    <% if (user.gender == "Male") { %>
+                                    <img class="mr-2 w-10 h-10 rounded-full" src="/img/male.jpg" alt="User Image"
+                                        width="35" height="35" style="border-radius: 9999px;">
+                                        <% }else{ %>
+                                            <img class="mr-2 w-10 h-10 rounded-full" src="/img/female.jpg" alt="User Image"
+                                        width="35" height="35" style="border-radius: 9999px;">
+                                        <% } %>                                        
+                                    <span class="mt-1">
+                                        <%= user.first_name %>
+                                    </span>
+                                </span>
+                            <% } %>
                             <% } %>
                     </a>
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
@@ -170,7 +182,7 @@
                             <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>" data-user="<%= JSON.stringify(user) %>">
                             <% } %>
 
-                                <span id="cartCounter" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                            <span id="cartCounter" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/notifications">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>

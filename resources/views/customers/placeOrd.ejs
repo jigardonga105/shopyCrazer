@@ -1,1 +1,199 @@
-<h1>placeOrd</h1>
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        .placeOrdBtn:hover {
+            color: white;
+            background: rgb(255, 124, 17);
+            transition: all 1s ease-in-out;
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+
+<section class="px-40 py-5">
+    <div>
+        <input type="hidden" name="user" id="userAdd" value="<%= JSON.stringify(user.address) %>">
+        <input type="hidden" name="">
+    </div>
+    <div class="grid grid-cols-2 bg-gray-100 rounded p-2 shadow">
+        <div id="address" class="address">
+            <div>
+                <div class="mt-2 mb-3">
+                    <span class="font-medium text-2xl">Select Delivery Address:</span>
+                    <p id="addNotMsg" class="text-red-500 font-bold" style="display: none;">*Please add Address</p>
+                </div>
+                <div id="allAddDivBtn" class=""></div>
+                <div id="allAddressDiv" class="bg-light inline-block rounded" style="width: 580px;">
+                </div>
+                <div class="ml-5 mt-3">
+                    <span><a href="/myAccount" id="myAccBTN">Add more Addresses</a></span>
+                </div>
+            </div>
+        </div>
+        <div id="payMethod" class="payMethod" style="margin-left: 25%;">
+            <div>
+                <div class="mt-2">
+                    <span class="font-medium text-2xl">Select Payment Method:</span>
+                </div>
+                <div class="bg-light inline-block p-2 rounded mt-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payMethod" value="cod"
+                            id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Cash on Delivery
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payMethod" value="online"
+                            id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Pay Online
+                        </label>
+                    </div>
+                </div>
+                <div class="m-5">
+                    <a href="/cart">
+                        <button class="placeOrdBtn mr-3 bg-yellow-300 text-black p-3 rounded focus:outline-none">
+                            ⬅ Back to Cart
+                        </button>
+                    </a>
+                    <a id="payBillBtnA">
+                        <button id="payBillBtn"
+                            class="placeOrdBtn ml-3 bg-yellow-300 text-black p-3 rounded focus:outline-none">
+                            Pay Bill ➡
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    let userAdd = document.getElementById('userAdd');
+    userAdd = JSON.parse(userAdd.value)
+
+    let allAddressDiv = document.getElementById('allAddressDiv');
+    let allAddDivBtn = document.getElementById('allAddDivBtn');
+    let seperateAdds = document.getElementsByClassName('seperateAdd');
+
+    if (userAdd.length > 0) {
+        userAdd.map((address, index) => {
+
+            let str1 = `<div id="seperateAdd" class="seperateAdd inline-block p-3 py-1 border-2 rounded">
+                            <input class="form-check-input" type="radio" name="selectAdd" value="${index + 1}" id="Add ${index + 1}" disabled ${index == 0 ? 'checked' : ''}>
+                            <label for="selectAdd">Add ${index + 1}</label>
+                        </div>`
+
+            allAddDivBtn.innerHTML += str1;
+        })
+    }
+    else {
+        allAddressDiv.innerHTML = `<ul class="list-disc">
+                                    <li>
+                                        <span class="text-3xl">
+                                            No Address added yet!
+                                        </span>
+                                    </li>
+                                </ul>
+                                <div class="ml-5">
+                                    <span>Go My Profile ➡ in Left side Click on Manage Address ➡ Add New Address</span>
+                                </div>
+                                <div class="ml-5 mt-3">
+                                    <span><a href="/myAccount" id="myAccBTN">My Profile</a></span>
+                                </div>`;
+    }
+
+    for (let i = 0; i < seperateAdds.length; i++) {
+        seperateAdds[i].addEventListener("click", () => {
+
+            let clickedAdd = document.getElementById(`Add ${i + 1}`)
+            let clickedAddInd = clickedAdd.value;
+
+            if (userAdd.length > 0) {
+                userAdd.map((address, index) => {
+                    if (index == clickedAddInd - 1) {
+
+                        let allInpField = document.getElementsByName('selectAdd');
+                        for (let j = 0; j < allInpField.length; j++) {
+                            seperateAdds[j].style.backgroundColor = "white";
+                            seperateAdds[j].style.borderColor = "white";
+                            allInpField[j].removeAttribute('checked', '');
+                        }
+
+                        seperateAdds[i].style.backgroundColor = "rgba(252,211,77)";
+                        seperateAdds[i].style.borderColor = "rgba(252,211,77)";
+                        allAddressDiv.style.border = "0.5px solid rgba(252,211,77)";
+
+                        clickedAdd.setAttribute('checked', '');
+                        allAddressDiv.innerHTML = ``;
+
+                        let str = `<div class="flex p-3 border rounded">
+                                    <label class="form-check-label ml-3" for="flexRadioDefault1">
+                                        <div> <span class="font-medium">${address['add-name']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-area&street']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-landmark'] ? address['add-landmark'] + '-' : ''}${address['add-locality']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-city']} ${address['add-state']}-${address['add-pin']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-phone']}${address['add-altphone'] ? ' / ' + address['add-altphone'] : ''}</span> </div>
+                                        <div> <span class="bg-gray-500 p-1 rounded font-bold text-white">${address['add-type']}</span> </div>
+                                    </label>
+                                </div>`
+
+                        allAddressDiv.innerHTML += str;
+                    }
+                })
+            }
+        })
+    }
+
+    //================================================================
+    let selectedAddInp = document.getElementsByName('selectAdd');
+    let payMethod = document.getElementsByName('payMethod');
+
+    var selectedAdd;
+    var payMethodVal;
+
+    for (let i = 0; i < selectedAddInp.length; i++) {
+        seperateAdds[i].addEventListener('click', () => {
+            selectedAdd = selectedAddInp[i].value;
+            console.log(selectedAdd);
+        })
+    }
+    for (let i = 0; i < payMethod.length; i++) {
+
+        payMethod[i].addEventListener('change', () => {
+            payMethodVal = payMethod[i].value;
+            console.log(payMethodVal);
+        })
+
+    }
+
+    let payBillBtnA = document.getElementById('payBillBtnA');
+    let payBillBtn = document.getElementById('payBillBtn');
+    payBillBtn.addEventListener('click', () => {
+        if (selectedAdd == undefined) {
+            if (userAdd.length > 0) {
+                selectedAdd = 1;
+            }
+            else {
+                console.log('Please select Address');
+                document.getElementById('addNotMsg').style.display = 'block';
+
+                setTimeout(() => {
+                    document.getElementById('addNotMsg').style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        if (payMethodVal == undefined) {
+            payMethodVal = 'COD';
+        }
+
+        if (selectedAdd != undefined && payMethodVal != undefined) {
+            payBillBtnA.setAttribute('href', `/payBill/${selectedAdd}/${payMethodVal}`)
+            payBillBtnA.click();
+        }
+    })
+</script>

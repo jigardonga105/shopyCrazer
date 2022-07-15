@@ -223,6 +223,14 @@ export function cart() {
                                         </span>
                                     </div>
                                     <div class="mt-4 float-right mr-16">
+                                        <form action="/buyOnlyCartPrd" method="POST">
+                                            <input type="hidden" name="onlyPrdId" value="${prd._id}"/>
+                                            <input type="hidden" name="onlyPrdPrice" value="${prd.price}"/>
+                                            <input type="hidden" name="onlyPrdfeatKey" value="${featureKey}"/>
+                                            <button class="cartItemOnlyBtn shadow px-2 py-1 rounded focus:outline-none">Buy this only</button>
+                                        </form>
+                                    </div>
+                                    <div class="mt-4 float-right mr-16">
                                         <form action="/deleteCartPrd" method="POST">
                                             <input type="hidden" name="removePrdId" value="${prd._id}"/>
                                             <input type="hidden" name="removePrdPrice" value="${prd.price}"/>
@@ -298,7 +306,7 @@ export function cart() {
     let month;
     let dateToday;
 
-    if (cartDataInp) {
+    if (cartDataInp && prdDataInp && strNameArrInp) {
         user = JSON.parse(cartDataInp.dataset.user);
         cartData = JSON.parse(cartDataInp.value);
         prdData = JSON.parse(prdDataInp.value);
@@ -463,5 +471,4 @@ export function cart() {
         }
     }
     //================================================================
-
 }
