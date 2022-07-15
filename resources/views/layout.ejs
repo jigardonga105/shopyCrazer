@@ -73,7 +73,7 @@
 
     <!-- Start Toggle left Nav -->
     <div>
-        <div id="mySidebar" class="sidebar">
+        <div id="mySidebar" class="sidebar" onmouseover="openNav()" onmouseout="closeNav()">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <a href="#">All Categories</a>
             <a href="#">Offer Zone</a>
@@ -87,7 +87,7 @@
         </div>
 
         <div id="main" style="display: inline;position: absolute;z-index: 5;left: -16px;top: 45px;">
-            <button class="openbtn" onclick="openNav()">☰</button>
+            <button class="openbtn" onmouseover="openNav()">☰</button>
         </div>
 
         <script>
@@ -148,29 +148,31 @@
                     </div>
                     <a class="nav-icon d-none d-lg-inline" href="/myAccount" style="text-decoration: none;">
                         <% if(user){ %>
-                        <% if(user.image.length > 0) { %>
-                            <span class="flex items-center">
-                                <img class="mr-2 w-10 h-10 rounded-full" src="/uploadedImages/<%= user.image[0].img %>" alt="User Image"
-                                    width="35" height="35" style="border-radius: 9999px;">
-                                <span class="mt-1">
-                                    <%= user.first_name %>
-                                </span>
-                            </span>
-                            <% }else{ %>
+                            <% if(user.image.length> 0) { %>
                                 <span class="flex items-center">
-                                    <% if (user.gender == "Male") { %>
-                                    <img class="mr-2 w-10 h-10 rounded-full" src="/img/male.jpg" alt="User Image"
-                                        width="35" height="35" style="border-radius: 9999px;">
-                                        <% }else{ %>
-                                            <img class="mr-2 w-10 h-10 rounded-full" src="/img/female.jpg" alt="User Image"
-                                        width="35" height="35" style="border-radius: 9999px;">
-                                        <% } %>                                        
+                                    <img class="mr-2 w-10 h-10 rounded-full"
+                                        src="/uploadedImages/<%= user.image[0].img %>" alt="User Image" width="35"
+                                        height="35" style="border-radius: 9999px;">
                                     <span class="mt-1">
                                         <%= user.first_name %>
                                     </span>
                                 </span>
-                            <% } %>
-                            <% } %>
+                                <% }else{ %>
+                                    <span class="flex items-center">
+                                        <% if (user.gender=="Male" ) { %>
+                                            <img class="mr-2 w-10 h-10 rounded-full" src="/img/male.jpg"
+                                                alt="User Image" width="35" height="35" style="border-radius: 9999px;">
+                                            <% }else{ %>
+                                                <img class="mr-2 w-10 h-10 rounded-full" src="/img/female.jpg"
+                                                    alt="User Image" width="35" height="35"
+                                                    style="border-radius: 9999px;">
+                                                <% } %>
+                                                    <span class="mt-1">
+                                                        <%= user.first_name %>
+                                                    </span>
+                                    </span>
+                                    <% } %>
+                                        <% } %>
                     </a>
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
@@ -182,7 +184,7 @@
                             <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>" data-user="<%= JSON.stringify(user) %>">
                             <% } %>
 
-                            <span id="cartCounter" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                                <span id="cartCounter" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/notifications">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
