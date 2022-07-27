@@ -1,6 +1,7 @@
 const User = require('../../models/user')
 const bcrypt = require('bcrypt')
 const passport = require('passport');
+const fs = require('fs');
 
 function authController() {
     return {
@@ -33,39 +34,72 @@ function authController() {
                 return res.redirect('/signup')
             }
 
-            //Check if email exists
-            User.exists({ email: email, role: 'customer' }, (err, result) => {
-                if (result) {
-                    req.flash('error', 'Email already taken')
-                    req.flash('fname', fname)
-                    req.flash('lname', lname)
-                    req.flash('phone', phone)
-                    return res.redirect('/signup')
-                }
-            })
+            if (!req.body.role) {
+                //Check if email exists
+                User.exists({ email: email, role: 'customer' }, (err, result) => {
+                    if (result) {
+                        req.flash('error', 'Email already taken')
+                        req.flash('fname', fname)
+                        req.flash('lname', lname)
+                        req.flash('phone', phone)
+                        return res.redirect('/signup')
+                    }
+                })
+            } else {
+                //Check if email exists
+                User.exists({ role: 'courier' }, (err, result) => {
+                    if (result) {
+                        let msg = "existed";
+                        return res.redirect(`/adminSection/${msg}`)
+                    }
+                })
+            }
+
 
             //Hash Password
             const hashPassword = await bcrypt.hash(password, 10)
+            let user;
 
-            //Create a new user
-            const user = new User({
-                first_name: fname,
-                last_name: lname,
-                email,
-                phone,
-                password: hashPassword,
-                image: productPictures
-            })
+            if (req.body.role) {
+                //Create a new user
+                user = new User({
+                    first_name: fname,
+                    last_name: lname,
+                    email,
+                    phone,
+                    role: req.body.role,
+                    password: hashPassword,
+                    image: productPictures
+                })
+            } else {
+                //Create a new user
+                user = new User({
+                    first_name: fname,
+                    last_name: lname,
+                    email,
+                    phone,
+                    password: hashPassword,
+                    image: productPictures
+                })
+            }
 
             user.save()
                 .then((user) => {
-                    // console.log(user);
-                    return res.redirect('/login')
+                    if (req.body.role) {
+                        let msg = "created";
+                        return res.redirect(`/adminSection/${msg}`)
+                    } else {
+                        return res.redirect('/login')
+                    }
                 })
                 .catch((err) => {
                     req.flash('error', 'Something went wrong')
-                        // console.log(err);
-                    return res.redirect('/signup')
+                    if (req.body.role) {
+                        let msg = "notCreated";
+                        return res.redirect(`/adminSection/${msg}`)
+                    } else {
+                        return res.redirect('/signup')
+                    }
                 })
         },
 
@@ -84,6 +118,14 @@ function authController() {
                     return res.redirect('/login')
                 }
             })
+
+            if (req.session.courierAgents) {
+                req.session.destroy((err) => {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
+            }
 
             passport.authenticate('local', (err, user, info) => {
                 if (err) {
@@ -107,8 +149,43 @@ function authController() {
         },
 
         logout(req, res) {
-            req.logout();
-            return res.redirect('/');
+            if (req.session.user) {
+                req.logout();
+                return res.redirect('/');
+            } else {
+                req.session.destroy((err) => {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    res.redirect('/');
+                });
+            }
+        },
+
+        async deleteAcc(req, res) {
+            let user = await User.findById({ _id: req.params.id });
+
+            if (user.role === 'courier') {
+
+                for (let i = 0; i < user.image.length; i++) {
+                    let img = user.image[i].img;
+                    fs.unlink(`public/uploadedImages/${img}`, (err, res) => {
+                        if (err) {
+                            let msg = "imgNotDeleted";
+                            return res.redirect(`/adminSection/${msg}`)
+                        }
+                    })
+                }
+
+                let del = await User.findByIdAndDelete({ _id: req.params.id });
+                if (del) {
+                    let msg = "deleted";
+                    return res.redirect(`/adminSection/${msg}`)
+                } else {
+                    let msg = "notDeleted";
+                    return res.redirect(`/adminSection/${msg}`)
+                }
+            }
         }
     }
 }

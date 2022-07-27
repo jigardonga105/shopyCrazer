@@ -4,15 +4,23 @@
 
     <style>
         /* Chrome, Safari, Edge, Opera */
+        
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
-
         /* Firefox */
+        
         input[type=number] {
             -moz-appearance: textfield;
+        }
+        
+        #card-element {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            width: 518px;
         }
     </style>
 </head>
@@ -69,30 +77,15 @@
         </div>
         <div>
             <h3>Credit/Debit Card:</h3>
-            <form action="/cust/myOrders" method="post">
-                <div>
-                    <label for="cardHoldName" class="block text-gray-900" style="font-size: 13px !important;">Card Holder Name</label>
-                    <input type="text" name="cardHoldName" id="cardHoldName" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none" placeholder="name" required style="width: 400px;">
-                </div>
-                <div>
-                    <label for="cardNum" class="block text-gray-900" style="font-size: 13px !important;">Card Number</label>
-                    <input type="number" name="cardNum" id="cardNum" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none" placeholder="____/____/____/____" required style="width: 400px;">
-                </div>
-                <div>
-                    <label for="expMonth" class="block text-gray-900" style="font-size: 13px !important;">Expiry Month</label>
-                    <input type="month" name="expMonth" id="expMonth" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none" placeholder="1-12" required style="width: 400px;">
-                </div>
-                <div>
-                    <label for="cvv" class="block text-gray-900" style="font-size: 13px !important;">CVV</label>
-                    <input type="number" name="cvv" id="cvv" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none" placeholder="ex. 123" required style="width: 400px;">
-                </div>
+            <form action="/cust/myOrders" method="post" id="payment-form">
 
                 <input type="hidden" name="addressToDel" class="addressToDel" value="">
-                <input type="hidden" name="finalAmount" value="<%= totalAmount %>">
-
+                <input type="hidden" name="finalAmount" value="<%= Math.round(totalAmount) %>">
+                <div id="card-element"></div>
                 <div>
                     <button class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Pay</button>
                 </div>
+
             </form>
 
             <!-- ----------------------------------------------- -->
@@ -100,6 +93,7 @@
 
             <h3>Cash on Delivery:</h3>
             <form action="/cust/myOrders" method="post">
+
                 <input class="form-check-input" type="radio" name="finalPayMth" value="cod" id="finalPayMth" required>
                 <label class="form-check-label" for="finalPayMth"> Cash on Delivery </label>
 
@@ -109,11 +103,16 @@
                 <div>
                     <button class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Buy now</button>
                 </div>
+
             </form>
 
         </div>
     </div>
 </section>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 
 <script>
     let userPayBill = document.getElementById('userPayBill');
@@ -129,10 +128,10 @@
     let addresses = userPayBill.address
 
     for (let i = 0; i < addresses.length; i++) {
-        if (i == (add-1)) {
+        if (i == (add - 1)) {
             let addDiv = document.getElementById('address');
             address = addresses[i];
-            
+
             addDiv.innerHTML = `<h3><span>Adress:</span></h3><div class="flex p-3 border rounded">
                                     <label class="form-check-label ml-3" for="flexRadioDefault1">
                                         <div> <span class="font-medium">${address['add-name']}</span> </div>
@@ -143,10 +142,80 @@
                                         <div> <span class="bg-gray-500 p-1 rounded font-bold text-white">${address['add-type']}</span> </div>
                                     </label>
                                 </div>`;
-        }        
+        }
     }
 
     for (let i = 0; i < addressToDel.length; i++) {
         addressToDel[i].value = JSON.stringify(address);
     }
+
+    //==============================================================================================
+    //==============================================================================================
+    //==============================================================================================
+
+    var stripe = Stripe('pk_test_51IteSRSFuWv43Ec8xhCAcFtsZGArYeXc16YtEnEToEms3UjQFhTQRCWxz8vDlXfcGBX3SR7Hw3ZGoM1957UjvstO00qftwexGb');
+
+    // Set up Stripe.js and Elements to use in checkout form
+    var elements = stripe.elements();
+    var style = {
+        base: {
+            color: "#32325d",
+        }
+    };
+
+    var card = elements.create("card", {
+        style,
+        hidePostalCode: true
+    });
+    card.mount("#card-element");
+
+
+    var form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', async(e) => {
+        e.preventDefault();
+
+        let formData = new FormData(form);
+        let addressToDel = formData.get('addressToDel');
+        let finalAmount = formData.get('finalAmount');
+
+        stripe.createToken(card).then(result => {
+                console.log(result.token.id);
+                axios.post('/cust/myOrders', {
+                        token: result.token.id,
+                        addressToDel,
+                        finalAmount
+                    })
+                    .then(res => {
+                        new Noty({
+                            type: 'success',
+                            timeout: 2000,
+                            text: res.data.message,
+                            progressBar: false,
+                        }).show();
+
+                        setTimeout(() => {
+                            window.location.href = '/cust/myOrders'
+                        }, 3000)
+                    })
+                    .catch(err => {
+                        new Noty({
+                            type: 'error',
+                            timeout: 2000,
+                            text: err.res.data.message,
+                            progressBar: false,
+                        }).show();
+                    });
+            })
+            .catch(error => {
+                console.log(err);
+                new Noty({
+                    type: 'error',
+                    timeout: 2000,
+                    text: err.res.data.message,
+                    progressBar: false,
+                }).show();
+            });
+
+    });
 </script>

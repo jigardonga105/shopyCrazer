@@ -2,6 +2,9 @@ const User = require("../../../models/user");
 const Product = require("../../../models/product");
 const Order = require("../../../models/order");
 const Store = require("../../../models/store");
+const Math = require("mathjs");
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
+
 
 function orderController() {
     return {
@@ -63,83 +66,81 @@ function orderController() {
 
             for (let i = 0; i < custOrders.length; i++) {
                 for (const key in custOrders[i].items) {
-                    if (prdIDArr.indexOf(key) === -1) {
-                        prdIDArr.push(key);
+                    if (prdIDArr.indexOf(custOrders[i].items[key].item) === -1 && custOrders[i].items[key].item !== undefined) {
+                        prdIDArr.push(custOrders[i].items[key].item);
                     }
                 }
             }
 
             for (let i = 0; i < prdIDArr.length; i++) {
-                let custProd = await Product.find({ _id: prdIDArr[i] });
-                prdArr.push(custProd[0]);
-                let res = await Store.findById({ _id: custProd[0].storeId });
+                let custProd = await Product.findById({ _id: prdIDArr[i] });
+
+                prdArr.push(custProd);
+                let res = await Store.findById({ _id: custProd.storeId });
 
                 let obj = {
-                    [custProd[0].storeId]: res.storename,
+                    [custProd.storeId]: res.storename,
                 };
 
                 strIDArr = {...strIDArr, ...obj };
             }
+
+            res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0')
             res.render("customers/custOrders", { userData, custOrders, prdArr, prdIDArr, strIDArr });
         },
         async placeOrder(req, res) {
-            const {
-                addressToDel,
-                finalAmount,
-                cardHoldName,
-                cardNum,
-                expMonth,
-                cvv,
-                finalPayMth,
-            } = req.body;
+            const { token, addressToDel, finalAmount, finalPayMth } = req.body;
             let address = JSON.parse(addressToDel);
 
             function savaOrderFunc(order, req, res) {
                 order.save()
                     .then(async(order) => {
-                        const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
-                        if (!result) {
-                            res.redirect("/cart");
-                        } else {
-                            let userData = await User.findById({ _id: req.user._id });
-                            let custOrders = await Order.find({ customerId: req.user._id },
-                                null, { sort: { createdAt: -1 } }
-                            );
-                            let prdIDArr = [];
-                            let prdArr = [];
-                            let strIDArr = {};
 
-                            for (let i = 0; i < custOrders.length; i++) {
-                                for (const key in custOrders[i].items) {
-                                    if (prdIDArr.indexOf(key) === -1) {
-                                        prdIDArr.push(key);
+                        if (!finalPayMth && token) {
+                            stripe.charges.create({
+                                    amount: finalAmount * 100,
+                                    source: token,
+                                    currency: 'inr',
+                                    description: `ZAY_order: ${order._id}`
+                                })
+                                .then(() => {
+                                    order.save()
+                                        .then(async(ord) => {
+                                            //Emit event
+                                            const eventEmitter = req.app.get('eventEmitter')
+                                            eventEmitter.emit('orderPlaced', { order: ord })
+
+                                            const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
+                                            if (!result) {
+                                                res.redirect("/cart");
+                                            }
+
+                                            return res.json({ message: 'Payment successful, Order placed successfully' });
+                                        })
+                                        .catch((err) => {
+                                            console.log(err)
+                                            return res.json({ message: 'We are facing a problem.' });
+                                        })
+
+                                })
+                                .catch(async(err) => {
+                                    order.paymentStatus = false
+                                    order.paymentType = 'COD'
+
+                                    const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
+                                    if (!result) {
+                                        res.redirect("/cart");
                                     }
-                                }
+
+                                    return res.json({ message: 'Order Placed but payment failed, You can pay at delivery time' });
+                                })
+                        } else {
+                            const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
+                            if (!result) {
+                                res.redirect("/cart");
                             }
 
-                            for (let i = 0; i < prdIDArr.length; i++) {
-                                let custProd = await Product.find({ _id: prdIDArr[i] });
-                                prdArr.push(custProd[0]);
-                                let res = await Store.findById({ _id: custProd[0].storeId });
-
-                                let obj = {
-                                    [custProd[0].storeId]: res.storename,
-                                };
-
-                                strIDArr = {
-                                    ...strIDArr,
-                                    ...obj,
-                                };
-                            }
-
-                            res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0')
-                            res.render("customers/custOrders", {
-                                userData,
-                                custOrders,
-                                prdArr,
-                                prdIDArr,
-                                strIDArr,
-                            });
+                            res.redirect('/cust/myOrders');
                         }
                     })
                     .catch((err) => {
@@ -147,7 +148,7 @@ function orderController() {
                     });
             }
 
-            if (finalPayMth) {
+            if (finalPayMth) { //if this is true then payment method will be COD
                 //Add a new order
                 const order = new Order({
                     customerId: req.user._id,
@@ -221,6 +222,143 @@ function orderController() {
             } else {
                 res.redirect("/cust/myOrders");
             }
+        },
+        async returnOrd(req, res) {
+            const { ordID, feaInd, prdID } = req.params;
+            const { returnWhat } = req.body;
+
+            //================================================================================================
+            //General Functions
+            const whenErrCome = (res, ordID, feaInd, prdID) => {
+                res.redirect(`/orderDetails/${ordID}/${feaInd}/${prdID}`);
+            };
+
+            const placeNewOrdFunc = (res, returnOrder, items, price) => {
+                let order = new Order({
+                    customerId: returnOrder.customerId,
+                    items: items,
+                    phone: returnOrder.phone,
+                    address: returnOrder.address,
+                    paymentType: returnOrder.paymentType,
+                    paymentStatus: returnOrder.paymentStatus,
+                    amount: parseInt(price),
+                    status: 'returned',
+                    createdAt: returnOrder.createdAt
+                });
+                order.save()
+                    .then((order) => {
+                        // console.log(order);
+                        res.redirect(`/orderDetails/${order._id}/0/${prdID}`);
+                    })
+                    .catch((err) => {
+                        whenErrCome(res, ordID, feaInd, prdID);
+                    })
+            };
+
+            const calcNewPriceFunc = (feature, index) => {
+                let newPrice = [(feature[index].price * feature[index].qty) / 100] * feature[index].discount;
+                newPrice = (feature[index].price * feature[index].qty) - newPrice;
+                newPrice = Math.round(newPrice);
+
+                return newPrice;
+            };
+
+            const moreThanOneFeatureFunc = (returnOrder, key, ordID) => {
+                let feature = returnOrder.items[key].feature;
+
+                feature.map(async(value, index) => {
+                    if (index == feaInd) {
+                        let newFeature = [];
+                        feature.map((fea, i) => {
+                            if (index != i) {
+                                newFeature.push(fea);
+                            }
+                        })
+
+                        let newPrice = calcNewPriceFunc(feature, index);
+
+                        returnOrder.items[key].feature = newFeature;
+
+                        //Update the Parent Order
+                        let parentOrdAmount = returnOrder.amount - newPrice;
+                        const returnOrderRes = await Order.updateOne({ _id: ordID }, { $set: { items: returnOrder.items, amount: parentOrdAmount } });
+
+                        //Create a new order
+                        let itemsNew = {
+                            [prdID]: {
+                                item: prdID,
+                                feature: [{...value }]
+                            }
+                        };
+                        placeNewOrdFunc(res, returnOrder, itemsNew, newPrice);
+                    }
+                });
+            };
+            //================================================================================================
+
+            //When user want to return all orders
+            if (returnWhat == 'all') {
+
+                const returnOrderRes = await Order.updateOne({ _id: ordID }, { $set: { status: 'returned' } });
+                whenErrCome(res, ordID, feaInd, prdID);
+            }
+            //When user want to return perticular item from the order
+            else if (returnWhat == 'one') {
+
+                const returnOrder = await Order.findById({ _id: ordID });
+
+                //If order contain only one product then
+                if (Object.keys(returnOrder.items).length <= 1) {
+                    for (const key in returnOrder.items) {
+
+                        //if product has only one feature then
+                        if (Object.keys(returnOrder.items[key].feature).length <= 1) {
+                            const returnOrderRes = await Order.updateOne({ _id: ordID }, { $set: { status: 'returned' } });
+                            res.redirect(`/orderDetails/${ordID}/${feaInd}/${prdID}`);
+                        }
+                        //if product has more than one feature then
+                        else {
+                            if (key == prdID) {
+                                moreThanOneFeatureFunc(returnOrder, key, ordID);
+                            }
+                        }
+                    }
+
+                }
+                //If order contain more than one products then
+                else {
+                    for (const key in returnOrder.items) {
+                        if (key == prdID) {
+
+                            //if product has only one feature then
+                            if (Object.keys(returnOrder.items[key].feature).length <= 1) {
+
+                                let feature = returnOrder.items[key].feature;
+                                let newPrice = calcNewPriceFunc(feature, 0);
+
+                                let newOrdItm = {
+                                    [prdID]: returnOrder.items[prdID]
+                                };
+
+                                //Update the Parent Order
+                                let parentOrdAmount = returnOrder.amount - newPrice;
+                                delete returnOrder.items[prdID]
+
+                                const returnOrderRes = await Order.updateOne({ _id: ordID }, { $set: { items: returnOrder.items, amount: parentOrdAmount } });
+
+                                //Create a new order
+                                placeNewOrdFunc(res, returnOrder, newOrdItm, newPrice);
+
+                            }
+                            //if product has more than one feature then
+                            else {
+                                moreThanOneFeatureFunc(returnOrder, key, ordID);
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     };
 }

@@ -12,7 +12,7 @@ const orderSchema = new Schema({
     address: { type: String, required: true },
     paymentType: { type: String, default: 'COD' },
     paymentStatus: { type: Boolean, default: false },
-    amount: { type: Number, required: true},
+    amount: { type: Number, required: true },
     status: { type: String, default: 'placed' }
 }, { timestamps: true })
 

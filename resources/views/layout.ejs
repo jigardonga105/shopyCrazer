@@ -56,6 +56,8 @@
                                                 <% } else { %>
                                                     <a class="text-light p-2" href="/logout" style="text-decoration: none;">Logout</a>
                                                     <% } %>
+
+
                                                         <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
                                                                 class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
                                                         <a class="text-light" href="https://www.instagram.com/" target="_blank"><i
@@ -84,6 +86,22 @@
             <a href="#">My Wishlist</a>
             <a href="/myAccount">My Account</a>
             <a href="#">My Notification</a>
+            <% if(user) {%>
+                <% if(user.role==='admin') { %>
+                    <hr>
+                    <a href="/adminSection/index">Admin Section</a>
+                    <% } %>
+                        <% } %>
+                            <% if(user) {%>
+                                <% if(user.role==='courier') { %>
+                                    <hr>
+                                    <a href="/courierSection/index">Courier Section</a>
+                                    <% } %>
+                                        <% } %>
+                                            <hr>
+                                            <hr>
+                                            <a href="/courieAgeDashBoard/index">Courier Agents</a>
+
         </div>
 
         <div id="main" style="display: inline;position: absolute;z-index: 5;left: -16px;top: 45px;">
@@ -334,6 +352,9 @@
         <script src="/js/bootstrap.bundle.min.js"></script>
         <script src="/js/templatemo.js"></script>
         <script src="/js/custom.js"></script>
+
+
+        <script src="/socket.io/socket.io.js"></script>
         <script src="/js/app.js"></script>
         <!-- End Script -->
 </body>

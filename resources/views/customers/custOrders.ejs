@@ -3,33 +3,33 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <style>
-        .ptagCSS{
+        .ptagCSS {
             font-size: 13px !important;
             margin: 0;
             margin-bottom: 3px;
             color: #a9a7a7;
         }
-
-        .dot{
+        
+        .dot {
             width: 10px;
             height: 10px;
             border-radius: 50px;
             margin-right: 5px;
         }
-
-        .greenEmptyDot{
+        
+        .greenEmptyDot {
             border: 2px solid rgb(33, 177, 33);
         }
-
-        .greenDot{
+        
+        .greenDot {
             background-color: rgb(33, 177, 33);
         }
-
-        .redDot{
+        
+        .redDot {
             background-color: #fc0505;
         }
-
-        .yellowDot{
+        
+        .yellowDot {
             background-color: rgb(246, 255, 0);
         }
     </style>
@@ -37,30 +37,34 @@
 
 <body>
     <div class="bg-gray-100">
-        <input type="hidden" id="userData"  data-user="<%= JSON.stringify(userData) %>">
-        <input type="hidden" id="custOrders"  data-orders="<%= JSON.stringify(custOrders) %>">
-        <input type="hidden" id="prdArr"  data-products="<%= JSON.stringify(prdArr) %>">
+        <input type="hidden" id="userData" data-user="<%= JSON.stringify(userData) %>">
+        <input type="hidden" id="custOrders" data-orders="<%= JSON.stringify(custOrders) %>">
+        <input type="hidden" id="prdArr" data-products="<%= JSON.stringify(prdArr) %>">
         <input type="hidden" id="prdIDArr" value="<%= JSON.stringify(prdIDArr) %>">
         <input type="hidden" id="strIDArr" value="<%= JSON.stringify(strIDArr) %>">
 
         <div class="pt-5 flex gap-x-8">
             <div class="leftFilter inline-block ml-10 py-3 bg-white rounded shadow" style="width: 300px;height: 250px;">
-                <div class="pl-10"><h3>Filter</h3></div>
+                <div class="pl-10">
+                    <h3>Filter</h3>
+                </div>
                 <hr>
                 <div class="pl-10">
-                    <div><h5><strong>Status</strong></h5></div>
+                    <div>
+                        <h5><strong>Status</strong></h5>
+                    </div>
                     <div class="cursor-pointer">
                         <div class="filterChbDiv">
                             <input id="all" type="radio" name="filtRadio" value="all" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
-                            <label for="placed" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">All</label>
+                            <label for="All" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">All</label>
                         </div>
                         <div class="filterChbDiv">
                             <input id="placed" type="radio" name="filtRadio" value="placed" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
-                            <label for="placed" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remained</label>
+                            <label for="Remainings" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remainings</label>
                         </div>
                         <div class="filterChbDiv">
-                            <input id="delivered" type="radio" name="filtRadio" value="delivered" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
-                            <label for="delivered" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Delivered</label>
+                            <input id="completed" type="radio" name="filtRadio" value="completed" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="completed" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Delivered</label>
                         </div>
                         <div class="filterChbDiv">
                             <input id="cancelled" type="radio" name="filtRadio" value="cancelled" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
@@ -76,7 +80,7 @@
             <div class="rightOrds rounded" style="width: 1020px;">
                 <div id="allOrd" class="allOrd"></div>
                 <div id="placedOrd" class="placedOrd" style="display: none;"></div>
-                <div id="deliveredOrd" class="deliveredOrd" style="display: none;"></div>
+                <div id="completedOrd" class="completedOrd" style="display: none;"></div>
                 <div id="cancelledOrd" class="cancelledOrd" style="display: none;"></div>
                 <div id="returnedOrd" class="returnedOrd" style="display: none;"></div>
             </div>
@@ -89,13 +93,13 @@
     let userData = JSON.parse(userDataInp.dataset.user);
     let cartCounter = document.getElementById("cartCounter");
 
-    if (userData.cart) {   
+    if (userData.cart) {
         let totalQty = userData.cart['custID_' + userData._id + '_cart'].totalQty
-        // console.log('cart found');
+            // console.log('cart found');
         cartCounter.innerText = totalQty;
-    }else{
+    } else {
         // console.log('cart not found');
-        setTimeout(function () {
+        setTimeout(function() {
             cartCounter.innerText = ``;
         }, 2000);
     }
@@ -120,30 +124,30 @@
     let noOrder = document.getElementById("noOrder");
     let allOrd = document.getElementById('allOrd');
     let placedOrd = document.getElementById('placedOrd');
-    let deliveredOrd = document.getElementById('deliveredOrd');
+    let completedOrd = document.getElementById('completedOrd');
     let cancelledOrd = document.getElementById('cancelledOrd');
     let returnedOrd = document.getElementById('returnedOrd');
 
-    function fillOrderDivFunc(div, prdArrJ, ordItmKey, ord, strIDArr, color, size, qty, price, discount, index){
+    function fillOrderDivFunc(div, prdArrJ, ordItmKey, ord, strIDArr, color, size, qty, price, discount, index) {
 
         let imgPath = prdArrJ.image[0].img;
         let name = prdArrJ.name;
         let storeName;
-        price = Math.round(price - [(price/100) * discount]);
+        price = Math.round(price - [(price / 100) * discount]);
         let status = ord.status;
         let dot = 'greenEmptyDot';
         let dateTime = new Date(ord.updatedAt);
 
-        if(status == 'cancelled'){
+        if (status == 'cancelled') {
             status = 'Cancelled on';
             dot = 'redDot';
-        }else if(status == 'returned'){
+        } else if (status == 'returned') {
             status = 'Returned on';
             dot = 'yellowDot';
-        }else if(status == 'delivered'){
+        } else if (status == 'completed') {
             status = 'Delivered on';
             dot = 'greenDot';
-        }else{
+        } else {
             status = 'Delivery expected by'
             dateTime = new Date(new Date(ord.updatedAt).getTime() + (5 * 24 * 60 * 60 * 1000));
         }
@@ -157,7 +161,7 @@
         let month = months[dateTime.getMonth()];
 
         for (const key in strIDArr) {
-            if(key === prdArrJ.storeId){
+            if (key === prdArrJ.storeId) {
                 storeName = strIDArr[key];
             }
         }
@@ -197,7 +201,7 @@
         div.innerHTML += html;
     }
 
-    function runFillOrderDivFunc(ordItm, prdArr, div, ord, strIDArr){
+    function runFillOrderDivFunc(ordItm, prdArr, div, ord, strIDArr) {
         if (Object.keys(ordItm).length > 0) {
             for (var key in ordItm) {
                 if (ordItm.hasOwnProperty(key)) {
@@ -213,30 +217,35 @@
         }
     }
 
-    function checkedUncheckedFiltFunc(custOrders, filtVal, filteredDiv){
-        for (let j = 0; j < custOrders.length; j++)
-        {
+    function checkedUncheckedFiltFunc(custOrders, filtVal, filteredDiv) {
+        for (let j = 0; j < custOrders.length; j++) {
             let ord = custOrders[j];
             let ordItm = ord.items;
-            
-            if(ord.status == filtVal){
-                runFillOrderDivFunc(ordItm, prdArr, filteredDiv, ord, strIDArr);
+
+
+            if (ord.status == 'confirmed' || ord.status == 'shipped' || ord.status == 'delivery') {
+                if (filtVal == 'placed') {
+                    runFillOrderDivFunc(ordItm, prdArr, filteredDiv, ord, strIDArr);
+                }
+            } else {
+                if (ord.status == filtVal) {
+                    runFillOrderDivFunc(ordItm, prdArr, filteredDiv, ord, strIDArr);
+                }
             }
 
-            if(filteredDiv.id == 'allOrd'){
+            if (filteredDiv.id == 'allOrd') {
                 runFillOrderDivFunc(ordItm, prdArr, filteredDiv, ord, strIDArr);
             }
         }
     }
 
-    let divsArr = [allOrd, placedOrd, deliveredOrd, cancelledOrd, returnedOrd];
-    let filterChBValues = ["all", "placed", "delivered", "cancelled", "returned"];
+    let divsArr = [allOrd, placedOrd, completedOrd, cancelledOrd, returnedOrd];
+    let filterChBValues = ["all", "placed", "completed", "cancelled", "returned"];
 
     filterChBValues.map((value) => {
         let filterChBInp = document.getElementById(value);
         let filtVal = filterChBInp.value;
-        if(filtVal == value)
-        {
+        if (filtVal == value) {
             let filteredDiv = `${value}Ord`;
             filteredDiv = document.getElementById(filteredDiv);
             checkedUncheckedFiltFunc(custOrders, filtVal, filteredDiv);
@@ -250,16 +259,16 @@
             let filtVal = filterChB[i].value;
 
             filterChBValues.map((value) => {
-                if(filtVal == value){
+                if (filtVal == value) {
                     divsArr.map((divElem) => {
-                        if(divElem.id == `${value}Ord`){
+                        if (divElem.id == `${value}Ord`) {
                             divElem.style.display = 'block';
-                            if(!divElem.innerHTML){
+                            if (!divElem.innerHTML) {
                                 divElem.innerHTML = `<div class="flex justify-center my-12">
                                                         <h4 class="border rounded p-10 bg-white shadow-2xl cursor-pointer">You don't have any orders till today!</h4>
                                                     </div>`;
                             }
-                        }else{
+                        } else {
                             divElem.style.display = 'none';
                         }
                     })
@@ -267,5 +276,4 @@
             })
         })
     }
-
 </script>

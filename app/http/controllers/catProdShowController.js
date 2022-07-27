@@ -5,13 +5,23 @@ function catProdShowController() {
     return {
         async showCategory(req, res) {
             const products = await Product.find({ category: req.params.category });
-            // console.log(products);
-            return res.render('customers/shop', { products });
+
+            if (req.session.courierAgents) {
+                var courierAgents = req.session.courierAgents;
+                return res.render('customers/shop', { cAg: true, courierAgents, products });
+            } else {
+                return res.render('customers/shop', { cAg: false, products });
+            }
         },
         async showSubCategory(req, res) {
             const products = await Product.find({ category: req.params.category, subcategory: req.params.subCategory });
-            // console.log(products);
-            return res.render('customers/shop', { products });
+
+            if (req.session.courierAgents) {
+                var courierAgents = req.session.courierAgents;
+                return res.render('customers/shop', { cAg: true, courierAgents, products });
+            } else {
+                return res.render('customers/shop', { cAg: false, products });
+            }
         },
         async viewProduct(req, res) {
             const product = await Product.find({ _id: req.params.prdID });
@@ -21,10 +31,12 @@ function catProdShowController() {
             let subcategory = product[0].subcategory;
             const relatedPrds = await Product.find({ category, subcategory });
 
-            // console.log(product);
-            // console.log(store);
-            // console.log(relatedPrd);
-            return res.render('customers/shop-single', { product, store, relatedPrds });
+            if (req.session.courierAgents) {
+                var courierAgents = req.session.courierAgents;
+                return res.render('customers/shop-single', { cAg: true, courierAgents, product, store, relatedPrds });
+            } else {
+                return res.render('customers/shop', { cAg: false, store, relatedPrds });
+            }
         }
     }
 }

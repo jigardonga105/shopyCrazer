@@ -28,15 +28,20 @@ mongoose.connect(process.env.MONGO_CONNECTION_URL, {
         console.log(err);
     })
 
+//Event Emitter
+const eventEmitter = new Emitter();
+app.set('eventEmitter', eventEmitter);
+
 //session config
 app.use(session({
     secret: process.env.COOKIE_SECRET,
     resave: false,
     store: MongoDbStore.create({
-        mongoUrl: process.env.MONGO_CONNECTION_URL
+        mongoUrl: process.env.MONGO_CONNECTION_URL,
+        // ttl: 30 * 24 * 60 * 60 // = 30 days
     }),
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 hours
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 3 } // 3 days
 }))
 
 //Passport config
@@ -70,7 +75,8 @@ var storage = multer.diskStorage({
     }
 })
 app.use(multer({ storage: storage }).any("image"))
-    //==============================================================================================
+
+//==============================================================================================
 
 //Global middlewares
 app.use((req, res, next) => {
@@ -91,3 +97,23 @@ require('./routes/web')(app)
 const server = app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })
+
+const io = require('socket.io')(server);
+io.on('connection', (socket) => {
+    // console.log(socket.id);
+
+    // Join
+    socket.on('join', (orderId) => {
+        // console.log(orderId);
+        socket.join(orderId);
+    });
+});
+
+eventEmitter.on('orderUpdated', (data) => {
+    // console.log(data);
+    io.to(`order_${data.id}`).emit('orderUpdated', data);
+});
+
+eventEmitter.on('orderPlaced', (data) => {
+    io.to(`${JSON.parse(data.order.address)['add-state']}'s_Room`).emit('orderPlaced', data);
+});
