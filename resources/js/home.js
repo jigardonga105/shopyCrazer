@@ -27,6 +27,8 @@ export function home() {
         subCatObjKeyArr.map(subCat => {
             let li = document.createElement("li");
             li.setAttribute('class', 'cat-dropdown-li');
+            li.style.display = 'grid';
+            li.style.justifyContent = 'center';
 
             let a = document.createElement("a");
 

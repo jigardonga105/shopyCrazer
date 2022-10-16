@@ -348,7 +348,7 @@ export function myAcc() {
                                 <span>
                                     <h1>Your varification code is: ${otp}</h1>
                                     <br>
-                                    <h3>for update email address in Zay Shop.</h3>
+                                    <h3>for update email address in shopyCrazer Shop.</h3>
                                 </span>
                             </div>`;
 
@@ -374,7 +374,7 @@ export function myAcc() {
                                                     <br>
                                                     <h2>Your new email address is: ${user.email}</h2>
                                                     <br>
-                                                    <h3>Thank you for using Zay Shop.</h3>
+                                                    <h3>Thank you for using shopyCrazer Shop.</h3>
                                                 </span>
                                             </div>`;
 
@@ -469,7 +469,7 @@ export function myAcc() {
                                         <br>
                                         <h2>Your new Contact Number is: ${user.phone}</h2>
                                         <br>
-                                        <h3>Thank you for using Zay Shop.</h3>
+                                        <h3>Thank you for using shopyCrazer Shop.</h3>
                                     </span>
                                 </div>`;
 

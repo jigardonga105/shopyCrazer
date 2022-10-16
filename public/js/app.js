@@ -2776,6 +2776,8 @@ function home() {
     subCatObjKeyArr.map(function (subCat) {
       var li = document.createElement("li");
       li.setAttribute('class', 'cat-dropdown-li');
+      li.style.display = 'grid';
+      li.style.justifyContent = 'center';
       var a = document.createElement("a");
       a.innerHTML = subCat;
       a.setAttribute('href', "/category/".concat(category, "/").concat(subCat));
@@ -3388,7 +3390,7 @@ function myAcc() {
             });
 
             var subject = 'Verify Your Email Address';
-            var body = "<div>\n                                <span>\n                                    <h1>Your varification code is: ".concat(_otp, "</h1>\n                                    <br>\n                                    <h3>for update email address in Zay Shop.</h3>\n                                </span>\n                            </div>");
+            var body = "<div>\n                                <span>\n                                    <h1>Your varification code is: ".concat(_otp, "</h1>\n                                    <br>\n                                    <h3>for update email address in shopyCrazer Shop.</h3>\n                                </span>\n                            </div>");
             sendEmail(email, subject, body);
             emailVarDiv.style.display = 'block';
             document.getElementById("email-pass-save-btn").addEventListener("click", function () {
@@ -3404,7 +3406,7 @@ function myAcc() {
                   putDataInField();
                   showMSG(document.getElementById('email-span'), '#4ab74a');
                   var subject = 'Successfully changed your email address';
-                  var body = "<div>\n                                                <img src=\"/img/apple-icon.png\" style=\"margin: auto;\">\n                                                <span>\n                                                    <h1>You have successfully changed your email address</h1>\n                                                    <br>\n                                                    <h2>Your new email address is: ".concat(user.email, "</h2>\n                                                    <br>\n                                                    <h3>Thank you for using Zay Shop.</h3>\n                                                </span>\n                                            </div>");
+                  var body = "<div>\n                                                <img src=\"/img/apple-icon.png\" style=\"margin: auto;\">\n                                                <span>\n                                                    <h1>You have successfully changed your email address</h1>\n                                                    <br>\n                                                    <h2>Your new email address is: ".concat(user.email, "</h2>\n                                                    <br>\n                                                    <h3>Thank you for using shopyCrazer Shop.</h3>\n                                                </span>\n                                            </div>");
                   sendEmail(user.email, subject, body);
                 })["catch"](function (error) {
                   console.log(error);
@@ -3477,7 +3479,7 @@ function myAcc() {
             putDataInField();
             showMSG(document.getElementById('phone-span'), '#4ab74a');
             var subject = 'Successfully changed your Contact Number';
-            var body = "<div>\n                                    <img src=\"/img/apple-icon.png\" style=\"margin: auto;\">\n                                    <span>\n                                        <h1>You have successfully changed your Contact Number</h1>\n                                        <br>\n                                        <h2>Your new Contact Number is: ".concat(user.phone, "</h2>\n                                        <br>\n                                        <h3>Thank you for using Zay Shop.</h3>\n                                    </span>\n                                </div>");
+            var body = "<div>\n                                    <img src=\"/img/apple-icon.png\" style=\"margin: auto;\">\n                                    <span>\n                                        <h1>You have successfully changed your Contact Number</h1>\n                                        <br>\n                                        <h2>Your new Contact Number is: ".concat(user.phone, "</h2>\n                                        <br>\n                                        <h3>Thank you for using shopyCrazer Shop.</h3>\n                                    </span>\n                                </div>");
             sendEmail(user.email, subject, body);
           }, function (error) {
             console.log(error);

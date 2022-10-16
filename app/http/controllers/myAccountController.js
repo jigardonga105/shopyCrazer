@@ -23,7 +23,7 @@ function myAccountController() {
 
             client.messages
                 .create({
-                    body: `${otp} is your One Time Password for change Phone Number in Zay.`,
+                    body: `${otp} is your One Time Password for change Phone Number in shopyCrazer.`,
                     from: '+17208939563',
                     to: '+919624233580'
                         // to: '+91' + phoneNumber //Trial accounts cannot send messages to unverified numbers;

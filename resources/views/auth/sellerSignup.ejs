@@ -88,7 +88,15 @@
                     </div>
         </form>
         <p class="text-center text-gray-500 text-xs  pb-24">
-            &copy;2021-22 Zay. All rights reserved.
+            &copy;<span id="sellerSignupCopyYear"></span> shopyCrazer. All rights reserved.
         </p>
     </div>
 </section>
+
+<script>
+    let copyYear = document.getElementById('sellerSignupCopyYear');
+    let date = new Date();
+    let year = date.getFullYear();
+
+    copyYear.innerHTML = year;
+</script>

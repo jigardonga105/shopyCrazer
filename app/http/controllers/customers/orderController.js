@@ -101,7 +101,7 @@ function orderController() {
                                     amount: finalAmount * 100,
                                     source: token,
                                     currency: 'inr',
-                                    description: `ZAY_order: ${order._id}`
+                                    description: `shopyCrazer_order: ${order._id}`
                                 })
                                 .then(() => {
                                     order.save()
