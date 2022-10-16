@@ -127,6 +127,9 @@ function orderController() {
                                     order.paymentStatus = false
                                     order.paymentType = 'COD'
 
+                                    const eventEmitter = req.app.get('eventEmitter')
+                                    eventEmitter.emit('orderPlaced', { order: order })
+
                                     const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
                                     if (!result) {
                                         res.redirect("/cart");
@@ -135,6 +138,9 @@ function orderController() {
                                     return res.json({ message: 'Order Placed but payment failed, You can pay at delivery time' });
                                 })
                         } else {
+                            const eventEmitter = req.app.get('eventEmitter')
+                            eventEmitter.emit('orderPlaced', { order: order })
+
                             const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
                             if (!result) {
                                 res.redirect("/cart");

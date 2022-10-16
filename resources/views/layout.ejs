@@ -2,22 +2,27 @@
 <html lang="en">
 
 <head>
-    <title>Zay Shop</title>
+    <title>shopyCrazer - Make your day greatefull</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="/img/apple-icon.png">
-    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css" />
+
     <link rel="stylesheet" href="/css/templatemo.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/app.css">
 
-    <!-- Load fonts style after rendering the layout styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="/fontawesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/fontawesome.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+
 
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="/css/slick.min.css">
@@ -26,6 +31,8 @@
     <script src="https://kit.fontawesome.com/fc3dca529c.js" crossorigin="anonymous"></script>
 </head>
 
+<!-- <body oncontextmenu="return false"> -->
+
 <body>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -33,39 +40,56 @@
             <div class="w-100 d-flex justify-content-between">
                 <div>
                     <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none"
+                        href="mailto:info@shopyCrazer.com">info@shopyCrazer.com</a>
                     <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:1234567890">1234567890</a>
                 </div>
                 <div>
 
                     <% if(user) {%>
                         <% if(user.role==='seller' ) { %>
-                            <a class="seller-bord-blink text-light p-2" href="/seller/sellerStr" style="text-decoration: none;">Profile</a>
+                            <a class="seller-bord-blink text-light p-2" href="/seller/sellerStr"
+                                style="text-decoration: none;">Profile</a>
                             <%} else {%>
-                                <a class="seller-bord-blink text-light p-2" href="/sellerReg" style="text-decoration: none;">Seller</a>
+                                <a class="seller-bord-blink text-light p-2" href="/sellerReg"
+                                    style="text-decoration: none;">Seller</a>
                                 <% } %>
                                     <% } else { %>
-                                        <a class="seller-bord-blink text-light p-2" href="/sellerReg" style="text-decoration: none;">Seller</a>
+                                        <a class="seller-bord-blink text-light p-2" href="/sellerReg"
+                                            style="text-decoration: none;">Seller</a>
                                         <% } %>
 
 
                                             <% if (!user) { %>
-                                                <a class="text-light p-2" href="/login" style="text-decoration: none;">Login</a>
-                                                <a class="text-light p-2" href="/signup" style="text-decoration: none;">Register</a>
+                                                <a class="text-light p-2" href="/login"
+                                                    style="text-decoration: none;">Login</a>
+                                                <a class="text-light p-2" href="/signup"
+                                                    style="text-decoration: none;">Register</a>
                                                 <% } else { %>
-                                                    <a class="text-light p-2" href="/logout" style="text-decoration: none;">Logout</a>
+                                                    <a class="text-light p-2" href="/logout"
+                                                        style="text-decoration: none;">Logout</a>
                                                     <% } %>
 
 
-                                                        <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
-                                                                class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
-                                                        <a class="text-light" href="https://www.instagram.com/" target="_blank"><i
-                                                                class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                                                        <a class="text-light" href="https://twitter.com/" target="_blank"><i
-                                                                class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                                                        <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i
-                                                                class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                                                        <a class="text-light" href="https://www.facebook.com/"
+                                                            target="_blank" rel="sponsored">
+                                                            <i class="fab fa-facebook-f fa-sm fa-fw me-2"></i>
+                                                        </a>
+                                                        <a class="text-light"
+                                                            href="https://www.instagram.com/jigsdonga25__/"
+                                                            target="_blank">
+                                                            <i class="fab fa-instagram fa-sm fa-fw me-2"></i>
+                                                        </a>
+                                                        <a class="text-light" href="https://twitter.com/"
+                                                            target="_blank">
+                                                            <i class="fab fa-twitter fa-sm fa-fw me-2"></i>
+                                                        </a>
+                                                        <a class="text-light"
+                                                            href="https://www.linkedin.com/in/jigardonga/"
+                                                            target="_blank">
+                                                            <i class="fab fa-linkedin fa-sm fa-fw"></i>
+                                                        </a>
                 </div>
             </div>
         </div>
@@ -79,7 +103,7 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <a href="#">All Categories</a>
             <a href="#">Offer Zone</a>
-            <a href="/sellerReg">Sell on Zay</a>
+            <a href="/sellerReg">Sell on shopyCrazer</a>
             <hr>
             <a href="/cust/myOrders">My Orders</a>
             <a href="/cart">My Cart</a>
@@ -87,13 +111,13 @@
             <a href="/myAccount">My Account</a>
             <a href="#">My Notification</a>
             <% if(user) {%>
-                <% if(user.role==='admin') { %>
+                <% if(user.role==='admin' ) { %>
                     <hr>
                     <a href="/adminSection/index">Admin Section</a>
                     <% } %>
                         <% } %>
                             <% if(user) {%>
-                                <% if(user.role==='courier') { %>
+                                <% if(user.role==='courier' ) { %>
                                     <hr>
                                     <a href="/courierSection/index">Courier Section</a>
                                     <% } %>
@@ -129,15 +153,18 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand text-success logo h1 align-self-center" href="/index">
-                Zay
+            <a class="navbar-brand text-success logo h1 align-self-center" id="logoSection" href="/index">
+
             </a>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+                id="templatemo_main_nav">
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
@@ -192,21 +219,25 @@
                                     <% } %>
                                         <% } %>
                     </a>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
+                        data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/cart">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
 
                         <% if(user && user.cart) { %>
-                            <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>" data-user="<%= JSON.stringify(user) %>">
+                            <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>"
+                                data-user="<%= JSON.stringify(user) %>">
                             <% } %>
 
-                                <span id="cartCounter" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                                <span id="cartCounter"
+                                    class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="/notifications">
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                        <span
+                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                     </a>
                 </div>
             </div>
@@ -217,7 +248,8 @@
     <!-- Close Header -->
 
     <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="w-100 pt-1 mb-5 text-right">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -236,23 +268,27 @@
     <%- body %>
 
         <!-- Start Footer -->
-        <footer class="bg-dark" id="tempaltemo_footer">
+        <footer style="background-color: black;" id="tempaltemo_footer">
             <div class="container">
                 <div class="row">
 
                     <div class="col-md-4 pt-5">
-                        <h2 class="h2 text-success border-bottom pb-3 border-light logo">Zay Shop</h2>
+                        <!-- <h2 class="h2 text-success border-bottom pb-3 border-light logo">shopyCrazer</h2> -->
+                        <a class="navbar-brand text-success logo h1 align-self-center" href="/index">
+                            <img src="/img/logo.png" alt="shopyCrazer" width="200" height="50">
+                        </a>
                         <ul class="list-unstyled text-light footer-link-list">
                             <li>
-                                <i class="fas fa-map-marker-alt fa-fw"></i> 123 Consectetur at ligula 10660
+                                <i class="fas fa-map-marker-alt fa-fw"></i> Gujarat, India
                             </li>
                             <li>
                                 <i class="fa fa-phone fa-fw"></i>
-                                <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                                <a class="text-decoration-none" href="tel:1234567890">1234567890</a>
                             </li>
                             <li>
                                 <i class="fa fa-envelope fa-fw"></i>
-                                <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                                <a class="text-decoration-none"
+                                    href="mailto:info@shopyCrazer.com">info@shopyCrazer.com</a>
                             </li>
                         </ul>
                     </div>
@@ -290,35 +326,42 @@
                     <div class="col-auto me-auto">
                         <ul class="list-inline text-left footer-icons">
                             <li class="list-inline-item border border-light rounded-circle text-center">
-                                <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                                <a class="text-light text-decoration-none" target="_blank"
+                                    href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
                             </li>
                             <li class="list-inline-item border border-light rounded-circle text-center">
-                                <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                                <a class="text-light text-decoration-none" target="_blank"
+                                    href="https://www.instagram.com/jigsdonga25__/"><i
+                                        class="fab fa-instagram fa-lg fa-fw"></i></a>
                             </li>
                             <li class="list-inline-item border border-light rounded-circle text-center">
-                                <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
+                                <a class="text-light text-decoration-none" target="_blank"
+                                    href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
                             </li>
                             <li class="list-inline-item border border-light rounded-circle text-center">
-                                <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                                <a class="text-light text-decoration-none" target="_blank"
+                                    href="https://www.linkedin.com/in/jigardonga/"><i
+                                        class="fab fa-linkedin fa-lg fa-fw"></i></a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-auto">
                         <label class="sr-only" for="subscribeEmail">Email address</label>
                         <div class="input-group mb-2">
-                            <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
+                            <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
+                                placeholder="Email address">
                             <div class="input-group-text btn-success text-light">Subscribe</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="w-100 bg-black py-3">
+            <div class="w-100 py-3" style="background-color: #060607;">
                 <div class="container">
                     <div class="row pt-2">
                         <div class="col-12">
                             <p class="text-left text-light">
-                                Copyright &copy; 2021 Company Name | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                                Copyright &copy; <span id="copyYear"></span> shopyCrazer
                             </p>
                         </div>
                     </div>
@@ -344,6 +387,26 @@
             } else {
                 cartCounterSpan.innerText = '';
             }
+
+            let copyYear = document.getElementById('copyYear');
+            let date = new Date();
+            let year = date.getFullYear();
+
+            copyYear.innerHTML = year;
+
+            const loadVideoLogo = () => {
+                document.getElementById('logoSection').innerHTML = `<video width="200" height="50" autoplay loop>
+                                                                        <source src="/img/video_logo.mp4" type="video/mp4">
+                                                                        <source src="movie.ogg" type="video/ogg">
+                                                                        <img src="/img/logo.png" alt="shopyCrazer" width="200" height="50">
+                                                                    </video>`;
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(() => {
+                    loadVideoLogo();
+                }, 1000);
+            }, false);
         </script>
 
         <!-- Start Script -->

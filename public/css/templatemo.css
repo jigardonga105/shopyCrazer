@@ -188,10 +188,9 @@ div {
 }
 
 .card.product-wap .card .product-overlay {
-    background: rgba(0, 0, 0, 0.2);
     visibility: hidden;
     opacity: 0;
-    transition: 0.3s;
+    transition: 1s;
 }
 
 .card.product-wap:hover .card .product-overlay {

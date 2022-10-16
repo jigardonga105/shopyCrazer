@@ -141,9 +141,10 @@ function authController() {
                 req.login(user, (err) => {
                     if (err) {
                         req.flash('error', info.message)
+                        // return res.redirect('/login')
+                    } else {
                         return res.redirect('/')
                     }
-                    return res.redirect('/')
                 })
             })(req, res, next)
         },

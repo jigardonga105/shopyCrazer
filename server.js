@@ -15,18 +15,21 @@ const Emitter = require('events')
 const multer = require("multer");
 
 // Database connection:-
-mongoose.connect(process.env.MONGO_CONNECTION_URL, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: true
+let dbUrl = process.env.MONGO_CONNECTION_URL;
+(async () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const conn = mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+            if (conn) {
+                console.log('Database connection established...');
+                resolve(true);
+            }
+        } catch (error) {
+            console.log('Database connection failed...');
+            reject(error);
+        }
     })
-    .then(() => {
-        console.log('Database connection established...');
-    })
-    .catch((err) => {
-        console.log(err);
-    })
+})();
 
 //Event Emitter
 const eventEmitter = new Emitter();
@@ -37,7 +40,7 @@ app.use(session({
     secret: process.env.COOKIE_SECRET,
     resave: false,
     store: MongoDbStore.create({
-        mongoUrl: process.env.MONGO_CONNECTION_URL,
+        mongoUrl: dbUrl,
         // ttl: 30 * 24 * 60 * 60 // = 30 days
     }),
     saveUninitialized: false,
@@ -115,5 +118,6 @@ eventEmitter.on('orderUpdated', (data) => {
 });
 
 eventEmitter.on('orderPlaced', (data) => {
+    // console.log(data);
     io.to(`${JSON.parse(data.order.address)['add-state']}'s_Room`).emit('orderPlaced', data);
 });

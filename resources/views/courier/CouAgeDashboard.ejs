@@ -342,12 +342,9 @@
             let orderId = form.get('orderId');
             let status = form.get('status');
 
-            axios.post('/courieAgeDashBoard/cSt', {
-                    orderId,
-                    status
-                })
+            axios.post('/courieAgeDashBoard/cSt', { orderId, status })
                 .then((response) => {
-                    // console.log(response.data.msg);
+                    console.log(response.data.msg);
                     if (response.data.msg == 'updated') {
                         new Noty({
                             type: 'success',
@@ -374,8 +371,9 @@
                             progressBar: false,
                         }).show();
                     }
-                }, (error) => {
-                    // console.log(error);
+                })
+                .catch((error) => {
+                    console.log(error);
                     if (error) {
                         new Noty({
                             type: 'error',
@@ -480,6 +478,7 @@
                                                     <div class="inline-block relative w-48">
                                                         <form action="/courieAgeDashBoard/cSt" class="chnStatusForm" method="POST">
                                                             <input type="hidden" name="orderId" value="${ order._id }">
+                                                            
                                                             <select name="status" id="${ order._id }-select" onchange="changeStatusFunc(this.form)"
                                                                 class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                                                 <option value="placed" ${ order.status === 'placed' ? 'selected' : '' }>
@@ -504,6 +503,7 @@
                                                                     Cancelled
                                                                 </option>
                                                             </select>
+
                                                         </form>
                                                         <div
                                                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -575,6 +575,13 @@
         }
 
         socket.on('orderPlaced', (data) => {
+            new Noty({
+                type: 'success',
+                timeout: 2000,
+                text: 'New order placed.',
+                progressBar: false,
+            }).show();
+
             stOrd.unshift(data.order);
 
             seperatesOrds(stOrd);

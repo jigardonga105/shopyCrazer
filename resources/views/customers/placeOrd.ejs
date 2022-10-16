@@ -25,8 +25,7 @@
                     <p id="addNotMsg" class="text-red-500 font-bold" style="display: none;">*Please add Address</p>
                 </div>
                 <div id="allAddDivBtn" class=""></div>
-                <div id="allAddressDiv" class="bg-light inline-block rounded" style="width: 580px;">
-                </div>
+                <div id="allAddressDiv" class="bg-light inline-block rounded" style="width: 580px;"></div>
                 <div class="ml-5 mt-3">
                     <span><a href="/myAccount" id="myAccBTN">Add more Addresses</a></span>
                 </div>
@@ -158,14 +157,14 @@
     for (let i = 0; i < selectedAddInp.length; i++) {
         seperateAdds[i].addEventListener('click', () => {
             selectedAdd = selectedAddInp[i].value;
-            console.log(selectedAdd);
+            // console.log(selectedAdd);
         })
     }
     for (let i = 0; i < payMethod.length; i++) {
 
         payMethod[i].addEventListener('change', () => {
             payMethodVal = payMethod[i].value;
-            console.log(payMethodVal);
+            // console.log(payMethodVal);
         })
 
     }

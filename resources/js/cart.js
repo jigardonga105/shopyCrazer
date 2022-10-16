@@ -18,24 +18,23 @@ export function cart() {
         //if user click on shopSingle page counter
         var prdQty;
         let shopSingleCounter = document.getElementsByClassName('shopSingleCounter')[0];
-        if(shopSingleCounter){
+        if (shopSingleCounter) {
             prdQty = shopSingleCounter.innerHTML;
-        }
-        else{
+        } else {
             prdQty = 1;
         }
 
         //if user select color
         var color;
         let colorImg = document.getElementsByClassName('select')[0];
-        if(colorImg){
+        if (colorImg) {
             color = colorImg.nextElementSibling.dataset.value;
         }
 
         //if user select size
         var size
         let selectedSize = document.getElementsByClassName('selectedSize')[0];
-        if(selectedSize){
+        if (selectedSize) {
             size = selectedSize.dataset.value;
         }
 
@@ -81,7 +80,7 @@ export function cart() {
     //==================================================================
     //==================================================================
     //==================================================================
-    function forRightSideDiv(cartTotalQty, cartTotalPrice, cartTotalDiscount){
+    function forRightSideDiv(cartTotalQty, cartTotalPrice, cartTotalDiscount) {
 
         let cartRightDiv = document.getElementById('cartRightDiv');
 
@@ -151,7 +150,7 @@ export function cart() {
             let feature = cartData[`custID_${user._id}_cart`].items[`${prd._id}`].feature
 
             for (let featureKey in feature) {
-                
+
                 let prdStr = `<div class="grid grid-cols-6 my-4 pt-3 border-t">
                                 <div class="flex flex-col col-span-1">
                                     <div class="h-24 overflow-hidden mx-auto">
@@ -253,17 +252,17 @@ export function cart() {
                                     </div>
                                     <div class="mt-3 bg-gray-100 p-2 shadow">
                                         <div>
-                                            <span class="font-bold mr-2">color:</span>${feature[featureKey].color}
+                                            ${feature[featureKey].color ? '<span class="font-bold mr-2">Color:</span>' + feature[featureKey].color : ''}
                                         </div>
                                         <div>
-                                            <span class="font-bold mr-2">size:</span>${feature[featureKey].size ? feature[featureKey].size : '---'}
+                                            ${feature[featureKey].size ? '<span class="font-bold mr-2">Size:</span>' + feature[featureKey].size : ''}
                                         </div>
                                     </div>
                                 </div>
                                 </div>`;
-    
+
                 allCartProduct.innerHTML += prdStr;
-                
+
                 let cartItemsQty = feature[featureKey].qty
                 cartTotalDiscount = cartTotalDiscount + Math.round([((prd.price / 100) * prd.discount)] * parseInt(cartItemsQty));
             }
@@ -274,7 +273,7 @@ export function cart() {
         for (let i = 0; i < cartOfferUl.length; i++) {
 
             let prdInd = cartOfferUl[i].dataset.prdind
-            
+
             for (let offer in prdData[prdInd].offer[0]) {
 
                 for (let key in prdData[prdInd].offer[0][offer]) {
@@ -339,21 +338,21 @@ export function cart() {
         let cartMinBtn = document.querySelectorAll('#cartMinBtn');
         let cartItemLen = document.querySelectorAll('#cartItemLen');
 
-        function hideMinBtn(cartItemLen, cartPlusBtn, cartMinBtn){
+        function hideMinBtn(cartItemLen, cartPlusBtn, cartMinBtn) {
             if (cartItemLen.innerHTML < 4) {
                 cartPlusBtn.classList.remove("hidden");
-            }else{
+            } else {
                 cartPlusBtn.classList.add("hidden");
             }
 
             if (cartItemLen.innerHTML == 1) {
                 cartMinBtn.classList.add("hidden");
-            }else{
+            } else {
                 cartMinBtn.classList.remove("hidden");
             }
         }
 
-        function changeCartItemData(qty, totalQty, totalPrice, prdData){
+        function changeCartItemData(qty, totalQty, totalPrice, prdData) {
             document.getElementById('itemLength').innerHTML = `My Cart(${totalQty})`;
             document.getElementById('rightDivPriceItem').innerHTML = `Price (${totalQty} items)`;
             document.getElementById('cartCounter').innerHTML = qty;
@@ -370,9 +369,10 @@ export function cart() {
         }
 
         let product;
-        function findProduct(prdData, prdID){
+
+        function findProduct(prdData, prdID) {
             prdData.map((prd, index) => {
-                if(prd._id == prdID){
+                if (prd._id == prdID) {
                     product = prd;
                 }
             });
@@ -386,7 +386,7 @@ export function cart() {
             cartPlusBtn[i].addEventListener("click", () => {
 
                 let data = JSON.parse(cartPlusBtn[i].dataset.prd);
-                
+
                 let prdID = data['id']
                 let featureKey = data['featureKey']
                 findProduct(prdData, prdID);
@@ -413,9 +413,9 @@ export function cart() {
             hideMinBtn(cartItemLen[i], cartPlusBtn[i], cartMinBtn[i]);
 
             cartMinBtn[i].addEventListener("click", () => {
-                
+
                 let data = JSON.parse(cartMinBtn[i].dataset.prd);
-                
+
                 let prdID = data['id']
                 let featureKey = data['featureKey']
                 findProduct(prdData, prdID);
@@ -448,12 +448,12 @@ export function cart() {
         deliverToImg.setAttribute('src', url);
     }
     //================================================================
-    
+
     //================================================================
     let cartOfferIcon = document.querySelectorAll('#cartOfferIcon');
     let cartOfferDiv = document.querySelectorAll('#cartOfferDiv');
 
-    if(cartOfferIcon){
+    if (cartOfferIcon) {
         for (let i = 0; i < cartOfferIcon.length; i++) {
             cartOfferDiv[i].style.display = 'none';
             cartOfferIcon[i].addEventListener('mouseover', () => {

@@ -14,12 +14,12 @@
                 </span>
                 <% } %>
                     <form action="/signup" method="POST" enctype="multipart/form-data">
-                        <input name="fname" type="text" placeholder="FIRSTNAME" />
-                        <input name="lname" type="text" placeholder="LASTNAME" />
-                        <input name="email" type="email" placeholder="EMAIL" />
-                        <input name="phone" type="tel" placeholder="PHONE" />
-                        <input name="password" type="password" placeholder="PASSWORD" />
-                        <input name="image" type="file" placeholder="PROFILEPIC" accept=".jpg, .jpeg, .png" />
+                        <input name="fname" type="text" placeholder="FIRSTNAME" required/>
+                        <input name="lname" type="text" placeholder="LASTNAME" required/>
+                        <input name="email" type="email" placeholder="EMAIL" required/>
+                        <input name="phone" type="tel" placeholder="PHONE" required/>
+                        <input name="password" type="password" placeholder="PASSWORD" required/>
+                        <input name="image" type="file" placeholder="PROFILEPIC" accept=".jpg, .jpeg, .png" required/>
                         <button class="opacity">SUBMIT</button>
                     </form>
                     <div class="register-forget opacity">

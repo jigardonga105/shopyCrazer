@@ -71,8 +71,8 @@ export function shopSingle() {
         colorImg.classList.add('select');
     }
     let colorImg = document.querySelectorAll('.color-img');
-    for (let i = 0; i < colorImg.length; i++) {
 
+    for (let i = 0; i < colorImg.length; i++) {
         colorImg[i].addEventListener('click', () => {
             for (let j = 0; j < colorImg.length; j++) {
                 if (colorImg[j].style.border) {
@@ -110,10 +110,11 @@ export function shopSingle() {
     // ==================================================================
 
     //this is for related products
-    let relaPrdInp = document.querySelector('#relaPrdInp');
+    let relaPrdInp = document.querySelector('#relaPrdInp-in');
     if (relaPrdInp) {
+        let prdID = document.querySelector('#prdID').value;
         var relaPrd = JSON.parse(relaPrdInp.value);
-        let cardGroup = document.querySelector('.card-group');
+        let cardGroup = document.querySelector('#card-group');
 
         for (let i = 0; i < relaPrd.length; i++) {
             for (let key in relaPrd) {
@@ -127,20 +128,19 @@ export function shopSingle() {
                 var rating = relaPrd[i].rating;
                 var vote = relaPrd[i].vote;
                 var price = relaPrd[i].price;
+                var discount = relaPrd[i].discount;
+
+                var prcAftDisc = Math.round(price - ((price / 100) * discount));
             }
-            if (cardGroup) {
-                cardGroup.innerHTML += `<div class="card cardCss">
-                                        <div class="inner-card">
-                                            <a href="/productview/${id}">
-                                                <div class="card-img-div">
-                                                    <img src="../../uploadedImages/${imgPath}" class="card-img-top" alt="..." />
-                                                </div>
-                                            </a>
-                                            <div class="card-body">
-                                                <a href="/productview/${id}">
-                                                    <h6 class="card-title">${name}</h6>
+
+            if (cardGroup && prdID != id) {
+                if (discount) {
+                    cardGroup.innerHTML += `<div class="card-body shadow-md cursor-pointer rounded-lg">
+                                                <a href="/productview/${id}" class="h3 text-black hover:text-black" style="font-size: 20px !important;">
+                                                    <img class="card-img rounded-lg img-fluid mb-2" src="../../uploadedImages/${imgPath}">
+                                                    ${name}
                                                 </a>
-                                                <ul class="rating-vote-ul">
+                                                <ul class="rating-vote-ul mt-2">
                                                     <li class="rating-vote-li1">
                                                         ${rating}&nbsp;<i class="text-muted fa fa-star"></i>
                                                     </li>
@@ -148,11 +148,48 @@ export function shopSingle() {
                                                         (${vote})
                                                     </li>
                                                 </ul>
-                                                <span class="rela-priceSpan">₹${price}</span>
-                                            </div>
-                                        </div>
-                                    </div>`;
+
+                                                <div class="bg-gray-100 p-2 rounded-lg">
+                                                    <p class="text-center mb-0 " style="font-weight: bold !important;font-size: 20px !important;">
+                                                        ₹${prcAftDisc}
+                                                        <span class="animate-ping" style="color: green; font-weight: bold; font-size: 12px;margin-left: 5px;">
+                                                            ${discount}% off
+                                                        </span>
+                                                        <p class="text-center mb-0 " style="text-decoration: line-through;">₹
+                                                            ${price}
+                                                        </p>
+                                                    </p>
+                                                </div>
+                                            </div>`
+                } else {
+                    cardGroup.innerHTML += `<div class="card-body shadow-md cursor-pointer rounded-lg">
+                                                <a href="/productview/${id}" class="h3 text-black hover:text-black" style="font-size: 20px !important;">
+                                                    <img class="card-img rounded-lg img-fluid mb-2" src="../../uploadedImages/${imgPath}">
+                                                    ${name}
+                                                </a>
+                                                <ul class="rating-vote-ul mt-2">
+                                                    <li class="rating-vote-li1">
+                                                        ${rating}&nbsp;<i class="text-muted fa fa-star"></i>
+                                                    </li>
+                                                    <li class="rating-vote-li2">
+                                                        (${vote})
+                                                    </li>
+                                                </ul>
+
+                                                <div class="bg-gray-100 p-2 rounded-lg">
+                                                    <p class="text-center mb-0 " style="font-weight: bold !important;font-size: 20px !important;">
+                                                        <p class="text-center mb-0 " style="text-decoration: line-through;">₹
+                                                            ${price}
+                                                        </p>
+                                                    </p>
+                                                </div>
+                                            </div>`
+                }
             }
+        }
+
+        if (relaPrd.length == 1) {
+            document.getElementsByClassName('related-prd')[0].classList.add('hidden');
         }
     }
 

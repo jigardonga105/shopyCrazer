@@ -249,7 +249,7 @@ function cartController() {
                 const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
                 res.redirect('/cart');
             }
-        },
+        }
     };
 }
 

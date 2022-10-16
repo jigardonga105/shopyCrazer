@@ -10,6 +10,8 @@ const orderController = require('../app/http/controllers/customers/orderControll
 const adminSectionController = require('../app/http/controllers/admin/adminSectionController')
 const courierSectionController = require('../app/http/controllers/courier/courierSectionController')
 const CourierAgentDashboardController = require('../app/http/controllers/courier/CoAgDashboardController')
+const postCommentController = require('../app/http/controllers/customers/postCommentController')
+const buyNowController = require('../app/http/controllers/customers/buyNowController')
 
 const guest = require('../app/http/middlewares/guest')
 const admin = require('../app/http/middlewares/admin')
@@ -66,6 +68,7 @@ function initRoutes(app) {
     app.get('/category/:category', catProdShowController().showCategory)
     app.get('/category/:category/:subCategory', catProdShowController().showSubCategory)
     app.get('/productview/:prdID', catProdShowController().viewProduct)
+    // app.get('/productview/:prdID/:msg', catProdShowController().viewProductwithMsg)
 
     //this is for my Account
     app.get('/myAccount', auth, notcouAge, myAccountController().index)
@@ -77,6 +80,10 @@ function initRoutes(app) {
     app.post('/addToCart', customer, cartController().addToCart)
     app.post('/updateCart', customer, cartController().updateCart)
     app.post('/deleteCartPrd', customer, cartController().deleteCartPrd)
+
+    //Buy Now
+    app.post('/buyNow', customer, buyNowController().buyNow)
+    app.post('/cust/myOrdersBuyNow', customer, buyNowController().placeOrderOfBuyNow)
 
     //Place Order from Cart
     app.get('/placeOrder', customer, orderController().index)
@@ -100,7 +107,10 @@ function initRoutes(app) {
     //Courier Agent Dashboard
     app.get('/courieAgeDashBoard/:msg', CourierAgentDashboardController().getAgentDashboard);
     app.post('/couAgeLogin', CourierAgentDashboardController().couAgeLogin);
-    app.post('/courieAgeDashBoard/cSt', couAge, CourierAgentDashboardController().couAgeChangeStatus);
+    app.post('/courieAgeDashBoard/cSt', CourierAgentDashboardController().couAgeChangeStatus);
+
+    //Post Comments
+    app.post('/shopSingleComment', postCommentController().shopSingleComment);
 
 }
 

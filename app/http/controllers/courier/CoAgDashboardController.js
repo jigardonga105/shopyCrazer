@@ -98,6 +98,7 @@ function CourierAgentDashboardController() {
             }
         },
         async couAgeChangeStatus(req, res) {
+            // console.log("both");
             const { orderId, status } = req.body;
 
             if (orderId && status) {
