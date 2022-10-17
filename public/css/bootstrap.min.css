@@ -4519,6 +4519,11 @@ fieldset:disabled .btn {
     margin-bottom: 0;
 }
 
+.card-text {
+    font-size: 13px !important;
+    color: #838383;
+}
+
 .card-text:last-child {
     margin-bottom: 0;
 }
