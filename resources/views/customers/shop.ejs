@@ -6,22 +6,34 @@
         .card {
             box-shadow: 2px 2px 2px 2px #ebebeb;
         }
-        
+
         .card:hover {
             box-shadow: 2px 2px 1px #ebebeb;
         }
-        
+
         .card-shadowNone {
             box-shadow: none !important;
         }
-        
+
         .card {
             border: none !important;
         }
-        
+
         .card-img {
             height: 250px !important;
             width: 200px !important;
+        }
+
+        @media only screen and (max-width: 1400px) {
+            #productsGridDiv {
+                grid-template-columns: repeat(2,minmax(0,1fr));
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            #productsGridDiv {
+                grid-template-columns: repeat(1,minmax(0,1fr));
+            }
         }
     </style>
 </head>
@@ -96,15 +108,19 @@
             <!-- ========================================================================= -->
             <!-- ========================================================================= -->
 
-            <div class="grid grid-cols-3 gap-4 rounded-lg">
+            <div id="productsGridDiv" class="grid justify-items-center grid-cols-3 gap-4 rounded-lg">
                 <% if (products) { %>
                     <% if (products.length> 0) { %>
                         <% products.forEach((product)=> { %>
                             <div class="" style="cursor: pointer;">
-                                <div class="card mb-4 product-wap rounded-lg" style="width: 300px !important; border-radius: 20px;">
-                                    <div class="card rounded-lg image-card card-shadowNone" style="height: 200px !important;">
-                                        <img class="card-img rounded-lg img-fluid" src="../../uploadedImages/<%= product.image[0].img %>">
-                                        <div class="card-img-overlay rounded-lg product-overlay d-flex align-items-center justify-content-center">
+                                <div class="card mb-4 product-wap rounded-lg"
+                                    style="width: 300px !important; border-radius: 20px;">
+                                    <div class="card rounded-lg image-card card-shadowNone"
+                                        style="height: 200px !important;">
+                                        <img class="card-img rounded-lg img-fluid"
+                                            src="../../uploadedImages/<%= product.image[0].img %>">
+                                        <div
+                                            class="card-img-overlay rounded-lg product-overlay d-flex align-items-center justify-content-center">
                                             <ul class="list-unstyled">
                                                 <li>
                                                     <a class="btn btn-success text-white" href="#">
@@ -112,12 +128,14 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a class="btn btn-success text-white mt-2" href="/productview/<%= product._id %>">
+                                                    <a class="btn btn-success text-white mt-2"
+                                                        href="/productview/<%= product._id %>">
                                                         <i class="far fa-eye"></i>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a class="addToCartBtn btn btn-success text-white mt-2" href="#" data-product="<%= JSON.stringify(product) %>">
+                                                    <a class="addToCartBtn btn btn-success text-white mt-2" href="#"
+                                                        data-product="<%= JSON.stringify(product) %>">
                                                         <i class="fas fa-cart-plus"></i>
                                                     </a>
                                                 </li>
@@ -142,13 +160,17 @@
                                         </ul>
 
                                         <div class="bg-gray-100 p-2 rounded-lg">
-                                            <p class="text-center mb-0 " style="font-weight: bold !important;font-size: 20px !important;">
+                                            <p class="text-center mb-0 "
+                                                style="font-weight: bold !important;font-size: 20px !important;">
                                                 <% if(product.discount !=0){ %>₹
-                                                    <%= Math.round(product.price - ((product.price/100)*product.discount)) %>
-                                                        <span class="animate-ping" style="color: green; font-weight: bold; font-size: 12px;margin-left: 5px;">
-                                                        <%= product.discount %>% off
-                                                    </span>
-                                                        <p class="text-center mb-0 " style="text-decoration: line-through;">₹
+                                                    <%= Math.round(product.price -
+                                                        ((product.price/100)*product.discount)) %>
+                                                        <span class="animate-ping"
+                                                            style="color: green; font-weight: bold; font-size: 12px;margin-left: 5px;">
+                                                            <%= product.discount %>% off
+                                                        </span>
+                                                        <p class="text-center mb-0 "
+                                                            style="text-decoration: line-through;">₹
                                                             <%= product.price %>
                                                         </p>
                                                         <% }else{ %>₹
@@ -170,10 +192,12 @@
             <div div="row">
                 <ul class="pagination pagination-lg justify-content-end">
                     <li class="page-item disabled">
-                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">1</a>
+                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#"
+                            tabindex="-1">1</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+                            href="#">2</a>
                     </li>
                     <li class="page-item">
                         <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
@@ -208,7 +232,8 @@
 
                     <!--Carousel Wrapper-->
                     <div class="col">
-                        <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
+                        <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example"
+                            data-bs-ride="carousel">
                             <!--Slides-->
                             <div class="carousel-inner product-links-wap" role="listbox">
 
@@ -216,16 +241,20 @@
                                 <div class="carousel-item active">
                                     <div class="row">
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -235,16 +264,20 @@
                                 <div class="carousel-item">
                                     <div class="row">
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -254,16 +287,20 @@
                                 <div class="carousel-item">
                                     <div class="row">
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                         <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png" alt="Brand Logo"></a>
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png"
+                                                    alt="Brand Logo"></a>
                                         </div>
                                     </div>
                                 </div>
