@@ -1,3 +1,7 @@
+<style>
+
+</style>
+
 <div id="cat-nav" style="display: grid; justify-content: center;">
     <ul id="cat-nav-ul"></ul>
 </div>
@@ -8,32 +12,32 @@
         <div class="carousel-item active">
             <img class="d-block w-100" src="/img/banners/banner_img_11.jpg" style="height: 36rem;" alt="First slide">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="color: #ffc67d;">Best deals on Laptops</h4>
-                <p style="color: #7d8389">Start your new journey with best gadgets</p>
+                <h4 style="font-weight: bold; color: #ffc67d;">Best deals on Laptops</h4>
+                <p style="font-weight: bold; color: #7d8389">Start your new journey with best gadgets</p>
             </div>
         </div>
 
         <div class="carousel-item">
             <img class="d-block w-100" src="/img/banners/banner_img_06.jpg" style="height: 36rem;" alt="Second slide">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="color: rgb(7 47 58);">Buy your home appliances</h4>
-                <p style="color: rgb(255 241 177);">Get your products within 2 days and with free installation</p>
+                <h4 style="font-weight: bold; color: rgb(214 246 255);;">Buy your home appliances</h4>
+                <p style="font-weight: bold; color: rgb(255 241 177);">Get your products within 2 days and with free installation</p>
             </div>
         </div>
 
         <div class="carousel-item">
             <img class="d-block w-100" src="/img/banners/banner_img_15.jpg" style="height: 36rem;" alt="Third slide">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="color: rgb(149 255 49);">Improve your looks with new fashions</h4>
-                <p style="color: rgb(255, 255, 255);">Buy all styling accessories at one place in cheap price</p>
+                <h4 style="font-weight: bold; color: rgb(149 255 49);">Improve your looks with new fashions</h4>
+                <p style="font-weight: bold; color: rgb(255, 255, 255);">Buy all styling accessories at one place in cheap price</p>
             </div>
         </div>
 
         <div class="carousel-item">
             <img class="d-block w-100" src="/img/banners/banner_img_08.jpg" style="height: 36rem;" alt="fourth slide">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="color: rgb(0 255 168);">Purchase any product with one click</h4>
-                <p style="color: rgb(153 91 48);">Check our new feature <span style="color: rgb(0, 0, 0);">Buy
+                <h4 style="font-weight: bold; color: rgb(0 255 168);">Purchase any product with one click</h4>
+                <p style="font-weight: bold; color: rgb(153 91 48);">Check our new feature <span style="color: rgb(0, 0, 0);">Buy
                         Now</span> for purchase anything in one click</p>
             </div>
         </div>
@@ -53,33 +57,136 @@
 <section class="container py-5">
     <div class="row text-center pt-3">
         <div class="col-lg-6 m-auto">
-            <h1 class="h1">Categories of The Month</h1>
-            <p>
+            <h1>Categories of The Month</h1>
+            <p style="color: darkgray;">
                 Here are some the best categories of the month that you'll like
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col-12 col-md-4 p-5 mt-3">
-            <a href="#"><img src="/img/bestCate1.jpg" class="rounded-circle img-fluid border"></a>
+            <a href="#">
+                <img src="/img/bestCate1.jpg" class="catOfMonthImg rounded-circle img-fluid border">
+            </a>
             <h5 class="text-center mt-3 mb-3">Watches</h5>
-            <p class="text-center"><a href="/category/Electronics/Smart%20Wearable%20Tech" class="btn btn-success">Go
-                    Shop</a></p>
+            <p class="text-center">
+                <a href="/category/Electronics/Smart%20Wearable%20Tech" class="btn btn-success">Go Shop</a>
+            </p>
         </div>
         <div class="col-12 col-md-4 p-5 mt-3">
-            <a href="#"><img src="/img/bestCate2.jpg" class="rounded-circle img-fluid border"></a>
+            <a href="#">
+                <img src="/img/bestCate2.jpg" class="catOfMonthImg rounded-circle img-fluid border">
+            </a>
             <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-            <p class="text-center"><a href="/category/Men/Footwear" class="btn btn-success">Go Shop</a></p>
+            <p class="text-center">
+                <a href="/category/Men/Footwear" class="btn btn-success">Go Shop</a>
+            </p>
         </div>
         <div class="col-12 col-md-4 p-5 mt-3">
-            <a href="#"><img src="/img/bestCate3.jpg" class="rounded-circle img-fluid border"></a>
+            <a href="#">
+                <img src="/img/bestCate3.jpg" class="catOfMonthImg rounded-circle img-fluid border">
+            </a>
             <h2 class="h5 text-center mt-3 mb-3">Phones</h2>
-            <p class="text-center"><a href="/category/Electronics/Mobiles" class="btn btn-success">Go Shop</a></p>
+            <p class="text-center">
+                <a href="/category/Electronics/Mobiles" class="btn btn-success">Go Shop</a>
+            </p>
         </div>
     </div>
 </section>
 <!-- End Categories of The Month -->
 
+<!-- Start multiBanner -->
+<div id="multiBanner" class="multiBanner" style="position: relative;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr);">
+
+        <div class="flip-box" style="grid-area: 1 / 1 / 2 / 2;">
+            <div class="flip-box-inner">
+                <div class="flip-box-front">
+                    <img src="/img/banners/banner_img_03.jpg" alt="banner2" style="max-width: 100%;" height="1000">
+                </div>
+                <div class="flip-box-back h-1000">
+                    <div class="jumbotron mx-5" style="margin: 78% auto;">
+                        <h1 class="display-4">Women's wear</h1>
+                        <p class="lead">Explore brand new fashions for women's</p>
+                        <hr class="my-4">
+                        <p class="fs-15" style="color: #838383;">Try out traditions, westerns and sports wear in all
+                            sizes with affordable price</p>
+                        <p class="fs-15" style="color: #838383;">Best matching accessories and new collection of
+                            Footwear</p>
+                        <a class="btn btn-info btn-sm" href="/category/Women" role="button"
+                            style="color: #759cc3;">Explore Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="BannerDiv2" style="grid-area: 1 / 2 / 2 / 4;">
+            <div class="flip-box" style="height: 500px;">
+                <div class="flip-box-inner">
+                    <div class="flip-box-front">
+                        <img src="/img/banners/banner_img_01.jpg" alt="banner1" style="max-width: 100%;" height="500">
+                    </div>
+                    <div class="flip-box-back w-100 h-500 p-5">
+                        <div class="jumbotron" style="margin: 10% auto;">
+                            <h1 class="display-4">Apple's Products</h1>
+                            <p class="lead">Explore all new IPhones and Macbooks</p>
+                            <hr class="my-4">
+                            <p class="fs-15" style="color: #838383;">Get your all necessary apple's accessories here</p>
+                            <a class="btn btn-info btn-sm" href="/category/Electronics" role="button"
+                                style="color: #759cc3;">Explore Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="flip-box" style="height: 500px;">
+                <div class="flip-box-inner">
+                    <div class="flip-box-front">
+                        <img src="/img/banners/banner_img_10.jpg" alt="banner10"
+                            style="max-width: 100%; margin: auto 0.5%;" height="500">
+                    </div>
+                    <div class="flip-box-back w-100 h-500 p-5">
+                        <div class="jumbotron" style="margin: 10% auto;">
+                            <h1 class="display-4">Personal Accessories</h1>
+                            <p class="lead">Explore all personal gadgets and its accessories</p>
+                            <hr class="my-4">
+                            <p class="fs-15" style="color: #838383;">Buy now all personal care products and mobile
+                                accessories</p>
+                            <a class="btn btn-info btn-sm" href="/category/Electronics" role="button"
+                                style="color: #759cc3;">Explore Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-box" style="grid-area: 1 / 4 / 2 / 5;">
+            <div class="flip-box-inner">
+                <div class="flip-box-front">
+                    <img src="/img/banners/banner_img_02.jpg" alt="banner2" style="max-width: 100%;" height="1000">
+                </div>
+                <div class="flip-box-back h-1000">
+                    <div class="jumbotron mx-5" style="margin: 78% auto;">
+                        <h1 class="display-4">Men's wear</h1>
+                        <p class="lead">Explore brand new fashions for Men</p>
+                        <hr class="my-4">
+                        <p class="fs-15" style="color: #838383;">Try out traditions, westerns and sports wear in all
+                            sizes with affordable price</p>
+                        <p class="fs-15" style="color: #838383;">Best matching accessories and new collection of
+                            Footwear</p>
+                        <a class="btn btn-info btn-sm" href="/category/Men" role="button"
+                            style="color: #759cc3;">Explore Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="position: absolute;top: 43%; left: 38%;">
+        <h4>Improve your look today by shop here</h4>
+    </div>
+</div>
+<!-- End multiBanner -->
 
 <!-- Start Featured Product -->
 <section class="bg-light">
@@ -166,143 +273,29 @@
 </section>
 <!-- End Featured Product -->
 
-<div id="multiBanner" class="multiBanner" style="position: relative;">
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr);">
-        <!-- <div class="BannerDiv1" style="grid-area: 1 / 1 / 2 / 2;">
-            <div>
-                <img id="womenImg" src="/img/banners/banner_img_03.jpg" style="max-width: 100%;" alt="banner2"
-                    height="1000">
-            </div>
-        </div> -->
-        <div class="flip-box" style="grid-area: 1 / 1 / 2 / 2;">
-            <div class="flip-box-inner">
-                <div class="flip-box-front">
-                    <img src="/img/banners/banner_img_03.jpg" alt="banner2" style="max-width: 100%;" height="1000">
-                </div>
-                <div class="flip-box-back h-1000">
-                    <div class="jumbotron mx-5" style="margin: 78% auto;">
-                        <h1 class="display-4">Women's wear</h1>
-                        <p class="lead">Explore brand new fashions for women's</p>
-                        <hr class="my-4">
-                        <p class="fs-15" style="color: #838383;">Try out traditions, westerns and sports wear in all sizes with affordable price</p>
-                        <p class="fs-15" style="color: #838383;">Best matching accessories and new collection of Footwear</p>
-                        <a class="btn btn-info btn-sm" href="/category/Women" role="button" style="color: #759cc3;">Explore Now</a>
-                    </div>
-                </div>
-            </div>
+<!-- Start grocerySec Product -->
+<section>
+    <div style="position: relative;">
+        <div id="grocerySec"></div>
+
+        <div id="subImg1" style="position: absolute; top: 5%; left: 3%;">
+            <img src="/img/banners/banner_img_16.jpg" alt="subImg1" class="subImgs-horizontal">
         </div>
 
-        <div class="BannerDiv2" style="grid-area: 1 / 2 / 2 / 4;">
-            <!-- <div style="height: 500px;">
-                <img id="iPhoneImg" src="/img/banners/banner_img_01.jpg" style="max-width: 100%;" alt="banner1" height="500">
-            </div> -->
-            <div class="flip-box" style="height: 500px;">
-                <div class="flip-box-inner">
-                    <div class="flip-box-front">
-                        <img src="/img/banners/banner_img_01.jpg" alt="banner1" style="max-width: 100%;" height="500">
-                    </div>
-                    <div class="flip-box-back w-100 h-500 p-5">
-                        <div class="jumbotron" style="margin: 10% auto;">
-                            <h1 class="display-4">Apple's Products</h1>
-                            <p class="lead">Explore all new IPhones and Macbooks</p>
-                            <hr class="my-4">
-                            <p class="fs-15" style="color: #838383;">Get your all necessary apple's accessories here</p>
-                            <a class="btn btn-info btn-sm" href="/category/Electronics" role="button" style="color: #759cc3;">Explore Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div style="height: 500px;">
-                <div class="alignCenter" style="justify-items: center;">
-                    <img id="accessoriesImg" src="/img/banners/banner_img_10.jpg" style="max-width: 100%;" alt="banner10" height="500">
-                </div>
-            </div> -->
-            <div class="flip-box" style="height: 500px; background-color: #bbb;">
-                <div class="flip-box-inner">
-                    <div class="flip-box-front">
-                        <img src="/img/banners/banner_img_10.jpg" alt="banner10"
-                            style="max-width: 100%; margin: auto 1%;" height="500">
-                    </div>
-                    <div class="flip-box-back w-100 h-500 p-5">
-                        <div class="jumbotron" style="margin: 10% auto;">
-                            <h1 class="display-4">Personal Accessories</h1>
-                            <p class="lead">Explore all personal gadgets and its accessories</p>
-                            <hr class="my-4">
-                            <p class="fs-15" style="color: #838383;">Buy now all personal care products and mobile accessories</p>
-                            <a class="btn btn-info btn-sm" href="/category/Electronics" role="button" style="color: #759cc3;">Explore Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="subImg2" style="position: absolute; top: 5%; left: 50%;">
+            <img src="/img/banners/banner_img_12.jpg" alt="subImg2" class="subImgs-vertical">
         </div>
 
-        <!-- <div class="BannerDiv3" style="grid-area: 1 / 4 / 2 / 5;">
-            <div>
-                <img id="menImg" src="/img/banners/banner_img_02.jpg" style="max-width: 100%;" alt="banner2" height="1000">
-            </div>
-        </div> -->
-        <div class="flip-box" style="grid-area: 1 / 4 / 2 / 5;">
-            <div class="flip-box-inner">
-                <div class="flip-box-front">
-                    <img src="/img/banners/banner_img_02.jpg" alt="banner2" style="max-width: 100%;" height="1000">
-                </div>
-                <div class="flip-box-back h-1000">
-                    <div class="jumbotron mx-5" style="margin: 78% auto;">
-                        <h1 class="display-4">Men's wear</h1>
-                        <p class="lead">Explore brand new fashions for Men</p>
-                        <hr class="my-4">
-                        <p class="fs-15" style="color: #838383;">Try out traditions, westerns and sports wear in all sizes with affordable price</p>
-                        <p class="fs-15" style="color: #838383;">Best matching accessories and new collection of Footwear</p>
-                        <a class="btn btn-info btn-sm" href="/category/Men" role="button" style="color: #759cc3;">Explore Now</a>
-                    </div>
-                </div>
-            </div>
+        <div id="subImg3" style="position: absolute; bottom: 5%; right: 50%;">
+            <img src="/img/banners/banner_img_17.jpg" alt="subImg3" class="subImgs-vertical">
+        </div>
+
+        <div id="subImg4" style="position: absolute; bottom: 5%; right: 3%;">
+            <img src="/img/banners/banner_img_18.jpg" alt="subImg4" class="subImgs-horizontal">
         </div>
     </div>
-    <div style="position: absolute;top: 43%; left: 38%;">
-        <h4>Improve your look today by shop here</h4>
-    </div>
-</div>
-
-<!-- 
-<div id="multiBanner" class="multiBanner" style="position: relative;">
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr);">
-        <div class="BannerDiv1" style="grid-area: 1 / 1 / 2 / 2;">
-            <div>
-                <img id="womenImg" src="/img/banners/banner_img_03.jpg" style="max-width: 100%;" alt="banner2" height="1000" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
-            </div>
-        </div>
-
-        <div class="BannerDiv2" style="grid-area: 1 / 2 / 2 / 4;">
-            <div style="height: 500px;">
-                <img id="iPhoneImg" src="/img/banners/banner_img_01.jpg" style="max-width: 100%;" alt="banner1" height="500" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
-            </div>
-
-            <div style="height: 500px;">
-                <div class="alignCenter" style="justify-items: center;">
-                    <img id="accessoriesImg" src="/img/banners/banner_img_10.jpg" style="max-width: 100%;" alt="banner10" height="500" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
-                </div>
-            </div>
-        </div>
-
-        <div class="BannerDiv3" style="grid-area: 1 / 4 / 2 / 5;">
-            <div>
-                <img id="menImg" src="/img/banners/banner_img_02.jpg" style="max-width: 100%;" alt="banner2" height="1000" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
-            </div>
-        </div>
-    </div>
-    <div style="position: absolute;top: 43%; left: 38%;">
-        <h4>Improve your look today by shop here</h4>
-    </div>
-</div>
- -->
-<script>
-    const mouseOver = (img) => {
-
-    }
-    const mouseOut = (img) => { }
-</script>
+</section>
+<!-- End grocerySec Product -->
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
