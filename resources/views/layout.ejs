@@ -35,11 +35,55 @@
             overflow-x: hidden !important;
         }
 
-        @media only screen and (max-width: 547px) {
+        #navbar_conatact_details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            font-size: 17px !important;
+        }
+
+        @media only screen and (max-width: 768px) {
             #navbar_conatact_authBtns {
                 display: grid !important;
                 justify-content: end !important;
                 gap: 15px !important;
+            }
+
+            #main {
+                top: -7px !important;
+            }
+        }
+
+        @media only screen and (max-width: 415px) {
+            #navbar_conatact_details {
+                display: grid !important;
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+                justify-items: end;
+            }
+        }
+
+        @media only screen and (max-width: 270px) {
+            #navbar_authBtns_details {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                justify-items: end;
+                row-gap: 15px;
+            }
+
+            #sellerATag {
+                grid-column: span 2 / span 2;
+            }
+        }
+
+        @media only screen and (max-width: 992px) {
+            #navBar_Sec_Div {
+                display: grid !important;
+                justify-content: center !important;
+            }
+
+            #navBar_Sec_Ul {
+                flex-direction: row !important;
+                column-gap: 50px;
             }
         }
     </style>
@@ -50,25 +94,29 @@
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-block" id="template_nav_top">
         <div class="container text-light">
             <div id="navbar_conatact_authBtns" class="w-100 d-flex justify-content-between">
-                <div>
-                    <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none"
-                        href="mailto:info@shopyCrazer.com">info@shopyCrazer.com</a>
-                    <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:1234567890">1234567890</a>
+                <div id="navbar_conatact_details">
+                    <div>
+                        <i class="fa fa-envelope mx-2"></i>
+                        <a class="navbar-sm-brand text-light text-decoration-none"
+                            href="mailto:info@shopyCrazer.com">info@shopyCrazer.com</a>
+                    </div>
+                    <div>
+                        <i class="fa fa-phone mx-2"></i>
+                        <a class="navbar-sm-brand text-light text-decoration-none" href="tel:1234567890">1234567890</a>
+                    </div>
                 </div>
 
-                <div>
+                <div id="navbar_authBtns_details">
                     <% if(user) {%>
                         <% if(user.role==='seller' ) { %>
-                            <a class="seller-bord-blink text-light p-2" href="/seller/sellerStr"
+                            <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/seller/sellerStr"
                                 style="text-decoration: none;">Profile</a>
                             <%} else {%>
-                                <a class="seller-bord-blink text-light p-2" href="/sellerReg"
+                                <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/sellerReg"
                                     style="text-decoration: none;">Seller</a>
                                 <% } %>
                                     <% } else { %>
-                                        <a class="seller-bord-blink text-light p-2" href="/sellerReg"
+                                        <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/sellerReg"
                                             style="text-decoration: none;">Seller</a>
                                         <% } %>
 
@@ -140,7 +188,7 @@
 
         </div>
 
-        <div id="main" style="display: inline;position: absolute;z-index: 5;left: -16px;top: 45px;">
+        <div id="main">
             <button class="openbtn" onmouseover="openNav()">☰</button>
         </div>
 
@@ -165,22 +213,20 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand text-success logo h1 align-self-center" id="logoSection" href="/index">
-
-            </a>
+            <a class="navbar-brand text-success logo h1 align-self-center" id="logoSection" href="/"></a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#template_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+                aria-label="Toggle navigation" style="margin-bottom: 15px !important;">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
                 id="template_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <div id="navBar_Sec_Div" class="flex-fill">
+                    <ul id="navBar_Sec_Ul" class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/index">Home</a>
+                            <a class="nav-link" href="/">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/shop">Shop</a>
@@ -195,15 +241,15 @@
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                    <!-- <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                         <div class="input-group">
                             <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
                             <div class="input-group-text">
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                         </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="/myAccount" style="text-decoration: none;">
+                    </div> -->
+                    <a class="nav-icon d-inline" href="/myAccount" style="text-decoration: none;">
                         <% if(user){ %>
                             <% if(user.image.length> 0) { %>
                                 <span class="flex items-center">
@@ -231,7 +277,7 @@
                                     <% } %>
                                         <% } %>
                     </a>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
+                    <a class="nav-icon d-inline" href="#" data-bs-toggle="modal"
                         data-bs-target="#template_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
@@ -409,7 +455,6 @@
             const loadVideoLogo = () => {
                 document.getElementById('logoSection').innerHTML = `<video width="200" height="50" autoplay loop>
                                                                         <source src="/img/video_logo.mp4" type="video/mp4">
-                                                                        <source src="movie.ogg" type="video/ogg">
                                                                         <img src="/img/logo.png" alt="shopyCrazer" width="200" height="50">
                                                                     </video>`;
             }
