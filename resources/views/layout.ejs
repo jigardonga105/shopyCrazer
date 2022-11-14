@@ -167,7 +167,8 @@
 
         @media only screen and (max-width: 446px) {
             #cat-nav-ul {
-                display: none !important;
+                display: none;
+                width: 250px;
             }
 
             #catsMoreOpt {
@@ -179,7 +180,7 @@
 
             #catsMoreOpt-plus {
                 margin-left: 15px;
-                border: 1px solid black;
+                border: 1.5px solid #ebebeb;
                 border-radius: 25px;
                 padding: 0px 8px !important;
             }
@@ -568,13 +569,22 @@
 
         <script>
             let catsMoreOpt = document.getElementById('catsMoreOpt');
+            let catsMoreOpt_plus = document.getElementById('catsMoreOpt-plus');
             let addAllCats = document.getElementById('addAllCats');
             let cat_nav_ul = document.getElementById('cat-nav-ul');
 
             catsMoreOpt.addEventListener('click', () => {
-                addAllCats.style.display = 'block';
-                addAllCats.innerHTML = cat_nav_ul;
-                console.log(cat_nav_ul);
+                if (catsMoreOpt_plus.innerHTML === '+') {
+                    catsMoreOpt_plus.innerHTML = 'x';
+                    addAllCats.style.display = 'block';
+                    cat_nav_ul.style.display = 'flex';
+                    cat_nav_ul.style.flexDirection = 'column';
+                    addAllCats.append(cat_nav_ul);
+                } else {
+                    catsMoreOpt_plus.innerHTML = '+';
+                    addAllCats.style.display = 'none';
+                    cat_nav_ul.style.display = 'none';
+                }
             })
         </script>
 
