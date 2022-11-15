@@ -1342,3 +1342,332 @@ a:hover {
         padding: 0px 8px !important;
     }
 }
+
+@media only screen and (max-width: 1000px) {
+    #womenWearImg {
+        height: 500px;
+    }
+
+    #womenWearImg_back {
+        height: 500px;
+    }
+
+    #womenWearImg_jumbotron {
+        margin: 0% auto !important;
+    }
+
+
+    #appleProdImg {
+        height: 250px;
+        width: 500px;
+    }
+
+    #appleProd_flipBox {
+        height: 250px !important;
+    }
+
+    #appleProd_back {
+        height: 250px;
+        padding: 1rem !important;
+    }
+
+    #appleProd_jumbotron {
+        margin: 0% auto !important;
+    }
+
+
+    #personalAccsImg {
+        height: 250px;
+        width: 500px;
+    }
+
+    #personalAccs_flipBox {
+        height: 250px !important;
+    }
+
+    #personalAccs_back {
+        height: 250px;
+        padding: 1rem !important;
+    }
+
+    #personalAccs_jumbotron {
+        margin: 0% auto !important;
+    }
+
+    #personalAccs_jumbotron h1 {
+        font-size: 25px !important;
+    }
+
+
+    #menWearImg {
+        height: 500px;
+    }
+
+    #menWear_back {
+        height: 500px;
+    }
+
+    #menWear_jumbotron {
+        margin: 0% auto !important;
+    }
+}
+
+@media only screen and (max-width: 810px) {
+    #womenWearImg {
+        height: 400px;
+    }
+
+    #womenWearImg_back {
+        height: 400px;
+    }
+
+    #womenWearImg_jumbotron {
+        margin: 0% auto !important;
+    }
+
+    #womenWearImg_jumbotron h1 {
+        font-size: 25px !important;
+    }
+
+
+    #appleProdImg {
+        height: 200px;
+        width: 500px;
+    }
+
+    #appleProd_flipBox {
+        height: 200px !important;
+    }
+
+    #appleProd_back {
+        height: 200px;
+        padding: 1rem !important;
+    }
+
+    #appleProd_jumbotron {
+        margin: 0% auto !important;
+    }
+
+    #appleProd_jumbotron h1 {
+        font-size: 15px !important;
+    }
+
+
+    #personalAccsImg {
+        height: 200px;
+        width: 500px;
+    }
+
+    #personalAccs_flipBox {
+        height: 200px !important;
+    }
+
+    #personalAccs_back {
+        height: 200px;
+        padding: 0rem !important;
+    }
+
+    #personalAccs_jumbotron {
+        margin: 0% auto !important;
+    }
+
+    #personalAccs_jumbotron h1 {
+        font-size: 15px !important;
+    }
+
+
+    #menWearImg {
+        height: 400px;
+    }
+
+    #menWear_back {
+        height: 400px;
+    }
+
+    #menWear_jumbotron {
+        margin: 0% auto !important;
+    }
+
+    #menWear_jumbotron h1 {
+        font-size: 25px !important;
+    }
+}
+
+@media only screen and (max-width: 760px) {
+    #appleProd_jumbotron hr {
+        margin-top: 0rem !important;
+        margin-bottom: 0rem !important;
+    }
+
+    #personalAccs_jumbotron hr {
+        margin-top: 0.2rem !important;
+        margin-bottom: 0.2rem !important;
+    }
+}
+
+#multiBanner682Width {
+    display: none;
+}
+
+#multiBanner682Width {
+    height: 1316.45px !important;
+}
+
+#multiBanner2-Grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+#multiBanner2-Grid-1 {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+#multiBanner2-Grid-2 {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+
+@media only screen and (max-width: 682px) {
+    #multiBanner {
+        display: none !important;
+    }
+
+    #multiBanner682Width {
+        display: block;
+    }
+
+    #multiBanner1 {
+        display: block;
+        height: 30.5%;
+    }
+
+    #multiBanner2 {
+        display: block;
+        height: 38%;
+    }
+
+    #multiBanner3 {
+        display: block;
+        height: 30%;
+    }
+
+    #appleProdImg {
+        max-width: 100%;
+        height: 400px;
+    }
+
+    #appleProdFlipBack {
+        height: 400px;
+    }
+
+    #womenWearImg {
+        max-width: 100%;
+        height: 100%;
+    }
+
+    #womenWearFlipBack {
+        height: 508px;
+        padding-top: 10px;
+    }
+
+    #menWearImg {
+        max-width: 100%;
+        height: 100%;
+    }
+
+    #menWearFlipBack {
+        height: 508px;
+        padding-top: 10px;
+    }
+
+    #persAccImg {
+        max-width: 100%;
+        height: 416px;
+    }
+
+    #persAccFlipBack {
+        height: 416px;
+    }
+}
+
+@media only screen and (max-width: 468px) {
+    #multiBanner682Width {
+        height: 1032px !important;
+        /* border: 1px solid red !important; */
+    }
+
+
+    #multiBanner1 {
+        display: block;
+        height: 21.5%;
+    }
+
+    #multiBanner2 {
+        display: block;
+        height: 49.3%;
+    }
+
+    #multiBanner3 {
+        display: block;
+        height: 29.2%;
+    }
+
+
+    #appleProdImg {
+        max-width: 100%;
+        height: 220px;
+    }
+
+    #appleProdFlipBack {
+        height: 220px;
+        padding: 0.5rem 3rem !important;
+    }
+    #appleProdFlipBack div {
+        margin: 0px !important;
+    }
+
+
+    #womenWearImg {
+        max-width: 100%;
+        height: 100%;
+    }
+
+    #womenWearFlipBack {
+        height: 508px;
+        padding-top: 10px;
+    }
+    #womenWearFlipBack div {
+        margin: 0px !important;
+    }
+
+
+    #menWearImg {
+        max-width: 100%;
+        height: 100%;
+    }
+
+    #menWearFlipBack {
+        height: 508px;
+        padding-top: 10px;
+    }
+    #menWearFlipBack div {
+        margin: 0px !important;
+    }
+
+
+    #persAccImg {
+        max-width: 100%;
+        height: 304px;
+    }
+
+    #persAccFlipBack {
+        height: 304px;
+        padding: 0.5rem 3rem !important;
+    }
+    #persAccFlipBack div {
+        margin: 0px !important;
+    }
+}
