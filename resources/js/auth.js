@@ -40,19 +40,11 @@ export function authJS() {
     };
 
     const displayThemeButtons = () => {
-        const btnContainer = document.querySelector(".theme-btn-container");
-        themes.forEach((theme) => {
-            const div = document.createElement("div");
-            div.className = "theme-btn";
-            div.style.cssText = `background: ${theme.background}; width: 25px; height: 25px`;
-            if (btnContainer) {
-                btnContainer.appendChild(div);
-            }
-            div.addEventListener("click", () => setTheme(theme));
-            // setTimeout(() => {
-            //     setTheme(theme)
-            // }, 3000);
-        });
+        let i = 0;
+        setInterval(() => {
+            setTheme(themes[i])
+            i === (themes.length - 1) ? i = 0 : i++
+        }, 3000);
     };
 
     displayThemeButtons();

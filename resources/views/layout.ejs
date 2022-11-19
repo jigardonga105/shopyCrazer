@@ -35,69 +35,42 @@
             overflow-x: hidden !important;
         } */
 
-        #multiBanner4 {
-            display: none;
+        @media only screen and (max-width: 469px) {
+            .circle {
+                width: 2rem !important;
+                height: 2rem !important;
+            }
         }
 
-        @media only screen and (max-width: 406px) {
-            #multiBanner682Width {
-                height: 1728.8px !important;
-                /* border: 1px solid red !important; */
+        @media only screen and (max-width: 384px) {
+            .form-container {
+                width: 265px;
             }
 
-            #multiBanner1 {
-                height: 12.5%;
-            }
-
-            #multiBanner2 {
-                display: none;
-            }
-
-            #multiBanner4 {
+            .login-container {
                 display: grid;
-                height: 70%;
+                justify-items: center;
             }
 
-            #womenWearImg4 {
-                max-width: 100%;
-                height: 100%;
+            .register-forget {
+                display: grid !important;
+                justify-items: center;
             }
 
-            #womenWearFlipBack4 {
-                height: 603px;
-            }
-
-            #menWearImg4 {
-                max-width: 100%;
-                height: 100%;
-            }
-
-            #menWearFlipBack4 {
-                height: 603px;
-            }
-
-            #appleProdFlipBack div h1 {
-                font-size: 25px;
-            }
-            #appleProdFlipBack div hr {
-                margin-top: 0.2rem !important;
-                margin-bottom: 0.2rem !important;
-            }
-
-            #persAccFlipBack div h1 {
-                font-size: 25px;
-            }
-            #persAccFlipBack div hr {
-                margin-top: 0.2rem !important;
-                margin-bottom: 0.2rem !important;
+            .circle {
+                display: none !important;
             }
         }
 
-        /* @media only screen and (max-width: 465px) {
-            #multiBanner682Width {
-                height: 1000px !important;
+        @media only screen and (max-width: 266px) {
+            .form-container {
+                width: 200px;
             }
-        } */
+
+            .register-forget a {
+                font-size: 12px !important;
+            }
+        }
     </style>
 </head>
 
@@ -223,11 +196,68 @@
 
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div id="logoProfMore" class="container d-flex justify-content-between align-items-center">
 
             <a class="navbar-brand text-success logo h1 align-self-center" id="logoSection" href="/"></a>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+            <div id="profSerachNoti" class="navbar align-self-center d-flex">
+                <a class="nav-icon d-inline" href="/myAccount" style="text-decoration: none;">
+                    <% if(user){ %>
+                        <% if(user.image.length> 0) { %>
+                            <span class="flex items-center">
+                                <img id="profImage" class="mr-2 w-10 h-10 rounded-full" name="<%= user.gender %>"
+                                    src="/uploadedImages/<%= user.image[0].img %>" onerror="userImgNotFound(this)"
+                                    width="35" height="35" style="border-radius: 9999px;">
+
+                                <script>
+                                    const userImgNotFound = (img) => {
+                                        let gender = document.getElementById('profImage').name;
+
+                                        gender && gender == 'male' ?
+                                            img.src = '/img/male.jpg' : img.src = '/img/female.jpg';
+                                        img.alt = 'Defualt';
+                                    }
+                                </script>
+                            </span>
+
+                            <% }else{ %>
+                                <span class="flex items-center">
+                                    <% if (user.gender=="male" ) { %>
+                                        <img class="mr-2 w-10 h-10 rounded-full" src="/img/male.jpg" alt="User Image"
+                                            width="35" height="35" style="border-radius: 9999px;">
+                                        <% }else{ %>
+                                            <img class="mr-2 w-10 h-10 rounded-full" src="/img/female.jpg"
+                                                alt="User Image" width="35" height="35" style="border-radius: 9999px;">
+                                            <% } %>
+                                                <span class="mt-1">
+                                                    <%= user.first_name %>
+                                                </span>
+                                </span>
+                                <% } %>
+                                    <% } %>
+                </a>
+                <a class="nav-icon d-inline" href="#" data-bs-toggle="modal" data-bs-target="#template_search">
+                    <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                </a>
+                <a class="nav-icon position-relative text-decoration-none" href="/cart">
+                    <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+
+                    <% if(user && user.cart) { %>
+                        <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>"
+                            data-user="<%= JSON.stringify(user) %>">
+                        <% } %>
+
+                            <span id="cartCounter"
+                                class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                </a>
+                <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                    <span
+                        class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                </a>
+            </div>
+
+            <button id="toggleMoreBtn" class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#template_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation" style="margin-bottom: 15px !important;">
                 <span class="navbar-toggler-icon"></span>
@@ -252,14 +282,14 @@
 
                     </ul>
                 </div>
-                <div class="navbar align-self-center d-flex">
+                <div id="profSerachNoti991" class="navbar align-self-center d-flex">
                     <a class="nav-icon d-inline" href="/myAccount" style="text-decoration: none;">
                         <% if(user){ %>
                             <% if(user.image.length> 0) { %>
                                 <span class="flex items-center">
-                                    <img class="mr-2 w-10 h-10 rounded-full"
-                                        src="/uploadedImages/<%= user.image[0].img %>" alt="User Image" width="35"
-                                        height="35" style="border-radius: 9999px;">
+                                    <img id="profImage" class="mr-2 w-10 h-10 rounded-full" name="<%= user.gender %>"
+                                        src="/uploadedImages/<%= user.image[0].img %>" onerror="userImgNotFound(this)"
+                                        width="35" height="35" style="border-radius: 9999px;">
                                     <span class="mt-1">
                                         <%= user.first_name %>
                                     </span>
@@ -486,19 +516,21 @@
             let addAllCats = document.getElementById('addAllCats');
             let cat_nav_ul = document.getElementById('cat-nav-ul');
 
-            catsMoreOpt.addEventListener('click', () => {
-                if (catsMoreOpt_plus.innerHTML === '+') {
-                    catsMoreOpt_plus.innerHTML = 'x';
-                    addAllCats.style.display = 'block';
-                    cat_nav_ul.style.display = 'flex';
-                    cat_nav_ul.style.flexDirection = 'column';
-                    addAllCats.append(cat_nav_ul);
-                } else {
-                    catsMoreOpt_plus.innerHTML = '+';
-                    addAllCats.style.display = 'none';
-                    cat_nav_ul.style.display = 'none';
-                }
-            })
+            if (catsMoreOpt) {
+                catsMoreOpt.addEventListener('click', () => {
+                    if (catsMoreOpt_plus.innerHTML === '+') {
+                        catsMoreOpt_plus.innerHTML = 'x';
+                        addAllCats.style.display = 'block';
+                        cat_nav_ul.style.display = 'flex';
+                        cat_nav_ul.style.flexDirection = 'column';
+                        addAllCats.append(cat_nav_ul);
+                    } else {
+                        catsMoreOpt_plus.innerHTML = '+';
+                        addAllCats.style.display = 'none';
+                        cat_nav_ul.style.display = 'none';
+                    }
+                })
+            }
         </script>
 
         <script>

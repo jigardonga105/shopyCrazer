@@ -4,8 +4,8 @@
 </head>
 
 
-<section class="seller-account flex justify-center pt-24 h-auto">
-    <div class="seller-account-poster w-full max-w-xs mr-5">
+<section class="seller-account grid grid-cols-3 justify-center pt-24 h-auto">
+    <div class="seller-account-poster flex flex-col justify-self-end w-full max-w-xs mr-5">
         <span class="text-5xl text-green-500">
             Create a new Seller Account Now
         </span>
@@ -27,8 +27,18 @@
             </a>
         </span>
     </div>
-    <div class="seller-account-adder max-w-xs">
-        <form action="/sellerReg" method="POST" enctype="multipart/form-data" class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4" style="width: 200%;">
+    <div class="seller-account-poster-730">
+        <span class="text-5xl text-green-500">
+            Create a new Seller Account Now
+        </span>
+        <br>
+        <span class="text-xl text-gray-400">
+            Let's take your business Online
+        </span>
+    </div>
+    <div class="seller-account-adder col-span-2 max-w-xs">
+        <form action="/sellerReg" method="POST" enctype="multipart/form-data"
+            class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4" style="width: 200%;">
             <% if(messages.error) { %>
                 <span class="text-red-500 text-md">
                     <%= messages.error %>
@@ -39,47 +49,62 @@
                             <label class="block text-white text-sm font-bold mb-2" for="fname">
                                 First name:
                             </label>
-                            <input name="fname" value="<%= messages.fname %>" class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="fname" type="text" placeholder="Enter your Firstname" required>
+                            <input name="fname" value="<%= messages.fname %>"
+                                class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                id="fname" type="text" placeholder="Enter your Firstname" required>
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-white text-sm font-bold mb-2" for="lname">
                                 Last name:
                             </label>
-                            <input name="lname" value="<%= messages.lname %>" class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="lname" type="text" placeholder="Enter your Lastname" required>
+                            <input name="lname" value="<%= messages.lname %>"
+                                class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                id="lname" type="text" placeholder="Enter your Lastname" required>
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-white text-sm font-bold mb-2" for="email">
                                 Email:
                             </label>
-                            <input name="email" value="<%= messages.email %>" class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="email" type="email" placeholder="Enter your email" required>
+                            <input name="email" value="<%= messages.email %>"
+                                class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                id="email" type="email" placeholder="Enter your email" required>
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-white text-sm font-bold mb-2" for="phone">
                                 Phone:
                             </label>
-                            <input name="phone" value="<%= messages.phone %>" class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="phone" type="tel" placeholder="Enter your phone" required>
+                            <input name="phone" value="<%= messages.phone %>"
+                                class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                id="phone" type="tel" placeholder="Enter your phone" required>
                         </div>
 
                         <div class="mb-1">
                             <label class="block text-white text-sm font-bold mb-2" for="password">
                                 Password
                             </label>
-                            <input name="password" class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none" id="password" type="password" placeholder="******************" required>
+                            <input name="password"
+                                class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none"
+                                id="password" type="password" placeholder="******************" required>
                         </div>
 
                         <div class="mb-6">
                             <label class="block text-white text-sm font-bold mb-2" for="password">
                                 Image
                             </label>
-                            <input name="image" class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none" id="image" type="file" placeholder="Enter your Profile Pic." accept=".jpg, .jpeg, .png" required>
+                            <input name="image"
+                                class="shadow appearance-none border rounded w-60 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none"
+                                id="image" type="file" placeholder="Enter your Profile Pic." accept=".jpg, .jpeg, .png"
+                                required>
                         </div>
                     </div>
 
                     <div class="seller-account-adder-btn flex items-center justify-between">
-                        <button class="rounded-full text-white bg-green-500 font-bold py-2 px-4 rounded focus:outline-none" type="submit">
+                        <button
+                            class="rounded-full text-white bg-green-500 font-bold py-2 px-4 rounded focus:outline-none"
+                            type="submit">
                             Register
                         </button>
                         <a class="inline-block align-baseline font-bold text-yellow-500" href="/sellerLog">
