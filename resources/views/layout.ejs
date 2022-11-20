@@ -478,11 +478,7 @@
                 cartCounterSpan.innerText = '';
             }
 
-            let copyYear = document.getElementById('copyYear');
-            let date = new Date();
-            let year = date.getFullYear();
-
-            copyYear.innerHTML = year;
+            document.getElementById('copyYear').innerHTML = new Date().getFullYear();
 
             const loadVideoLogo = () => {
                 document.getElementById('logoSection').innerHTML = `<video width="200" height="50" autoplay loop>

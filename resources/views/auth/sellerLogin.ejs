@@ -3,10 +3,47 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <style>
-        @media screen and (max-width: 416px) {
+        @media screen and (max-width: 680px) {
             .log-seller-account {
                 display: flex;
                 flex-direction: column;
+                padding-top: 2rem !important;
+            }
+
+            .log-seller-account-poster {
+                display: none !important;
+            }
+
+            .log-seller-account-adder {
+                margin-left: 27%;
+            }
+        }
+
+        @media screen and (max-width: 570px) {
+            .log-seller-account-adder {
+                margin-left: 20%;
+            }
+        }
+
+        @media screen and (max-width: 431px) {
+            .log-seller-account-adder {
+                margin-left: 5%;
+            }
+        }
+
+        @media screen and (max-width: 352px) {
+            .log-seller-account-adder {
+                max-width: 15rem;
+            }
+            .log-seller-account-adder-btn {
+                flex-direction: column;
+                row-gap: 5px;
+            }
+        }
+
+        @media screen and (max-width: 268px) {
+            .log-seller-account-adder {
+                max-width: 12rem;
             }
         }
     </style>

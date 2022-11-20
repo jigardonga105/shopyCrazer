@@ -119,9 +119,5 @@
 </section>
 
 <script>
-    let copyYear = document.getElementById('sellerSignupCopyYear');
-    let date = new Date();
-    let year = date.getFullYear();
-
-    copyYear.innerHTML = year;
+    document.getElementById('sellerSignupCopyYear').innerHTML = new Date().getFullYear();
 </script>

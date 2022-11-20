@@ -394,22 +394,42 @@ a:hover {
   }
 }
 
-@media screen and (max-width: 1308px) {
+@media screen and (max-width: 1340px) {
+  .show-store-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media screen and (max-width: 1095px) {
+  .show-store-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media screen and (max-width: 825px) {
   .show-store-list {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
 
-@media screen and (max-width: 488px) {
-  .show-store {
-    flex-direction: column-reverse;
-    width: 488px;
-  }
-  .show-store-add {
-    margin: 0 auto;
-  }
+@media screen and (max-width: 576px) {
   .show-store-list {
-    margin: 0 auto;
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+
+  .addNewStoreBtnDiv {
+    width: 100% !important;
+  }
+
+  .addNewStoreBtnDiv div {
+    float: right;
+  }
+}
+
+@media screen and (max-width: 290px) {
+  .your-store-header,
+  .addNewStoreBtnDiv div {
+    width: auto !important;
   }
 }
 
@@ -477,9 +497,6 @@ a:hover {
   .store-list-main {
     flex-direction: column-reverse;
   }
-  .show-store-list {
-    margin: auto !important;
-  }
   .show-store-add {
     margin: 0 auto;
     margin-bottom: 60px;
@@ -489,9 +506,8 @@ a:hover {
   }
 }
 
-.show-store-list div {
-  height: 27rem;
-  width: 84%;
+.show-store-list-div {
+  height: 18rem;
 }
 
 .show-store-list a {
@@ -499,7 +515,7 @@ a:hover {
   color: black;
 }
 
-.show-store-list .list-disc {
+.list-disc {
   width: 93%;
 }
 
@@ -513,16 +529,8 @@ a:hover {
 }
 
 @media screen and (max-width: 1498px) {
-  .show-store-list div {
-    height: 30rem;
-    width: 84%;
-  }
-  .show-store-list .list-disc {
+  .list-disc {
     width: 120%;
-  }
-  .store-dtil-btn {
-    display: flex;
-    flex-direction: column;
   }
   .store-dtil-btn a {
     display: contents;
@@ -534,16 +542,7 @@ a:hover {
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .your-store-header {
-    margin-left: 5rem;
-  }
-}
-
-@media screen and (max-width: 980px) {
-  .show-store-list {
-    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-  }
+@media screen and (max-width: 1089px) {
   .show-store-add {
     height: 720px;
   }
