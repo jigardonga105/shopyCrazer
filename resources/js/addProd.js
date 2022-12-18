@@ -78,59 +78,59 @@ export function addProd() {
                 let more_feild_div = document.getElementById(`more-${feild}-div`);
 
                 let offerStr = `<div id="offer-data-${counter + 2}"><hr>
-                            <span id="delete-spanBtn-offer" class="bg-red-500 float-right rounded-full cursor-pointer px-2"><strong>-</strong></span>
+                            <span id="delete-spanBtn-offer" class="bg-red-500 float-right rounded-full cursor-pointer px-2.5 py-0.5 mb-1"><strong>-</strong></span>
                             <input name="offers" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="offerstype${counter + 2}" type="text" placeholder="Enter Offer type">
                             <input name="offers" class="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="offersdetails${counter + 2}" type="text" placeholder="Enter Offer Details">
                         </div>`;
 
                 let warrStr = `<div id="warr-data-${counter + 2}"><hr>
-                        <span id="delete-spanBtn-warr" class="bg-red-500 float-right rounded-full cursor-pointer px-2"><strong>-</strong></span>
+                        <span id="delete-spanBtn-warr" class="bg-red-500 float-right rounded-full cursor-pointer px-2.5 py-0.5 mb-1"><strong>-</strong></span>
                         <input name="warr-type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="warr-type${counter + 2}" type="text" placeholder="type Warranty / Garranty">
                         <input name="warr-dura" class="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="warr-dura${counter + 2}" type="text" placeholder="Enter Duration ( 2 Years )">
                         <input name="warr-desc" class="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="warr-desc${counter + 2}" type="text" placeholder="Enter Description">
                     </div>`;
 
                 let sizeStr = `<div id="size-data-${counter + 2}"><hr>
-                        <span id="delete-spanBtn-size" class="bg-red-500 float-right rounded-full cursor-pointer px-2"><strong>-</strong></span>
+                        <span id="delete-spanBtn-size" class="bg-red-500 float-right rounded-full cursor-pointer px-2.5 py-0.5 mb-1"><strong>-</strong></span>
                         <input name="sizes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="size${counter + 2}" type="text" placeholder="Enter sizes ( S,M,L,XL.. )">
                     </div>`;
 
                 let colorStr = `<div id="color-data-${counter + 2}"><hr>
-                        <span id="delete-spanBtn-color" class="bg-red-500 float-right rounded-full cursor-pointer px-2"><strong>-</strong></span>
+                        <span id="delete-spanBtn-color" class="bg-red-500 float-right rounded-full cursor-pointer px-2.5 py-0.5 mb-1"><strong>-</strong></span>
                         <input name="colors" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="color${counter + 2}" type="text" placeholder="Enter colors">
                     </div>`;
 
                 let highlightStr = `<div id="highlight-data-${counter + 2}">
                         <hr>
-                        <span id="delete-spanBtn-highlight" class="bg-red-500 float-right rounded-full cursor-pointer px-2"><strong>-</strong></span>
+                        <span id="delete-spanBtn-highlight" class="bg-red-500 float-right rounded-full cursor-pointer px-2.5 py-0.5 mb-1"><strong>-</strong></span>
                         <input name="highlights" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="highlight${counter + 2}" type="text" placeholder="Enter highlights">
                     </div>`;
 
                 let payopsStr = `<div id="payops-data-${counter + 2}">
                         <hr>
-                        <span id="delete-spanBtn-payops" class="bg-red-500 float-right rounded-full cursor-pointer px-2"><strong>-</strong></span>
+                        <span id="delete-spanBtn-payops" class="bg-red-500 float-right rounded-full cursor-pointer px-2.5 py-0.5 mb-1"><strong>-</strong></span>
                         <input name="payops" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="payops${counter + 2}" type="text" placeholder="Enter payment options">
                     </div>`;
 
                 let servicesStr = `<div id="services-data-${counter + 2}">
                         <hr>
-                        <span id="delete-spanBtn-services" class="bg-red-500 float-right rounded-full cursor-pointer px-2"><strong>-</strong></span>
+                        <span id="delete-spanBtn-services" class="bg-red-500 float-right rounded-full cursor-pointer px-2.5 py-0.5 mb-1"><strong>-</strong></span>
                         <input name="services" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="services${counter + 2}" type="text" placeholder="Enter services">
                     </div>`;
 
                 let specStr = `<div id="spec-data-${counter + 2}">
                     <div id="sub_spec-div" class="sub_spec-div border rounded bg-gray-400 p-3 my-2">
                         <div id="key1" class="m-1">
-                            <input required type="text" class="inline-block shadow appearance-none border rounded w-11/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="spec${counter + 2}" placeholder="Enter Title of Specification">
-                            <span id="delete-spanBtn-spec" class="inline-block bg-red-500 float-right rounded-full cursor-pointer px-2"><strong>-</strong></span>
+                            <input required type="text" class="titleOfSpecField inline-block shadow appearance-none border rounded w-11/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="spec${counter + 2}" placeholder="Enter Title of Specification">
+                            <span id="delete-spanBtn-spec" class="inline-block bg-red-500 float-right rounded-full cursor-pointer px-3 py-1"><strong>-</strong></span>
                         </div>
-                        <div class="m-2 mt-4 flex">
+                        <div class="m-2 mt-4 flex specKeyValueField">
                             <input type="text" class="inline-block bg-gray-200 h-12 p-3" id="key${counter + 2}.1" placeholder="Enter Title">
                             <input type="text" class="ml-3 inline-block bg-gray-200 h-12 p-3" id="value${counter + 2}.1" placeholder="Enter Description">
-                            <span id="plus-btn" class="bg-yellow-500 px-4 pt-2 ml-2 rounded-full cursor-pointer"><strong>+</strong></span>
+                            <span id="plus-btn" class="bg-yellow-500 px-3 py-2 rounded-full cursor-pointer ml-5"><strong>+</strong></span>
                         </div>
                     </div>
-                    <div id="more-sub_spec-${counter + 2}" style="margin-left: 25%;"></div>
+                    <div id="more-sub_spec-${counter + 2}"></div>
                 </div>`;
 
                 let string
@@ -145,11 +145,11 @@ export function addProd() {
                 let delete_spanBtn_feild = document.querySelectorAll(`#delete-spanBtn-${feild}`);
                 for (let item of delete_spanBtn_feild) {
                     item.addEventListener('click', (e) => {
-                        if (e.target.parentElement.tagName == 'SPAN') {
-                            e.target.parentElement.parentElement.remove();
+                        if (feild == 'spec') {
+                            e.target.parentElement.parentElement.parentElement.remove();
                         } else {
-                            if (feild == 'spec') {
-                                e.target.parentElement.parentElement.parentElement.remove();
+                            if (e.target.parentElement.tagName == 'SPAN') {
+                                e.target.parentElement.parentElement.remove();
                             } else {
                                 e.target.parentElement.remove();
                             }
@@ -198,10 +198,10 @@ export function addProd() {
                     // console.log(more_sub_spec);
 
                     let string = `<div id="sub_spec-div" class="sub_spec-div mb-3">
-                        <div>
+                        <div style="margin-left: 22px;" class="specKeyValueField">
                             <input type="text" class="inline-block bg-gray-200 h-12 p-3" id="key${i + 1}.${more_sub_spec_counter + 2}" placeholder="Enter Title">
                             <input type="text" class="ml-3 inline-block bg-gray-200 h-12 p-3" id="value${i + 1}.${more_sub_spec_counter + 2}" placeholder="Enter Description">
-                            <span class="plus-btn bg-red-500 px-4 pt-2 ml-2 rounded-full cursor-pointer"><strong>-</strong></span>
+                            <span class="plus-btn bg-red-500 px-3 py-2 pt-2 ml-2 rounded-full cursor-pointer"><strong>-</strong></span>
                         </div>
                     </div>`;
 
@@ -227,8 +227,11 @@ export function addProd() {
     showSubSpec()
 
 
+    // ==================================================================================================================================================================================
+    // ==================================================================================================================================================================================
+
     // ===========================================================
-    // Data fetching :-
+    // Data fetching after submitting Form:-
     // ===========================================================
 
     let form = document.getElementById('form')

@@ -3,11 +3,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <style>
-        @media screen and (max-width: 793px) {
-            body {
-                width: 793px !important;
-            }
-        }
+
     </style>
 </head>
 
@@ -28,9 +24,8 @@
 
 
         <div class="container mx-auto">
-            <span class="font-bold py-3 px-3 bg-green-500 rounded">Update Product:</span>
-            <br>
-            <br>
+            <span class="font-bold py-3 px-3 bg-yellow-500 rounded mb-5">Update Product:</span>
+
             <input id="itemdata" type="hidden" value="<%= JSON.stringify(product) %>">
             <div id="forForm" class="hidden"></div>
 
@@ -123,7 +118,7 @@
                         <label class="inline-block text-white text-sm font-bold mb-2" for="productdesc">
                             Change Descriptions:
                         </label>
-                        <button class="changedprice-btn h-10 my-2 ml-24 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
+                        <button class="changedprice-btn inline-block h-10 my-2 ml-24 rounded text-black bg-green-500 font px-1 rounded focus:outline-none" type="submit">
                             Update
                         </button>
                         <br>
@@ -154,7 +149,6 @@
                                 <span id="btn" class="offer offer-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer" style="display: none;margin-left: 42%;" type="submit">
                                     Update
                                 </span>
-
                             </div>
                         </form>
 
@@ -292,6 +286,7 @@
                     </div>
                 </div>
             </div>
+            
             <div id="forms3" class="forms3 border w-full mt-3 p-3 rounded">
                 <form action="/seller/updateitem/<%= product._id %>" method="POST">
                     <div class="mb-4 bg-gray-400">

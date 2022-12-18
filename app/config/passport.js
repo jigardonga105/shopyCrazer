@@ -18,6 +18,8 @@ function init(passport) {
                 return done(null, false, { message: 'Username or password incorrect' })
             })
             .catch(err => {
+                console.log(err);
+                console.log("================");
                 return done(err, false, { message: 'Something went wrong' })
             })
     }))

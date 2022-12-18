@@ -36,23 +36,29 @@ function prodController() {
                 req.flash('productname', productname)
                 req.flash('price', price)
                 req.flash('productdesc', productdesc)
-                res.redirect(`/seller/store/${storeID}`)
+                return res.redirect(`/seller/store/${storeID}`)
             }
 
-            if (payops.length === 0) {
+            if (payops && payops.length === 0) {
                 req.flash('error', 'Payment Options are required')
                 req.flash('productname', productname)
                 req.flash('price', price)
                 req.flash('productdesc', productdesc)
-                res.redirect(`/seller/store/${storeID}`)
+                return res.redirect(`/seller/store/${storeID}`)
             }
-
+            
             let productPictures = [];
-
+            
             if (req.files.length > 0) {
                 productPictures = req.files.map((file) => {
                     return { img: file.filename };
                 });
+            } else {
+                req.flash('error', 'Atleast one product image is required')
+                req.flash('productname', productname)
+                req.flash('price', price)
+                req.flash('productdesc', productdesc)
+                return res.redirect(`/seller/store/${storeID}`)
             }
 
             if (offer || warr || size || color || highlight || payops || service || productdesc || specification) {
@@ -85,8 +91,8 @@ function prodController() {
                         return res.redirect(`/seller/store/${storeID}`)
                     })
             } else {
-                console.log('error');
-                res.redirect(`/`)
+                req.flash('error', 'Internal Server Error')
+                return res.redirect(`/seller/store/${storeID}`)
             }
         },
 
@@ -138,9 +144,9 @@ function prodController() {
             const result = await Product.updateOne({ _id: req.params.prdID }, { $push: { image: { $each: productPictures } } })
                 // console.log(result);
             if (result) {
-                res.redirect(`/seller/productUpdate/${req.params.prdID}`)
+                return res.redirect(`/seller/productUpdate/${req.params.prdID}`)
             } else {
-                res.render('/')
+                return res.render('/')
             }
         },
 
@@ -148,9 +154,9 @@ function prodController() {
 
             function resultRedirect(result) {
                 if (result) {
-                    res.redirect(`/seller/productUpdate/${req.params.prdID}`)
+                    return res.redirect(`/seller/productUpdate/${req.params.prdID}`)
                 } else {
-                    res.render('/')
+                    return res.render('/')
                 }
             }
 
@@ -190,7 +196,7 @@ function prodController() {
                     const result = await Product.updateOne({ _id: req.params.prdID }, { $set: { discount } })
                     resultRedirect(result)
                 } else {
-                    res.redirect(`/seller/productUpdate/${req.params.prdID}`)
+                    return res.redirect(`/seller/productUpdate/${req.params.prdID}`)
                 }
             }
             if (req.body.desc) {
@@ -257,9 +263,9 @@ function prodController() {
                 }
                 const result = await Product.findByIdAndDelete({ _id: req.params.prdID });
                 if (result) {
-                    res.redirect(`/seller/store/${strID}`);
+                    return res.redirect(`/seller/store/${strID}`);
                 } else {
-                    res.redirect(`/seller/productUpdate/${req.params.prdID}`);
+                    return res.redirect(`/seller/productUpdate/${req.params.prdID}`);
                 }
             }
         }

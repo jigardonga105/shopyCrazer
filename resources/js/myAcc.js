@@ -1,6 +1,6 @@
 import axios from "axios";
 import validator from "validator";
-import otpGenerator from "otp-generator";
+// import otpGenerator from "otp-generator";
 
 
 export function myAcc() {
@@ -342,7 +342,7 @@ export function myAcc() {
                     showErrField('Please enter valid Email!', emailInp);
                 } else {
 
-                    let otp = otpGenerator.generate(6, { upperCase: false, specialChars: false, alphabets: false });
+                    let otp = Math.floor(100000 + Math.random() * 900000);
                     let subject = 'Verify Your Email Address';
                     let body = `<div>
                                 <span>

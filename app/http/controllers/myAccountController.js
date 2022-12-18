@@ -1,5 +1,5 @@
 const User = require('../../models/user');
-const otpGenerator = require('otp-generator')
+// const otpGenerator = require('otp-generator')
 const fs = require('fs');
 
 const accountSid = 'AC910b3239a6b235851c5ad7a88a93954c';
@@ -18,7 +18,8 @@ function myAccountController() {
             // console.log(req.body.phoneNumber);
             let phoneNumber = req.body.phoneNumber;
 
-            let otp = otpGenerator.generate(6, { upperCase: false, specialChars: false, alphabets: false });
+            // let otp = otpGenerator.generate(6, { upperCase: false, specialChars: false, alphabets: false });
+            let otp = Math.floor(100000 + Math.random() * 900000)
             // console.log(otp);
 
             client.messages

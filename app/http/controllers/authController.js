@@ -112,41 +112,46 @@ function authController() {
                 return res.redirect('/login')
             }
 
-            User.exists({ email: email, role: 'seller' }, (err, result) => {
+            await User.exists({ email: email, role: 'seller' }, async (err, result) => {
+                if (err) {
+                    req.flash('error', 'Something went wrong')
+                    return res.redirect('/login')
+                }
                 if (result) {
                     req.flash('error', 'User not found')
                     return res.redirect('/login')
+
+                } else {
+                    if (req.session.courierAgents) {
+                        req.session.destroy((err) => {
+                            if (err) {
+                                return console.log(err);
+                            }
+                        });
+                    }
+        
+                    await passport.authenticate('local', (err, user, info) => {
+                        if (err) {
+                            req.flash('error', info.message)
+                            return res.redirect('/')
+                        }
+        
+                        if (!user) {
+                            req.flash('error', info.message)
+                            return res.redirect('/login')
+                        }
+        
+                        req.login(user, (err) => {
+                            if (err) {
+                                req.flash('error', info.message)
+                                // return res.redirect('/login')
+                            } else {
+                                return res.redirect('/')
+                            }
+                        })
+                    })(req, res, next)
                 }
             })
-
-            if (req.session.courierAgents) {
-                req.session.destroy((err) => {
-                    if (err) {
-                        return console.log(err);
-                    }
-                });
-            }
-
-            passport.authenticate('local', (err, user, info) => {
-                if (err) {
-                    req.flash('error', info.message)
-                    return res.redirect('/')
-                }
-
-                if (!user) {
-                    req.flash('error', info.message)
-                    return res.redirect('/login')
-                }
-
-                req.login(user, (err) => {
-                    if (err) {
-                        req.flash('error', info.message)
-                        // return res.redirect('/login')
-                    } else {
-                        return res.redirect('/')
-                    }
-                })
-            })(req, res, next)
         },
 
         logout(req, res) {

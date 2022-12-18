@@ -3,17 +3,11 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <style>
-        @media screen and (max-width: 630px) {
-            body {
-                width: 630px;
-            }
-        }
-        
         strong {
             font-size: 20px;
             font-weight: 600;
         }
-        
+
         li strong {
             font-weight: 400;
         }
@@ -24,62 +18,86 @@
 
     <div class="change-details-btn-div float-right relative right-24 top-5">
         <a href="/seller/productUpdate/<%= product._id %>">
-            <button class="h-10 rounded text-black bg-green-500 px-3 rounded focus:outline-none">
-                Update
+            <button
+                class="bg-gray-800 px-3 py-2 mt-3 float-right rounded-full hover:text-white hover:bg-gray-600 focus:outline-none text-yellow-400">
+                Update Info.&nbsp&nbsp<i class="fa-solid fa-pen"></i>
             </button>
         </a>
     </div>
 
-    <section class="item-details grid grid-cols-3 grid-center justify-center gap-20 py-20">
-        <div class="item-img" style="width: 574px;">
+    <section class="item-details mt-24 ml-10">
+        <div class="item-img">
             <% for (const img of product.image) { %>
                 <img class="itemSlider" src="../../../uploadedImages/<%= img.img %>" alt="">
                 <% } %>
         </div>
 
-        <div class="item-data col-span-2 grid grid-cols-2" style="margin-left: 11rem;">
+        <div class="item-data grid grid-cols-2 ml-5 mb-5">
 
-            <div class="item-data-1 mr-1">
-                <span class="bg-gray-300 rounded mb-5 p-2 text-lg block"><strong>Category:</strong>
+            <div class="bg-gray-100 shadow col-span-2 p-2">
+                <span class="">
+                    <strong class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">
+                        Category:
+                    </strong>
                     <%= product.category %> &#8658; <%= product.subcategory %>
                 </span>
-                <span class="bg-gray-300 rounded mb-5 p-2 text-lg flex">
-                    <span>
-                        <strong>Product Rating:</strong>
-                        <%= product.rating %>&nbsp;
-                    </span>
-                <span>
-                        <img class="mt-1" src="/img/star.png" alt="" height="20" width="20">
-                    </span>
-                </span>
-                <span class="bg-gray-300 rounded mb-5 p-2 text-lg block"><strong>Product Name:</strong>
+            </div>
+
+            <div class="bg-gray-100 shadow col-span-2 p-2 mt-5">
+                <span class="">
+                    <strong class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">
+                        Product Name:
+                    </strong>
                     <%= product.name %>
                 </span>
             </div>
 
-            <div class="item-data-2 ml-1">
-                <span class="bg-gray-300 rounded mb-5 p-2 text-lg block"><strong>In Stock:</strong>
-                    <% if(product.stock == true){ %>
-                        <span>✅</span>
-                <% } else { %>
-                    <span>❌</span>
-                    <% } %>
-                        </span>
-                        <span class="bg-gray-300 rounded mb-5 p-2 text-lg block"><strong>Product Vote:</strong>
+            <div class="item-data-1 mr-1 mt-5">
+                <span class="bg-gray-100 shadow rounded mb-5 p-2 text-lg flex">
+                    <span>
+                        <strong class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Product
+                            Rating:</strong>
+                        <%= product.rating %>&nbsp;
+                    </span>
+                    <span>
+                        <img class="mt-1" src="/img/star.png" alt="" height="20" width="20">
+                    </span>
+                </span>
+                <span class="bg-gray-100 shadow rounded mb-5 p-2 text-lg block"><strong
+                        class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Product
+                        Vote:</strong>
                     <%= product.vote %>
                 </span>
-                        <span class="bg-gray-300 rounded mb-5 p-2 text-lg block"><strong>Product Price:</strong>
+            </div>
+
+            <div class="item-data-2 ml-1 mt-5">
+                <span class="bg-gray-100 shadow rounded mb-5 p-2 text-lg block"><strong
+                        class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">In
+                        Stock:</strong>
+                    <% if(product.stock==true){ %>
+                        <span>✅</span>
+                        <% } else { %>
+                            <span>❌</span>
+                            <% } %>
+                </span>
+                <span class="bg-gray-100 shadow rounded mb-5 p-2 text-lg block"><strong
+                        class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Product
+                        Price:</strong>
                     ₹<%= product.price %>
                 </span>
             </div>
 
-            <div class="bg-gray-300 col-span-2">
-                <strong class="ml-2">Available offers:</strong>
+            <div class="bg-gray-100 shadow col-span-2 pt-3">
+                <strong class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow ml-2">
+                    Available offers:
+                </strong>
                 <ul class="my-2 list-disc">
-                    <% for(let i = 0; i < Object.keys(product.offer[0]).length; i++){ 
-                    let offer = product.offer[0][i]; %>
+                    <% for(let i=0; i < Object.keys(product.offer[0]).length; i++){ let offer=product.offer[0][i]; %>
                         <% for (key in offer) { %>
-                            <li class="mb-1"><strong><%= key %>:&nbsp;</strong>
+                            <li class="mb-1">
+                                <strong>
+                                    <%= key %>:&nbsp;
+                                </strong>
                                 <%= offer[key] %>
                             </li>
                             <% } %>
@@ -88,9 +106,10 @@
             </div>
 
             <% if(product.size.length) { %>
-                <div class="bg-gray-300 col-span-2 mt-5 p-2">
-                    <strong>Sizes:</strong>
-                    <% product.size.map(size => { %>
+                <div class="bg-gray-100 shadow col-span-2 mt-5 p-2">
+                    <strong
+                        class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Sizes:</strong>
+                    <% product.size.map(size=> { %>
                         <div class="size-show-div inline-block w-10 h-10 mt-2 mr-2">
                             <%= size %>
                         </div>
@@ -99,10 +118,12 @@
                 <% } %>
 
                     <% if(product.color) { %>
-                        <div class="bg-gray-300 col-span-2 mt-5 p-2">
-                            <strong>Colors:</strong>
-                            <% product.color.map(color => { %>
-                                <div class="color-show-div inline-block w-10 h-10 rounded-full mt-2 mr-2" data-color="<%= color %>"></div>
+                        <div class="bg-gray-100 shadow col-span-2 mt-5 p-2">
+                            <strong
+                                class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Colors:</strong>
+                            <% product.color.map(color=> { %>
+                                <div class="color-show-div inline-block w-10 h-10 rounded-full mt-2 mr-2"
+                                    data-color="<%= color %>"></div>
 
                                 <script>
                                     color_show_div = document.getElementsByClassName('color-show-div');
@@ -118,11 +139,12 @@
                         </div>
                         <% } %>
 
-                            <div class="bg-gray-300 col-span-2 mt-5">
-                                <strong class="ml-1">Warranty:</strong>
+                            <div class="bg-gray-100 shadow col-span-2 mt-5 pt-3">
+                                <strong
+                                    class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow ml-1">Warranty:</strong>
                                 <ul class="my-2 list-disc">
-                                    <% for(let i = 0; i < Object.keys(product.Warr_Garr[0]).length; i++){ 
-                                        let Warr_Garr = product.Warr_Garr[0][i]; %>
+                                    <% for(let i=0; i < Object.keys(product.Warr_Garr[0]).length; i++){ let
+                                        Warr_Garr=product.Warr_Garr[0][i]; %>
                                         <% for (key in Warr_Garr) { %>
                                             <li class="my-1">
                                                 <%= Warr_Garr[key] %>
@@ -133,10 +155,11 @@
                             </div>
 
                             <% if(product.highlight.length) { %>
-                                <div class="bg-gray-300 col-span-2 mt-5 p-2">
-                                    <strong>Highlights:</strong>
+                                <div class="bg-gray-100 shadow col-span-2 mt-5 p-2">
+                                    <strong
+                                        class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Highlights:</strong>
                                     <ul class="my-2 list-disc">
-                                        <% product.highlight.map(highlight => { %>
+                                        <% product.highlight.map(highlight=> { %>
                                             <li class="my-1">
                                                 <%= highlight %>
                                             </li>
@@ -146,10 +169,12 @@
                                 <% } %>
 
                                     <% if(product.payment_ops.length) { %>
-                                        <div class="bg-gray-300 col-span-2 mt-5 p-2">
-                                            <strong>Payment Options:</strong>
+                                        <div class="bg-gray-100 shadow col-span-2 mt-5 p-2">
+                                            <strong
+                                                class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Payment
+                                                Options:</strong>
                                             <ul class="my-2 list-disc">
-                                                <% product.payment_ops.map(payment_ops => { %>
+                                                <% product.payment_ops.map(payment_ops=> { %>
                                                     <li class="my-1">
                                                         <%= payment_ops %>
                                                     </li>
@@ -159,10 +184,11 @@
                                         <% } %>
 
                                             <% if(product.service.length) { %>
-                                                <div class="bg-gray-300 col-span-2 mt-5 p-2">
-                                                    <strong>Services:</strong>
+                                                <div class="bg-gray-100 shadow col-span-2 mt-5 p-2">
+                                                    <strong
+                                                        class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Services:</strong>
                                                     <ul class="my-2 list-disc">
-                                                        <% product.service.map(service => { %>
+                                                        <% product.service.map(service=> { %>
                                                             <li class="my-1">
                                                                 <%= service %>
                                                             </li>
@@ -171,22 +197,31 @@
                                                 </div>
                                                 <% } %>
 
-                                                    <div class="col-span-2 bg-gray-300 rounded mt-5 p-2 text-lg">
-                                                        <strong class="pt-2">Description:</strong>
+                                                    <div class="col-span-2 bg-gray-100 shadow rounded mt-5 p-2 text-lg">
+                                                        <strong
+                                                            class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow"
+                                                            class="pt-2">Description:</strong>
                                                         <br>
-                                                        <span><%= product.desc %></span>
+                                                        <span>
+                                                            <%= product.desc %>
+                                                        </span>
                                                     </div>
 
-                                                    <div class="bg-gray-300 col-span-2 mt-5 p-2">
-                                                        <strong>Specifications:</strong>
+                                                    <div class="bg-gray-100 shadow col-span-2 mt-5 p-2">
+                                                        <strong
+                                                            class="itemDataTitle bg-gray-800 text-white font-light px-2 py-1 rounded shadow">Specifications:</strong>
                                                         <ul class="my-2 list-disc">
-                                                            <% let specification = product.specification[0]; %>
+                                                            <% let specification=product.specification[0]; %>
                                                                 <% for (key in specification) { %>
-                                                                    <li class="mb-3"><strong><%= key %>:&nbsp;</strong>
-                                                                        <% let spec = specification[key]%>
+                                                                    <li class="mb-3"><strong>
+                                                                            <%= key %>:&nbsp;
+                                                                        </strong>
+                                                                        <% let spec=specification[key]%>
                                                                             <ul>
                                                                                 <% for (keySpec in spec) { %>
-                                                                                    <li class="mb-1"><strong><%= keySpec %>:&nbsp;</strong>
+                                                                                    <li class="mb-1"><strong>
+                                                                                            <%= keySpec %>:&nbsp;
+                                                                                        </strong>
                                                                                         <%= spec[keySpec] %>
                                                                                     </li>
                                                                                     <% } %>
@@ -207,14 +242,16 @@
             function itemSlider() {
                 var index;
                 var x = document.getElementsByClassName("itemSlider");
-                for (index = 0; index < x.length; index++) {
-                    x[index].style.display = "none";
+                if (x) {
+                    for (index = 0; index < x.length; index++) {
+                        x[index].style.display = "none";
+                    }
+                    itemIndex++;
+                    if (itemIndex > x.length) {
+                        itemIndex = 1
+                    }
+                    x[itemIndex - 1].style.display = "block";
+                    setTimeout(itemSlider, 5000); // Change image every 2 seconds
                 }
-                itemIndex++;
-                if (itemIndex > x.length) {
-                    itemIndex = 1
-                }
-                x[itemIndex - 1].style.display = "block";
-                setTimeout(itemSlider, 5000); // Change image every 2 seconds
             }
         </script>

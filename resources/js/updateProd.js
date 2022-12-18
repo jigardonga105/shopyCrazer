@@ -237,7 +237,7 @@ export function updateProd() {
                                             <span class="inline-block bg-blue-200 rounded px-2">${index + 1}:</span>
                                             <span class="ext-${key}-del inline-block bg-red-200 rounded mt-2 px-2 float-right cursor-pointer">-</span>
                                             <div id="ext-${key}-data-${index + 1}" class="mb-3 inline-block">
-                                                <input name="${key}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="ext-${key}${index + 1}" type="text" placeholder="Enter Offer type" value="${arrEle}" style="width:143%;">
+                                                <input name="${key}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="ext-${key}${index + 1}" type="text" placeholder="Enter Offer type" value="${arrEle}">
                                             </div>
                                         </div>`;
 

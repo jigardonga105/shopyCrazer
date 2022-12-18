@@ -90,32 +90,40 @@ function sellerAuthController() {
                 return res.redirect('/sellerLog')
             }
 
-            User.exists({ email: email, role: 'customer' }, (err, result) => {
+            await User.exists({ email: email, role: 'customer' }, (err, result) => {
+                if (err) {
+                    req.flash('error', 'Something went wrong')
+                    return res.redirect('/sellerLog')
+                }
+
                 if (result) {
                     req.flash('error', 'User not found')
                     return res.redirect('/sellerLog')
+
+                } else {
+                    passport.authenticate('local', (err, user, info) => {
+                        if (err) {
+                            req.flash('error', info.message)
+                            return res.redirect('/sellerLog')
+                        }
+        
+                        if (!user) {
+                            req.flash('error', info.message)
+                            return res.redirect('/sellerLog')
+                        }
+
+                        req.login(user, (err) => {
+                            if (err) {
+                                req.flash('error', info.message)
+                                return res.redirect('/sellerLog')
+                            } else {
+                                return res.redirect('/')
+                            }
+                        })
+                    })(req, res, next)
                 }
             })
 
-            passport.authenticate('local', (err, user, info) => {
-                if (err) {
-                    req.flash('error', info.message)
-                    return res.redirect('/sellerLog')
-                }
-
-                if (!user) {
-                    req.flash('error', info.message)
-                    return res.redirect('/sellerLog')
-                }
-
-                req.login(user, (err) => {
-                    if (err) {
-                        req.flash('error', info.message)
-                        return res.redirect('/sellerLog')
-                    }
-                    return res.redirect('/')
-                })
-            })(req, res, next)
         }
     }
 
