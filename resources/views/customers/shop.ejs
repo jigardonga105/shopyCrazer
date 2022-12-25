@@ -17,6 +17,8 @@
 
         .card {
             border: none !important;
+            width: 300px;
+            border-radius: 20px;
         }
 
         .card-img {
@@ -26,13 +28,19 @@
 
         @media only screen and (max-width: 1400px) {
             #productsGridDiv {
-                grid-template-columns: repeat(2,minmax(0,1fr));
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
         @media only screen and (max-width: 768px) {
             #productsGridDiv {
-                grid-template-columns: repeat(1,minmax(0,1fr));
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
+
+        @media only screen and (max-width: 300px) {
+            .card {
+                width: auto !important;
             }
         }
     </style>
@@ -113,8 +121,7 @@
                     <% if (products.length> 0) { %>
                         <% products.forEach((product)=> { %>
                             <div class="" style="cursor: pointer;">
-                                <div class="card mb-4 product-wap rounded-lg"
-                                    style="width: 300px !important; border-radius: 20px;">
+                                <div class="card mb-4 product-wap rounded-lg">
                                     <div class="card rounded-lg image-card card-shadowNone"
                                         style="height: 200px !important;">
                                         <img class="card-img rounded-lg img-fluid"

@@ -12,13 +12,13 @@
     </style>
 </head>
 
-<section class="px-40 py-5">
+<section class="selectAddPayopsMain px-40 py-5">
     <div>
         <input type="hidden" name="user" id="userAdd" value="<%= JSON.stringify(user.address) %>">
         <input type="hidden" name="">
     </div>
-    <div class="grid grid-cols-2 bg-gray-100 rounded p-2 shadow">
-        <div id="address" class="address">
+    <div class="selectAddressPayops grid grid-cols-2 bg-gray-100 rounded p-2 shadow">
+        <div id="address" class="address selectAddress">
             <div>
                 <div class="mt-2 mb-3">
                     <span class="font-medium text-2xl">Select Delivery Address:</span>
@@ -31,15 +31,15 @@
                 </div>
             </div>
         </div>
-        <div id="payMethod" class="payMethod" style="margin-left: 25%;">
-            <div>
-                <div class="mt-2">
+        <div id="payMethod" class="payMethod selectPayops" style="margin-left: 25%;">
+            <div class="selectPayopsDiv">
+                <div class="selectPayopsTitle mt-2">
                     <span class="font-medium text-2xl">Select Payment Method:</span>
                 </div>
-                <div class="bg-light inline-block p-2 rounded mt-3">
+                <div class="selectPayopsMethods bg-light inline-block p-2 rounded mt-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="payMethod" value="cod"
-                            id="flexRadioDefault1" checked>
+                        <input class="form-check-input" type="radio" name="payMethod" value="cod" id="flexRadioDefault1"
+                            checked>
                         <label class="form-check-label" for="flexRadioDefault1">
                             Cash on Delivery
                         </label>
@@ -52,7 +52,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="m-5">
+                <div class="backCartPayBillMain flex justify-content-center gap-x-5 mt-3">
                     <a href="/cart">
                         <button class="placeOrdBtn mr-3 bg-yellow-300 text-black p-3 rounded focus:outline-none">
                             ⬅ Back to Cart
@@ -90,19 +90,20 @@
         })
     }
     else {
+        document.getElementById('myAccBTN').style.display = 'none';
         allAddressDiv.innerHTML = `<ul class="list-disc">
-                                    <li>
-                                        <span class="text-3xl">
-                                            No Address added yet!
-                                        </span>
-                                    </li>
-                                </ul>
-                                <div class="ml-5">
-                                    <span>Go My Profile ➡ in Left side Click on Manage Address ➡ Add New Address</span>
-                                </div>
-                                <div class="ml-5 mt-3">
-                                    <span><a href="/myAccount" id="myAccBTN">My Profile</a></span>
-                                </div>`;
+                                        <li>
+                                            <span class="noAddFoundInstrTitle text-3xl">
+                                                No Address added yet!
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <div class="noAddFoundInstr ml-5">
+                                        <span>Go My Profile ➡ in Left side Click on Manage Address ➡ Add New Address</span>
+                                    </div>
+                                    <div class="ml-5 mt-3">
+                                        <span><a href="/myAccount" id="myAccBTN">My Profile</a></span>
+                                    </div>`;
     }
 
     for (let i = 0; i < seperateAdds.length; i++) {

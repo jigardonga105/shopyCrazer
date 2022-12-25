@@ -151,19 +151,19 @@ export function cart() {
 
             for (let featureKey in feature) {
 
-                let prdStr = `<div class="grid grid-cols-6 my-4 pt-3 border-t">
-                                <div class="flex flex-col col-span-1">
+                let prdStr = `<div class="cartSinglePrdMain grid grid-cols-6 my-4 pt-3 border-t">
+                                <div class="cartSinglePrdImg flex flex-col col-span-1">
                                     <div class="h-24 overflow-hidden mx-auto">
                                         <img class="w-40 cursor-pointer" src="/uploadedImages/${prd.image[0].img}" onclick="window.location.href = '/productview/${prd._id}'" alt="Product Image">
                                     </div>
-                                    <div class="mt-2 mx-auto">
+                                    <div class="cartSingleCounter mt-2 mx-auto">
                                         <span id="cartMinBtn" data-prd='${JSON.stringify({ id:prd._id, featureKey })}' class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">-</span>
                                         <span id="cartItemLen" class="${prd._id}_qty bg-gray-100 px-4 py-2">${feature[featureKey].qty}</span>
                                         <span id="cartPlusBtn" data-prd='${JSON.stringify({ id:prd._id, featureKey })}' class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">+</span>
                                     </div>
                                 </div>
     
-                                <div class="col-span-3 px-2">
+                                <div class="cartSinglePrdInfo col-span-3 px-2">
                                     <div>
                                         <div>
                                             <span class="text-base font-bold cursor-pointer" onclick="window.location.href = '/productview/${prd._id}'">${prd.name.substring(0, 45)}${prd.name.length > 45 ? '...' : ''}</span>
@@ -221,25 +221,27 @@ export function cart() {
                                             </div>
                                         </span>
                                     </div>
-                                    <div class="mt-4 float-right mr-16">
-                                        <form action="/buyOnlyCartPrd" method="POST">
-                                            <input type="hidden" name="onlyPrdId" value="${prd._id}"/>
-                                            <input type="hidden" name="onlyPrdPrice" value="${prd.price}"/>
-                                            <input type="hidden" name="onlyPrdfeatKey" value="${featureKey}"/>
-                                            <button class="cartItemOnlyBtn shadow px-2 py-1 rounded focus:outline-none">Buy this only</button>
-                                        </form>
-                                    </div>
-                                    <div class="mt-4 float-right mr-16">
-                                        <form action="/deleteCartPrd" method="POST">
-                                            <input type="hidden" name="removePrdId" value="${prd._id}"/>
-                                            <input type="hidden" name="removePrdPrice" value="${prd.price}"/>
-                                            <input type="hidden" name="removePrdfeatKey" value="${featureKey}"/>
-                                            <button class="cartItemRemBtn shadow px-2 py-1 rounded focus:outline-none">Remove</button>
-                                        </form>
+                                    <div class="cartSinglePrdRemBuNowMain flex justify-content-center gap-x-5 mt-3">
+                                        <div>
+                                            <form action="/deleteCartPrd" method="POST">
+                                                <input type="hidden" name="removePrdId" value="${prd._id}"/>
+                                                <input type="hidden" name="removePrdPrice" value="${prd.price}"/>
+                                                <input type="hidden" name="removePrdfeatKey" value="${featureKey}"/>
+                                                <button class="cartItemRemBtn shadow px-2 py-1 rounded focus:outline-none">Remove</button>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form action="/buyOnlyCartPrd" method="POST">
+                                                <input type="hidden" name="onlyPrdId" value="${prd._id}"/>
+                                                <input type="hidden" name="onlyPrdPrice" value="${prd.price}"/>
+                                                <input type="hidden" name="onlyPrdfeatKey" value="${featureKey}"/>
+                                                <button class="cartItemOnlyBtn shadow px-2 py-1 rounded focus:outline-none">Buy this only</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
     
-                                <div class="col-span-2">
+                                <div class="cartSinglePrdFeat col-span-2">
                                     <div>
                                         <span class="text-base">
                                             Delivery by ${day} ${month} ${dateToday} |
@@ -251,15 +253,11 @@ export function cart() {
                                         <span class="text-muted text-sm">${prdService == undefined ? 'No Return Policy' : prdService}</span>
                                     </div>
                                     <div class="mt-3 bg-gray-100 p-2 shadow">
-                                        <div>
-                                            ${feature[featureKey].color ? '<span class="font-bold mr-2">Color:</span>' + feature[featureKey].color : ''}
-                                        </div>
-                                        <div>
-                                            ${feature[featureKey].size ? '<span class="font-bold mr-2">Size:</span>' + feature[featureKey].size : ''}
-                                        </div>
+                                        ${feature[featureKey].color ? '<div><span class="font-bold mr-2">Color:</span>' + feature[featureKey].color + '</div>' : ''}
+                                        ${feature[featureKey].size ? '<div><span class="font-bold mr-2">Size:</span>' + feature[featureKey].size + '</div>' : ''}
                                     </div>
                                 </div>
-                                </div>`;
+                            </div>`;
 
                 allCartProduct.innerHTML += prdStr;
 

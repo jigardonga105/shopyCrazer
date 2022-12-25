@@ -4,28 +4,67 @@
 
     <style>
         /* Chrome, Safari, Edge, Opera */
-        
+
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
+
         /* Firefox */
-        
+
         input[type=number] {
+            appearance: textfield;
             -moz-appearance: textfield;
         }
-        
+
         #card-element {
             background: white;
             padding: 15px;
             border-radius: 10px;
             width: 518px;
         }
+
+        @media screen and (max-width: 1200px) {
+            #card-element {
+                width: 156%;
+            }
+        }
+
+        @media screen and (max-width: 1010px) {
+            #card-element {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 1400px) {
+            .payBillLastSec {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+        }
+
+        @media screen and (max-width: 650px) {
+            .addPricePayops {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .payopsChng {
+                margin-top: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .payBillLastSec {
+                padding-left: 0rem;
+                padding-right: 0rem;
+            }
+        }
     </style>
 </head>
 
-<section class="px-40 py-5">
+<section class="payBillLastSec px-40 py-5">
     <div>
         <input type="hidden" id="userPayBill" value="<%= JSON.stringify(user) %>">
         <input type="hidden" id="add" value="<%= add %>">
@@ -34,8 +73,8 @@
         <input type="hidden" id="totalDisAmount" value="<%= totalDisAmount %>">
     </div>
     <h1>Payment:</h1>
-    <div class="grid grid-cols-2 justify-items-center bg-gray-100 rounded p-2 shadow">
-        <div>
+    <div class="addPricePayops grid grid-cols-2 justify-items-center bg-gray-100 rounded p-2 shadow">
+        <div class="addressInfoChng">
             <div id="address"></div>
             <div class="float-right"><a href="/placeOrder">change</a></div>
 
@@ -46,12 +85,15 @@
 
                 <div class="m-3 border-b-4 border-dotted">
                     <div class="my-3">
-                        <span id="rightDivPriceItem">Price (<%= user.cart['custID_' + user['_id'] + '_cart'].totalQty %> items)</span>
-                        <span id="rightDivPrice" class="float-right">₹<%= user.cart['custID_' + user['_id'] + '_cart'].totalPrice %></span>
+                        <span id="rightDivPriceItem">Price (<%= user.cart['custID_' + user['_id'] + '_cart' ].totalQty
+                                %> items)</span>
+                        <span id="rightDivPrice" class="float-right">₹<%= user.cart['custID_' + user['_id'] + '_cart'
+                                ].totalPrice %></span>
                     </div>
                     <div class="my-3">
                         <span>Discount</span>
-                        <span id="rightDivDisc" class="float-right text-green-600">- ₹<%= Math.round(totalDisAmount) %></span>
+                        <span id="rightDivDisc" class="float-right text-green-600">- ₹<%= Math.round(totalDisAmount) %>
+                        </span>
                     </div>
                     <div class="my-3">
                         <span>Delivery Charges</span>
@@ -62,20 +104,22 @@
                 <div class="m-3 border-b-4 border-dotted">
                     <div class="my-3">
                         <span>Total Amount</span>
-                        <span id="rightDivFinalPrice" class="float-right font-bold">₹<%= Math.round(totalAmount) %></span>
+                        <span id="rightDivFinalPrice" class="float-right font-bold">₹<%= Math.round(totalAmount) %>
+                        </span>
                     </div>
                 </div>
 
                 <div class="m-3">
                     <div class="my-3">
-                        <span id="rightDivSavePrice" class="text-green-700 font-bold">You will save ₹<%= Math.round(totalDisAmount) %> on this order</span>
+                        <span id="rightDivSavePrice" class="text-green-700 font-bold">You will save ₹<%=
+                                Math.round(totalDisAmount) %> on this order</span>
                     </div>
                 </div>
             </div>
 
 
         </div>
-        <div>
+        <div class="payopsChng">
             <h3>Credit/Debit Card:</h3>
             <form action="/cust/myOrders" method="post" id="payment-form">
 
@@ -172,7 +216,7 @@
 
     var form = document.getElementById('payment-form');
 
-    form.addEventListener('submit', async(e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         let formData = new FormData(form);
@@ -180,33 +224,33 @@
         let finalAmount = formData.get('finalAmount');
 
         stripe.createToken(card).then(result => {
-                console.log(result.token.id);
-                axios.post('/cust/myOrders', {
-                        token: result.token.id,
-                        addressToDel,
-                        finalAmount
-                    })
-                    .then(res => {
-                        new Noty({
-                            type: 'success',
-                            timeout: 2000,
-                            text: res.data.message,
-                            progressBar: false,
-                        }).show();
-
-                        setTimeout(() => {
-                            window.location.href = '/cust/myOrders'
-                        }, 3000)
-                    })
-                    .catch(err => {
-                        new Noty({
-                            type: 'error',
-                            timeout: 2000,
-                            text: err.res.data.message,
-                            progressBar: false,
-                        }).show();
-                    });
+            console.log(result.token.id);
+            axios.post('/cust/myOrders', {
+                token: result.token.id,
+                addressToDel,
+                finalAmount
             })
+                .then(res => {
+                    new Noty({
+                        type: 'success',
+                        timeout: 2000,
+                        text: res.data.message,
+                        progressBar: false,
+                    }).show();
+
+                    setTimeout(() => {
+                        window.location.href = '/cust/myOrders'
+                    }, 3000)
+                })
+                .catch(err => {
+                    new Noty({
+                        type: 'error',
+                        timeout: 2000,
+                        text: err.res.data.message,
+                        progressBar: false,
+                    }).show();
+                });
+        })
             .catch(error => {
                 console.log(err);
                 new Noty({

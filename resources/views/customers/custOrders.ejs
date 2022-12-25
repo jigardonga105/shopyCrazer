@@ -9,28 +9,223 @@
             margin-bottom: 3px;
             color: #a9a7a7;
         }
-        
+
         .dot {
             width: 10px;
             height: 10px;
             border-radius: 50px;
             margin-right: 5px;
         }
-        
+
         .greenEmptyDot {
             border: 2px solid rgb(33, 177, 33);
         }
-        
+
         .greenDot {
             background-color: rgb(33, 177, 33);
         }
-        
+
         .redDot {
             background-color: #fc0505;
         }
-        
+
         .yellowDot {
             background-color: rgb(246, 255, 0);
+        }
+
+        .allOrdsLeftFilter {
+            width: 300px;
+            height: 250px;
+        }
+
+        @media screen and (max-width: 1400px) {
+            .allOrdsLeftFilter {
+                margin-left: 8px !important;
+            }
+
+            .rightOrds {
+                width: 100% !important;
+                margin-right: 8px;
+            }
+        }
+
+        @media screen and (max-width: 1000px) {
+            .filterAllOrdsMain {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .rightOrds {
+                width: 99% !important;
+                margin: 0px 5px;
+                margin-top: 15px;
+            }
+
+            .allOrdsLeftFilter {
+                width: auto !important;
+                height: auto !important;
+                margin: 0rem 5rem !important;
+            }
+
+            .allOrdFilters {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                column-gap: 3rem;
+            }
+
+            .filterChbDiv {
+                display: flex;
+            }
+
+            .allOrdsLeftFilterStatusDiv {
+                display: none;
+            }
+
+            .allOrdsLeftFilterMain {
+                padding-left: 5px !important;
+            }
+
+            .allOrdsLeftFilterTitle,
+            .allOrdsLeftFilterHr {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width: 880px) {
+            .allOrdsLeftFilter {
+                margin: 0rem 3rem !important;
+            }
+        }
+
+        @media screen and (max-width: 825px) {
+            .allOrdsLeftFilter {
+                margin: 0rem 1rem !important;
+            }
+
+            .allOrdsFeats {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        @media screen and (max-width: 750px) {
+            .allOrdFilters {
+                grid-template-columns: repeat(3, 1fr);
+                row-gap: 1.5rem;
+            }
+
+            .allOrdsLeftFilterTitle,
+            .allOrdsLeftFilterHr {
+                display: block;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .singleOrdMain {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+            }
+
+            .singleOrdImg {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            .singleOrdInfo {
+                grid-area: 1 / 2 / 2 / 4;
+                width: auto !important;
+            }
+
+            .singleOrdPrice {
+                grid-area: 1 / 4 / 2 / 5;
+                width: auto !important;
+            }
+
+            .singleOrdDelInfo {
+                grid-area: 2 / 3 / 3 / 5;
+            }
+        }
+
+        @media screen and (max-width: 470px) {
+            .allOrdFilters {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (max-width: 300px) {
+            .allOrdFilters {
+                grid-template-columns: repeat(1, 1fr);
+                justify-items: center;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .singleOrdMain {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+            }
+
+            .singleOrdImg {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            .singleOrdInfo {
+                grid-area: 1 / 2 / 2 / 4;
+                width: auto !important;
+            }
+
+            .singleOrdPrice {
+                grid-area: 1 / 4 / 2 / 5;
+                width: auto !important;
+            }
+
+            .singleOrdDelInfo {
+                grid-area: 2 / 2 / 3 / 5;
+                margin: auto 0px;
+            }
+        }
+
+        @media screen and (max-width: 450px) {
+            .singleOrdMain {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+            }
+
+            .singleOrdImg {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            .singleOrdInfo {
+                grid-area: 1 / 2 / 2 / 5;
+            }
+
+            .singleOrdPrice {
+                grid-area: 2 / 2 / 3 / 5;
+                margin: auto;
+            }
+
+            .singleOrdDelInfo {
+                grid-area: 3 / 2 / 4 / 5;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .singleOrdMain {
+                display: flex;
+                flex-direction: column !important;
+                row-gap: 10px;
+            }
+
+            .singleOrdImg {
+                margin: auto;
+            }
+
+            .singleOrdPrice,
+            .singleOrdDelInfo {
+                margin: 0px;
+            }
         }
     </style>
 </head>
@@ -43,36 +238,46 @@
         <input type="hidden" id="prdIDArr" value="<%= JSON.stringify(prdIDArr) %>">
         <input type="hidden" id="strIDArr" value="<%= JSON.stringify(strIDArr) %>">
 
-        <div class="pt-5 flex gap-x-8">
-            <div class="leftFilter inline-block ml-10 py-3 bg-white rounded shadow" style="width: 300px;height: 250px;">
-                <div class="pl-10">
+        <div class="filterAllOrdsMain pt-5 flex gap-x-8">
+            <div class="allOrdsLeftFilter inline-block ml-10 py-3 bg-white rounded shadow">
+                <div class="allOrdsLeftFilterTitle pl-10">
                     <h3>Filter</h3>
                 </div>
-                <hr>
-                <div class="pl-10">
-                    <div>
+                <hr class="allOrdsLeftFilterHr">
+                <div class="allOrdsLeftFilterMain pl-10">
+                    <div class="allOrdsLeftFilterStatusDiv">
                         <h5><strong>Status</strong></h5>
                     </div>
-                    <div class="cursor-pointer">
+                    <div class="allOrdFilters cursor-pointer">
                         <div class="filterChbDiv">
-                            <input id="all" type="radio" name="filtRadio" value="all" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
-                            <label for="All" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">All</label>
+                            <input id="all" type="radio" name="filtRadio" value="all"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="All"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">All</label>
                         </div>
                         <div class="filterChbDiv">
-                            <input id="placed" type="radio" name="filtRadio" value="placed" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
-                            <label for="Remainings" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remainings</label>
+                            <input id="placed" type="radio" name="filtRadio" value="placed"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="Remainings"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remainings</label>
                         </div>
                         <div class="filterChbDiv">
-                            <input id="completed" type="radio" name="filtRadio" value="completed" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
-                            <label for="completed" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Delivered</label>
+                            <input id="completed" type="radio" name="filtRadio" value="completed"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="completed"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Delivered</label>
                         </div>
                         <div class="filterChbDiv">
-                            <input id="cancelled" type="radio" name="filtRadio" value="cancelled" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
-                            <label for="cancelled" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Cancelled</label>
+                            <input id="cancelled" type="radio" name="filtRadio" value="cancelled"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="cancelled"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Cancelled</label>
                         </div>
                         <div class="filterChbDiv">
-                            <input id="returned" type="radio" name="filtRadio" value="returned" class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
-                            <label for="returned" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Returned</label>
+                            <input id="returned" type="radio" name="filtRadio" value="returned"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="returned"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Returned</label>
                         </div>
                     </div>
                 </div>
@@ -95,11 +300,11 @@
 
     if (userData.cart) {
         let totalQty = userData.cart['custID_' + userData._id + '_cart'].totalQty
-            // console.log('cart found');
+        // console.log('cart found');
         cartCounter.innerText = totalQty;
     } else {
         // console.log('cart not found');
-        setTimeout(function() {
+        setTimeout(function () {
             cartCounter.innerText = ``;
         }, 2000);
     }
@@ -167,23 +372,23 @@
         }
 
         let html = `<a href="/orderDetails/${ord._id}/${index}/${prdArrJ._id}" style="color: black;">
-                        <div class="flex flex-row bg-white border px-3 py-2 mb-2" style="padding-top: 25px !important;">
-                            <div class="inline-block mr-10">
+                        <div class="singleOrdMain flex flex-row bg-white border px-3 py-2 mb-2" style="padding-top: 25px !important;">
+                            <div class="singleOrdImg inline-block mr-10">
                                 <img src="../../uploadedImages/${imgPath}" class="w-24" alt="img">
                             </div>
-                            <div class="inline-block mr-10" style="width: 370px;">
+                            <div class="singleOrdInfo inline-block mr-10" style="width: 370px;">
                                 <p class="text-sm"><strong>${name}</strong></p>
-                                <p class="ptagCSS">
+                                <p class="allOrdsFeats ptagCSS">
                                     <span class="mr-5">Color: ${color}</span>
                                     <span class="mr-5">Size: ${size}</span>
                                     <span class="mr-5">Quantity: ${qty}</span>
                                 </p>
                                 <p class="ptagCSS">Seller: ${storeName}</p>
                             </div>
-                            <div class="inline-block mr-10" style="width: 130px;">
+                            <div class="singleOrdPrice inline-block mr-10" style="width: 130px;">
                                 ₹${price * qty}
                             </div>
-                            <div class="inline-block">
+                            <div class="singleOrdDelInfo inline-block">
                                 <div class="dot ${dot} inline-block"></div>
                                 <span class="mt-3" style="font-size: 16px !important;"><strong>${status} ${day} ${month} ${date},${year}</strong></span>
                                 <div style="font-size: 12px !important;">Your item has been delivered</div>

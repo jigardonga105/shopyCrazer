@@ -157,10 +157,10 @@ export function updateProd() {
                                     <div id="key1" class="m-1">
                                         <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" id="spec1" placeholder="Enter Title of Specification">
                                     </div>
-                                    <div class="m-2 mt-4 flex" style="margin-left: 25% !important;">
+                                    <div class="m-2 mt-4 flex">
                                         <input type="text" class="inline-block bg-gray-200 h-12 p-3" id="key1.1" placeholder="Enter Title">
                                         <input type="text" class="ml-3 inline-block bg-gray-200 h-12 p-3" id="value1.1" placeholder="Enter Description">
-                                        <span id="plus-btn" class="bg-yellow-500 px-4 pt-2 ml-2 rounded-full cursor-pointer"><strong>+</strong></span>
+                                        <span id="plus-btn" class="bg-yellow-500 px-3 py-2 rounded-full cursor-pointer ml-5"><strong>+</strong></span>
                                     </div>
                                 </div>
                                 <div id="more-sub_spec-1" style="margin-left: 25%;"></div>`;
