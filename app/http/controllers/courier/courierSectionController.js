@@ -9,6 +9,8 @@ function courierSectionController() {
         async courierSection(req, res) {
             let msg = req.params.msg;
             let courierAgents = await CourierAgents.find();
+            // let alreadyState = [];
+            // courierAgents.map(courierAgent => alreadyState.push(courierAgent.state))
 
             return res.render('courier/courierSection', { courierAgents, msg });
         },

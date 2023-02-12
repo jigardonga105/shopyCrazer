@@ -37,7 +37,8 @@ function buyNowController() {
 
         async placeOrderOfBuyNow(req, res) {
             const { token, addressToDel, finalAmount, finalPayMth } = req.body;
-
+            // console.log("req.body: ", req.body)
+            
             let address = JSON.parse(addressToDel);
             let itemsObj = JSON.parse(req.body.itemsObj);
 

@@ -7,11 +7,11 @@
             background: black;
             color: white;
         }
-        
+
         .f15 {
             font-size: 15px !important;
         }
-        
+
         .addressTd {
             width: 233px !important;
             max-height: 130px !important;
@@ -21,94 +21,190 @@
             scrollbar-width: none;
             /* Firefox */
         }
-        
+
         .addressTd::-webkit-scrollbar {
             display: none;
         }
-        
+
         .placedColor {
             background-color: #7fa1ff !important;
         }
-        
+
         .confirmedColor {
             background-color: #7fe3ff !important;
         }
-        
+
         .shippedColor {
             background-color: #7fffec !important;
         }
-        
+
         .deliveryColor {
             background-color: #7fffae !important;
         }
-        
+
         .completedColor {
             background-color: #09d828 !important;
         }
-        
+
         .returnedColor {
             background-color: yellow !important;
         }
-        
+
         .cancelledColor {
             background-color: red !important;
+        }
+
+        #courierAgentDashboard #withoutLogin {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: 1fr;
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+            justify-items: center;
+        }
+
+        #courierAgentDashboard #withoutLogin #login {
+            grid-area: 1 / 1 / 2 / 3;
+        }
+
+        #courierAgentDashboard #withoutLogin #poster {
+            grid-area: 1 / 3 / 2 / 6;
+        }
+
+        @media screen and (max-width: 950px) {
+            #courierAgentDashboard #withoutLogin #poster {
+                display: none !important;
+            }
+
+            #courierAgentDashboard #withoutLogin {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
+                grid-column-gap: 0px;
+                grid-row-gap: 0px;
+            }
+
+            #courierAgentDashboard #withoutLogin #login {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            #courierAgentDashboard .dashBody {
+                background-image: url('/img/Air-International-express.png');
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+            }
+        }
+
+        @media screen and (max-width: 890px) {
+            .courierAgeTab {
+                width: 762px !important;
+            }
+
+            .couAgeTabDiv {
+                overflow-x: scroll;
+            }
+        }
+
+        @media screen and (max-width: 830px) {
+            #courierAgentDashboard #loggedIn {
+                display: flex !important;
+                flex-direction: column;
+            }
+
+            .loggedIn-dashboard {
+                margin: auto 10px !important;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            #dashboard {
+                margin: 0rem 0rem !important;
+            }
+
+            #courierAgentDashboard .header {
+                margin-left: 10px !important;
+            }
+        }
+
+        @media screen and (max-width: 350px) {
+            #login-div {
+                width: auto !important;
+            }
+
+            #login-div strong,
+            #login-div label,
+            #login-div input {
+                font-size: 15px !important;
+            }
         }
     </style>
 </head>
 
-<body>
+<section id="courierAgentDashboard">
     <% if(msg) { %>
         <input type="hidden" id="msg" value="<%= msg %>">
         <% } %>
             <div class="bg-gray-100">
-                <div class="container py-10" id="dashboard">
+                <div class="py-10 mx-5 <% if(cAg) { %>loggedIn-dashboard<% } %>" id="dashboard">
                     <div class="header inline-block">
-                        <h3>Welcome to the Dashboard</h3>
+                        <h3>Courier Agent Dashboard :-</h3>
                     </div>
 
                     <% if(cAg) { %>
                         <a href="/logout">
                             <div class="logout inline-block float-right">
-                                <button type="button" class="inline-block px-6 py-2.5 bg-gray-800 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-900 hover:shadow-lg focus:bg-gray-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-900 active:shadow-lg transition duration-150 ease-in-out">Logout</button>
+                                <button type="button"
+                                    class="inline-block px-6 py-2.5 bg-gray-800 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-900 hover:shadow-lg focus:bg-gray-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-900 active:shadow-lg transition duration-150 ease-in-out">Logout</button>
                             </div>
                         </a>
                         <% } %>
 
-                            <div class="dashBody bg-white mt-2 w-full rounded p-5">
+                            <div id="dashBody" class="dashBody bg-white mt-2 w-full rounded py-5 px-3">
                                 <div id="alertMsg"></div>
 
                                 <% if(!cAg) { %>
                                     <div id="withoutLogin" class="flex">
                                         <div class="login my-auto" id="login">
-                                            <div class="block px-6 py-2 rounded-lg shadow-lg bg-dark w-80">
+                                            <div id="login-div" class="block px-6 py-2 rounded-lg shadow-lg bg-dark w-80">
                                                 <h3 class="text-white">Login:</h3>
                                                 <div class="inline-block w-2 h-2 mr-2 bg-white rounded-full"></div>
                                                 <strong class="text-white text-sm">
-                                            You are not logged In.
-                                        </strong>
+                                                    You are not logged In.
+                                                </strong>
                                                 <form action="/couAgeLogin" method="POST" class="mt-2">
                                                     <input type="hidden" name="role" value="courierAgent">
                                                     <div class="form-group mb-6">
-                                                        <label for="email" class="form-label inline-block mb-2  text-white">Email address</label>
-                                                        <input type="email" name="email" class="form-control block w-full px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                            id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                                                        <small id="emailHelp" class="text-white block mt-1 text-xs text-gray-600">We'll never share your email with anyone else.</small>
+                                                        <label for="email"
+                                                            class="form-label inline-block mb-2  text-white">Email
+                                                            address</label>
+                                                        <input type="email" name="email"
+                                                            class="form-control block w-full px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                            id="email" aria-describedby="emailHelp"
+                                                            placeholder="Enter email">
+                                                        <small id="emailHelp"
+                                                            class="text-white block mt-1 text-xs text-gray-600">We'll
+                                                            never share your email with anyone else.</small>
                                                     </div>
                                                     <div class="form-group mb-6">
-                                                        <label for="password" class="form-label inline-block mb-2  text-white">Password</label>
-                                                        <input type="password" name="password" class="form-control block w-full px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                        <label for="password"
+                                                            class="form-label inline-block mb-2  text-white">Password</label>
+                                                        <input type="password" name="password"
+                                                            class="form-control block w-full px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                             id="password" placeholder="Password">
                                                     </div>
-                                                    <button type="submit" class="px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-200 hover:text-black hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out">Login</button>
+                                                    <button type="submit"
+                                                        class="px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-200 hover:text-black hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out">Login</button>
                                                 </form>
                                             </div>
                                         </div>
                                         <div id="poster" class="mx-auto">
-                                            <img src="/img/Air-International-express.png" alt="Poster" style="width: 94vh;">
+                                            <img src="/img/Air-International-express.png" alt="Poster">
                                         </div>
                                     </div>
                                     <% } else { %>
-                                        <input type="hidden" id="userData" value="<%= JSON.stringify(courierAgents) %>" />
+                                        <input type="hidden" id="userData"
+                                            value="<%= JSON.stringify(courierAgents) %>" />
                                         <input type="hidden" id="calData" value="<%= JSON.stringify(calData) %>" />
                                         <input type="hidden" id="stOrd" value="<%= JSON.stringify(stOrd) %>" />
                                         <input type="hidden" id="prdArr" value="<%= JSON.stringify(prdArr) %>" />
@@ -119,47 +215,51 @@
                                         </div>
 
                                         <div id="showOrds" class="showOrds mt-20 cursor-pointer">
-                                            <div id="remainings" class="remainings flex justify-between shadow-sm rounded px-5 py-3">
+                                            <div id="remainings"
+                                                class="remainings flex justify-between shadow-sm rounded px-5 py-3">
                                                 <h5>
                                                     <strong class="cursor-pointer">Remainings</strong>
                                                     <strong class="cursor-pointer ml-5" id="remHead"></strong>
                                                 </h5>
                                                 <i class="fa-solid fa-caret-down fa-2x"></i>
                                             </div>
-                                            <div id="remainings-ords" class="my-2"></div>
+                                            <div id="remainings-ords" class="couAgeTabDiv my-2"></div>
 
-                                            <div id="completed" class="completed flex justify-between shadow-sm rounded px-5 py-3">
+                                            <div id="completed"
+                                                class="completed flex justify-between shadow-sm rounded px-5 py-3">
                                                 <h5>
                                                     <strong class="cursor-pointer">Delivered</strong>
                                                     <strong class="cursor-pointer ml-5" id="delHead"></strong>
                                                 </h5>
                                                 <i class="fa-solid fa-caret-down fa-2x"></i>
                                             </div>
-                                            <div id="completed-ords" class="my-2"></div>
+                                            <div id="completed-ords" class="couAgeTabDiv my-2"></div>
 
-                                            <div id="returned" class="returned flex justify-between shadow-sm rounded px-5 py-3">
+                                            <div id="returned"
+                                                class="returned flex justify-between shadow-sm rounded px-5 py-3">
                                                 <h5>
                                                     <strong class="cursor-pointer">Returned</strong>
                                                     <strong class="cursor-pointer ml-5" id="retHead"></strong>
                                                 </h5>
                                                 <i class="fa-solid fa-caret-down fa-2x"></i>
                                             </div>
-                                            <div id="returned-ords" class="my-2"></div>
+                                            <div id="returned-ords" class="couAgeTabDiv my-2"></div>
 
-                                            <div id="cancelled" class="cancelled flex justify-between shadow-sm rounded px-5 py-3">
+                                            <div id="cancelled"
+                                                class="cancelled flex justify-between shadow-sm rounded px-5 py-3">
                                                 <h5>
                                                     <strong class="cursor-pointer">Cancelled</strong>
                                                     <strong class="cursor-pointer ml-5" id="canHead"></strong>
                                                 </h5>
                                                 <i class="fa-solid fa-caret-down fa-2x"></i>
                                             </div>
-                                            <div id="cancelled-ords" class="my-2"></div>
+                                            <div id="cancelled-ords" class="couAgeTabDiv my-2"></div>
                                         </div>
                                         <% } %>
                             </div>
                 </div>
             </div>
-</body>
+</section>
 
 
 <script src="/socket.io/socket.io.js"></script>
@@ -392,7 +492,7 @@
             let parsedItems = Object.values(items) //Object.values(obj) return Array without key, that contain only values of obj
             return parsedItems.map((menuItem) => {
                 return `
-                <p>${ menuItem.item.name } - ${ menuItem.qty } pcs </p>
+                <p>${menuItem.item.name} - ${menuItem.qty} pcs </p>
             `
             }).join('')
         }
@@ -446,13 +546,11 @@
                     let div = document.getElementById(id);
                     document.getElementById(`${id}-ords`).style.display = "none";
                     document.getElementById(`${id}-ords`).innerHTML = '';
-                    document.getElementById(`${id}-ords`).innerHTML = `<table class="w-full table-auto bg-white">
+                    document.getElementById(`${id}-ords`).innerHTML = `<table class="courierAgeTab w-full table-auto bg-white">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th class="px-4 py-2 text-left">Order Id</th>
                                                                                 <th class="px-4 py-2 text-left">Customer</th>
-                                                                                <th class="px-4 py-2 text-left">Phone</th>
-                                                                                <th class="px-4 py-2 text-left">Address</th>
                                                                                 <th class="px-4 py-2 text-left">status</th>
                                                                                 <th class="px-4 py-2 text-left">Updated at</th>
                                                                                 <th class="px-4 py-2 text-left">Payment Status</th>
@@ -467,39 +565,50 @@
                     eval(`${id}Ords`).map(order => {
                         let name = JSON.parse(order.address)['add-name'];
                         ordTabBody.innerHTML += `<tr>
-                                                <td class="border px-4 py-2 text-green-900">
-                                                    <p class="f15">${ order._id }</p>
-                                                    <div class="f15"><strong>Total Items: </strong>${ totalQtyFunc(order) }</div>
+                                                <td class="border px-2 py-2 text-green-900">
+                                                    <p class="f15">${order._id}</p>
+                                                    <div class="f15"><strong>Total Items: </strong>${totalQtyFunc(order)}</div>
                                                 </td>
-                                                <td class="border px-4 py-2">${ name }</td>
-                                                <td class="border px-4 py-2"><a class="link f15" href="#">${ order.phone }</a></td>
-                                                <td class="border px-4 py-2 addressTd">${ prtAddFunc(JSON.parse(order.address)) }</td>
-                                                <td class="border px-4 py-2">
-                                                    <div class="inline-block relative w-48">
+                                                <td class="border px-4 py-2 flex flex-column">
+                                                    <p class="flex flex-row gap-2">
+                                                        <i class="fa-solid fa-user"></i>
+                                                        <span class="f15">${name}</span>
+                                                    </p>
+                                                    <p class="flex flex-row gap-2">
+                                                        <i class="fa-solid fa-phone"></i>
+                                                        <span><a class="link f15" href="#">${order.phone}</a></span>
+                                                    </p>
+                                                    <p class="flex flex-row gap-2">
+                                                        <i class="fa-solid fa-box"></i>
+                                                        <span class="f15">${prtAddFunc(JSON.parse(order.address))}</span>
+                                                    </p>
+                                                </td>
+                                                <td class="border px-2 py-2">
+                                                    <div class="inline-block relative w-36">
                                                         <form action="/courieAgeDashBoard/cSt" class="chnStatusForm" method="POST">
-                                                            <input type="hidden" name="orderId" value="${ order._id }">
+                                                            <input type="hidden" name="orderId" value="${order._id}">
                                                             
-                                                            <select name="status" id="${ order._id }-select" onchange="changeStatusFunc(this.form)"
-                                                                class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                                                                <option value="placed" ${ order.status === 'placed' ? 'selected' : '' }>
+                                                            <select name="status" id="${order._id}-select" onchange="changeStatusFunc(this.form)"
+                                                                class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline f15">
+                                                                <option value="placed" ${order.status === 'placed' ? 'selected' : ''}>
                                                                     Placed
                                                                 </option>
-                                                                <option value="confirmed" ${ order.status === 'confirmed' ? 'selected' : '' }>
+                                                                <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>
                                                                     Confirmed
                                                                 </option>
-                                                                <option value="shipped" ${ order.status === 'shipped' ? 'selected' : '' }>
+                                                                <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>
                                                                     Shipped
                                                                 </option>
-                                                                <option value="delivery" ${ order.status === 'delivery' ? 'selected' : '' }>
+                                                                <option value="delivery" ${order.status === 'delivery' ? 'selected' : ''}>
                                                                     Out for Delivery
                                                                 </option>
-                                                                <option value="completed" ${ order.status === 'completed' ? 'selected' : '' }>
+                                                                <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>
                                                                     Completed
                                                                 </option>
-                                                                <option value="returned" ${ order.status === 'returned' ? 'selected' : '' }>
+                                                                <option value="returned" ${order.status === 'returned' ? 'selected' : ''}>
                                                                     Returned
                                                                 </option>
-                                                                <option value="cancelled" ${ order.status === 'cancelled' ? 'selected' : '' }>
+                                                                <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>
                                                                     Cancelled
                                                                 </option>
                                                             </select>
@@ -515,19 +624,17 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="border px-4 py-2">
-                                                    ${ getUpdateDataFunc(order) }
+                                                <td class="border px-2 py-2">
+                                                    ${getUpdateDataFunc(order)}
                                                 </td>
-                                                <td class="border px-4 py-2">
-                                                    ${ order.paymentStatus ? 'Paid' : 'Not Paid' }
+                                                <td class="border px-2 py-2">
+                                                    ${order.paymentStatus ? 'Paid' : 'Not Paid'}
                                                 </td>
                                             </tr>`;
 
-                        let selectId = document.getElementById(`${ order._id }-select`);
+                        let selectId = document.getElementById(`${order._id}-select`);
                         selectId.classList.add(`${selectId.value}Color`);
                     })
-
-
 
                 } else {
                     document.getElementById(`${id}-ords`).innerHTML = '';
@@ -563,6 +670,13 @@
             })
         });
 
+        if (userData && userData._id) {
+            let dashBody = document.getElementById('dashBody');
+            if (dashBody) {
+                dashBody.style.backgroundImage = 'none';
+            }
+        }
+        
         //============================================================
         //Socket Connection Management for Live Preview
         //============================================================

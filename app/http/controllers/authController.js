@@ -132,18 +132,18 @@ function authController() {
         
                     await passport.authenticate('local', (err, user, info) => {
                         if (err) {
-                            req.flash('error', info.message)
+                            req.flash('error', info.message ? info.message : 'Internal Server Error');
                             return res.redirect('/')
                         }
         
                         if (!user) {
-                            req.flash('error', info.message)
+                            req.flash('error', info.message ? info.message : 'Internal Server Error')
                             return res.redirect('/login')
                         }
         
                         req.login(user, (err) => {
                             if (err) {
-                                req.flash('error', info.message)
+                                req.flash('error', info.message ? info.message : 'Internal Server Error')
                                 // return res.redirect('/login')
                             } else {
                                 return res.redirect('/')

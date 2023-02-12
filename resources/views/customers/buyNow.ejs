@@ -4,18 +4,34 @@
 
     <style>
         /* Chrome, Safari, Edge, Opera */
-        
+
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
+
         /* Firefox */
-        
+
         input[type=number] {
+            appearance: textfield;
             -moz-appearance: textfield;
         }
-        
+
+        @media screen and (max-width: 680px) {
+            #allAddressDiv {
+                width: 100% !important;
+            }
+        }
+
+        @media screen and (max-width: 425px) {
+
+            .noAddFoundInstrTitle,
+            .noAddFoundInstr {
+                font-size: 15px !important;
+            }
+        }
+
         #card-element {
             background: white;
             padding: 15px;
@@ -23,33 +39,62 @@
             width: 518px;
         }
 
-        #noAddress_alert {
-            font-size: 14px !important;
-            color: red;
+        @media screen and (max-width: 1200px) {
+            #card-element {
+                width: 156%;
+            }
         }
 
-        .fontSimple {
-            font-weight: 400;
+        @media screen and (max-width: 1010px) {
+            #card-element {
+                width: 100%;
+            }
+        }
+
+        /* @media screen and (max-width: 1400px) {
+            .payBillLastSec {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+        } */
+
+        @media screen and (max-width: 650px) {
+            .addPricePayops {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .payopsChng {
+                margin-top: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .payBillLastSec {
+                padding-left: 0rem;
+                padding-right: 0rem;
+            }
         }
     </style>
 </head>
 
-<section class="px-40 py-5">
+<section class="payBillLastSec px-10 py-5">
     <div>
         <input type="hidden" id="userPayBill" value="<%= JSON.stringify(user) %>">
         <input type="hidden" id="buyNowProductData" value="<%= JSON.stringify(buyNowProductData) %>">
     </div>
     <h1>Payment:</h1>
-    <div class="grid grid-cols-2 justify-items-center bg-gray-100 rounded p-2 shadow">
-        <div>
-            <div id="address" class="address">
+    <div class="addPricePayops grid grid-cols-2 justify-items-center bg-gray-100 rounded px-6 py-2 shadow">
+
+        <div class="addressInfoChng flex flex-col w-full">
+            <div id="address" class="address selectAddress">
                 <div>
                     <div class="mt-2 mb-3">
                         <span class="font-medium text-2xl">Select Delivery Address:</span>
                         <p id="addNotMsg" class="text-red-500 font-bold" style="display: none;">*Please add Address</p>
                     </div>
                     <div id="allAddDivBtn" class=""></div>
-                    <div id="allAddressDiv" class="bg-light inline-block rounded" style="width: 580px;"></div>
+                    <div id="allAddressDiv" class="bg-light inline-block rounded"></div>
                     <div class="ml-5 mt-3">
                         <span><a href="/myAccount" id="myAccBTN">Add more Addresses</a></span>
                     </div>
@@ -89,13 +134,13 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-        <div>
-            <h3>Credit/Debit Card:</h3>
-            <form action="/cust/myOrdersBuyNow" method="post" id="payment-form">
 
+
+        <div class="payopsChng">
+            <h3>Credit/Debit Card:</h3>
+
+            <form action="/cust/myOrders" method="post" id="payment-form">
                 <input type="hidden" name="addressToDel" class="addressToDel" value="">
                 <input type="hidden" name="finalAmount" class="finalAmountInp" value="">
                 <input type="hidden" name="itemsObj" class="itemsObj" value=''>
@@ -104,18 +149,15 @@
                 <div>
                     <button id="stripePayBtn" class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Pay</button>
                 </div>
-
             </form>
-
             <!-- ----------------------------------------------- -->
             <hr>
-            
+
             <h3>Cash on Delivery:</h3>
             <form action="/cust/myOrdersBuyNow" method="post">
-                
                 <input class="form-check-input" type="radio" name="finalPayMth" value="cod" id="finalPayMth" required>
                 <label class="form-check-label" for="finalPayMth"> Cash on Delivery </label>
-                
+
                 <input type="hidden" name="addressToDel" class="addressToDel" value="">
                 <input type="hidden" name="finalAmount" class="finalAmountInp" value="">
                 <input type="hidden" name="itemsObj" class="itemsObj" value=''>
@@ -123,10 +165,7 @@
                 <div>
                     <button id="CODPayBtn" class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Buy now</button>
                 </div>
-                
             </form>
-            
-            <!-- ----------------------------------------------- -->
 
             <div class="mt-5 bg-white p-2 shadow">
                 <div>
@@ -171,19 +210,20 @@
         })
     }
     else {
+        document.getElementById('myAccBTN').style.display = 'none';
         allAddressDiv.innerHTML = `<ul class="list-disc">
-                                    <li>
-                                        <span class="text-3xl">
-                                            No Address added yet!
-                                        </span>
-                                    </li>
-                                </ul>
-                                <div class="ml-5">
-                                    <span>Go My Profile ➡ in Left side Click on Manage Address ➡ Add New Address</span>
-                                </div>
-                                <div class="ml-5 mt-3">
-                                    <span><a href="/myAccount" id="myAccBTN">My Profile</a></span> <p id="noAddress_alert">*Please add a new Address first!</p>
-                                </div>`;
+                                        <li>
+                                            <span class="noAddFoundInstrTitle text-3xl">
+                                                No Address added yet!
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <div class="noAddFoundInstr ml-5">
+                                        <span>Go My Profile ➡ in Left side Click on Manage Address ➡ Add New Address</span>
+                                    </div>
+                                    <div class="ml-5 mt-3">
+                                        <span><a href="/myAccount" id="myAccBTN">My Profile</a></span>
+                                    </div>`;
 
         let stripePayBtn = document.getElementById('stripePayBtn'); 
         let CODPayBtn = document.getElementById('CODPayBtn');
@@ -192,6 +232,10 @@
         CODPayBtn.setAttribute('disabled', '');
     }
 
+    //==============================================================================================
+    //==============================================================================================
+    //==============================================================================================
+    
     for (let i = 0; i < seperateAdds.length; i++) {
         seperateAdds[i].addEventListener("click", () => {
 
@@ -233,7 +277,7 @@
             }
         })
     }
-
+    
     //================================================================================================================
     //================================================================================================================
         
@@ -306,7 +350,6 @@
             feature: [ { ...featureObj } ],
         }
     }
-
     let itemsObjs = document.getElementsByClassName('itemsObj')
     for (let i = 0; i < itemsObjs.length; i++) {
         itemsObjs[i].value = JSON.stringify(itemsObj);
@@ -344,7 +387,7 @@
         let itemsObj = formData.get('itemsObj');
 
         stripe.createToken(card).then(result => {
-                console.log(result.token.id);
+                // console.log(result.token.id);
                 axios.post('/cust/myOrdersBuyNow', {
                         token: result.token.id,
                         addressToDel,
@@ -355,7 +398,7 @@
                         new Noty({
                             type: 'success',
                             timeout: 2000,
-                            text: res.data.message,
+                            text: res.data.message ? res.data.message : 'Something happened!',
                             progressBar: false,
                         }).show();
 
@@ -367,7 +410,7 @@
                         new Noty({
                             type: 'error',
                             timeout: 2000,
-                            text: err.res.data.message,
+                            text: err.res.data.message ? err.res.data.message : 'Something went wrong!',
                             progressBar: false,
                         }).show();
                     });
@@ -381,6 +424,5 @@
                     progressBar: false,
                 }).show();
             });
-
     });
 </script>

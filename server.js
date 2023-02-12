@@ -14,22 +14,8 @@ const passport = require('passport');
 const Emitter = require('events')
 const multer = require("multer");
 
-// Database connection:-
 let dbUrl = process.env.MONGO_CONNECTION_URL;
-(async () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const conn = mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-            if (conn) {
-                console.log('Database connection established...');
-                resolve(true);
-            }
-        } catch (error) {
-            console.log('Database connection failed...');
-            reject(error);
-        }
-    })
-})();
+require('./app/helper/dbConn')
 
 //Event Emitter
 const eventEmitter = new Emitter();

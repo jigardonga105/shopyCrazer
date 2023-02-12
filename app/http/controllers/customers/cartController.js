@@ -213,6 +213,7 @@ function cartController() {
                 let removePrdId = req.body.removePrdId;
                 let removePrdPrice = parseInt(req.body.removePrdPrice);
                 let removePrdfeatKey = req.body.removePrdfeatKey;
+                let haveToRedirect = req.body.haveToRedirect;
 
                 let cart = req.user.cart;
                 let itemsObj = {};
@@ -247,7 +248,11 @@ function cartController() {
                 isSave ? cart[`custID_${req.user._id}_cart`].items[removePrdId].feature = featureArr : null;
 
                 const result = await User.updateOne({ _id: req.user._id }, { $set: { cart: req.user.cart} });
-                res.redirect('/cart');
+                if (haveToRedirect == true || haveToRedirect == 'true') {
+                    return res.redirect('/cart');
+                } else {
+                    return res.send('true');
+                }
             }
         }
     };

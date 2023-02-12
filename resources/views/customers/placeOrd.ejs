@@ -9,6 +9,115 @@
             transition: all 1s ease-in-out;
             transform: scale(0.9);
         }
+
+        @media screen and (max-width: 1284px) {
+            .selectAddPayopsMain {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+        }
+
+        @media screen and (max-width: 1038px) {
+            .selectAddressPayops {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .selectPayops {
+                margin-left: 0px !important;
+            }
+
+            .selectPayopsDiv {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                justify-items: center;
+            }
+
+            .selectPayopsTitle {
+                grid-area: 1 / 1 / 2 / 3;
+                margin-top: 1.5rem !important;
+            }
+
+            .selectPayopsMethods {
+                grid-area: 2 / 1 / 3 / 3;
+                margin-top: 0px !important;
+            }
+
+            .backCartPayBillMain {
+                grid-area: 1 / 3 / 3 / 4;
+                flex-direction: column;
+                row-gap: 12px;
+            }
+        }
+
+        @media screen and (max-width: 680px) {
+            #allAddressDiv {
+                width: 100% !important;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .backCartPayBillMain button {
+                font-size: 15px;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .selectAddPayopsMain {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            .selectPayopsDiv {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 1fr);
+                justify-items: center;
+                max-height: 12rem !important;
+            }
+
+            .selectPayopsTitle {
+                grid-area: 1 / 1 / 2 / 2;
+                margin-top: 0px !important;
+            }
+
+            .selectPayopsMethods {
+                grid-area: 2 / 1 / 3 / 2;
+            }
+
+            .backCartPayBillMain {
+                grid-area: 3 / 1 / 4 / 2;
+                flex-direction: row;
+                row-gap: 0px;
+            }
+        }
+
+        @media screen and (max-width: 425px) {
+
+            .noAddFoundInstrTitle,
+            .noAddFoundInstr {
+                font-size: 15px !important;
+            }
+        }
+
+        @media screen and (max-width: 350px) {
+            .selectPayopsDiv {
+                max-height: 16rem !important;
+            }
+
+            .backCartPayBillMain {
+                flex-direction: column;
+                row-gap: 12px;
+            }
+        }
+
+        @media screen and (max-width: 300px) {
+            .selectAddPayopsMain {
+                padding-left: 0rem;
+                padding-right: 0rem;
+            }
+        }
     </style>
 </head>
 

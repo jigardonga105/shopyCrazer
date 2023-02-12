@@ -107,7 +107,7 @@ export function cart() {
                                 <div class="m-3 border-b-4 border-dotted">
                                     <div class="my-3">
                                         <span>Total Amount</span>
-                                        <span id="rightDivFinalPrice" class="float-right font-bold">₹${ cartTotalPrice - cartTotalDiscount}</span>
+                                        <span id="rightDivFinalPrice" class="float-right font-bold">₹${cartTotalPrice - cartTotalDiscount}</span>
                                     </div>
                                 </div>
 
@@ -157,9 +157,9 @@ export function cart() {
                                         <img class="w-40 cursor-pointer" src="/uploadedImages/${prd.image[0].img}" onclick="window.location.href = '/productview/${prd._id}'" alt="Product Image">
                                     </div>
                                     <div class="cartSingleCounter mt-2 mx-auto">
-                                        <span id="cartMinBtn" data-prd='${JSON.stringify({ id:prd._id, featureKey })}' class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">-</span>
+                                        <span id="cartMinBtn" data-prd='${JSON.stringify({ id: prd._id, featureKey })}' class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">-</span>
                                         <span id="cartItemLen" class="${prd._id}_qty bg-gray-100 px-4 py-2">${feature[featureKey].qty}</span>
-                                        <span id="cartPlusBtn" data-prd='${JSON.stringify({ id:prd._id, featureKey })}' class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">+</span>
+                                        <span id="cartPlusBtn" data-prd='${JSON.stringify({ id: prd._id, featureKey })}' class="cartPlusMin rounded-full px-2 py-1 cursor-pointer focus:outline-none">+</span>
                                     </div>
                                 </div>
     
@@ -223,20 +223,22 @@ export function cart() {
                                     </div>
                                     <div class="cartSinglePrdRemBuNowMain flex justify-content-center gap-x-5 mt-3">
                                         <div>
-                                            <form action="/deleteCartPrd" method="POST">
+                                            <form action="/deleteCartPrd" id="${prd._id}_cartRemovePrdForm" method="POST">
                                                 <input type="hidden" name="removePrdId" value="${prd._id}"/>
                                                 <input type="hidden" name="removePrdPrice" value="${prd.price}"/>
                                                 <input type="hidden" name="removePrdfeatKey" value="${featureKey}"/>
+                                                <input type="hidden" name="haveToRedirect" value="true"/>
                                                 <button class="cartItemRemBtn shadow px-2 py-1 rounded focus:outline-none">Remove</button>
                                             </form>
                                         </div>
                                         <div>
-                                            <form action="/buyOnlyCartPrd" method="POST">
-                                                <input type="hidden" name="onlyPrdId" value="${prd._id}"/>
-                                                <input type="hidden" name="onlyPrdPrice" value="${prd.price}"/>
-                                                <input type="hidden" name="onlyPrdfeatKey" value="${featureKey}"/>
-                                                <button class="cartItemOnlyBtn shadow px-2 py-1 rounded focus:outline-none">Buy this only</button>
+                                            <form action="/buyNow" id="${prd._id}_cartBuyNowForm" method="POST">
+                                                <input type="hidden" name="product" value='${JSON.stringify(prd)}'/>
+                                                <input type="hidden" id="${prd._id}_onlyPrdQty" name="prdQty" value=""/>
+                                                <input type="hidden" name="color" ${feature[featureKey].color ? `value="${feature[featureKey].color}"` : ''} />
+                                                <input type="hidden" name="size" ${feature[featureKey].size ? `value="${feature[featureKey].size}"` : ''} />
                                             </form>
+                                            <button id="cartBuyNowFormSubBtn" class="cartItemOnlyBtn cartBuyNowFormSubBtn shadow px-2 py-1 rounded focus:outline-none" value="${prd._id}">Buy this only</button>
                                         </div>
                                     </div>
                                 </div>
@@ -468,5 +470,49 @@ export function cart() {
             })
         }
     }
+    //================================================================
+
+
+    //================================================================
+    function cartBuyNowPerform() {
+        let cartBuyNowFormSubBtns = document.getElementsByClassName('cartBuyNowFormSubBtn');
+        for (let i = 0; i < cartBuyNowFormSubBtns.length; i++) {
+            const cartBuyNowFormSubBtn = cartBuyNowFormSubBtns[i];
+            if (cartBuyNowFormSubBtn) {
+                cartBuyNowFormSubBtn.addEventListener('click', () => {
+                    let prdId = cartBuyNowFormSubBtn.value;
+                    if (prdId) {
+                        let cartBuyNowForm = document.getElementById(`${prdId}_cartBuyNowForm`);
+                        let onlyPrdQty = document.getElementById(`${prdId}_onlyPrdQty`);
+
+                        let prdQty = document.getElementsByClassName(`${prdId}_qty`)[0];
+                        if (prdQty) {
+                            onlyPrdQty.setAttribute('value', prdQty.innerHTML)
+                        }
+
+                        //================================================================
+
+                        let cartRemovePrdForm = document.getElementById(`${prdId}_cartRemovePrdForm`)
+                        const formData = new FormData(cartRemovePrdForm);
+                        let dto = {};
+                        for (const [key, value] of formData) {
+                            dto[`${key}`] = value;
+                        }
+                        dto['haveToRedirect'] = 'false';
+                        axios.post("/deleteCartPrd", dto)
+                            .then(response => {
+                                if (response) {
+                                    cartBuyNowForm.submit();
+                                }
+                            })
+                            .catch(err => {
+                                cartUpdateNoty("Something went wrong", "error");
+                            });
+                    }
+                })
+            }
+        }
+    }
+    cartBuyNowPerform();
     //================================================================
 }

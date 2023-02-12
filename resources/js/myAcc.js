@@ -692,7 +692,7 @@ export function myAcc() {
                                                 <input type="text" name="edit-add-locality" id="edit-add-locality" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="Locality" value="${address['add-locality']}">
                                             </div>
                                             <div class="mt-3">
-                                                <textarea name="edit-add-area&street" id="edit-add-area&street" class="border focus:outline-none rounded p-1" cols="63" rows="3" placeholder="Address (Area and Street)">${address['add-area&street']}</textarea>
+                                                <textarea name="edit-add-area&street" id="edit-add-area&street" class="edit-add-area-street border focus:outline-none rounded p-1" cols="63" rows="3" placeholder="Address (Area and Street)">${address['add-area&street']}</textarea>
                                             </div>
                                             <div class="mt-2">
                                                 <input type="text" name="edit-add-city" id="edit-add-city" class="border w-72 h-10 focus:outline-none rounded p-1" placeholder="City/District/Town" value="${address['add-city']}">

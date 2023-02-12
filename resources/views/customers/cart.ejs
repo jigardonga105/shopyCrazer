@@ -3,9 +3,8 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <style>
-        #emptyCartDiv {
-            width: 75rem;
-        }
+        /* #emptyCartDiv {
+        } */
 
         .mx {
             margin: 0rem 31.5rem;
@@ -47,6 +46,18 @@
         .cartItemOnlyBtn:hover {
             transition: all 1s ease-in-out;
             transform: scale(0.9);
+        }
+
+        @media screen and (max-width: 1000px) {
+            #cartNoPrdMain {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            #cartNoPrdMain {
+                padding: 2rem 0.5rem;
+            }
         }
     </style>
 
@@ -206,23 +217,25 @@
                 </div>
             </div>
             <% }else{ %>
-                <div class="bg-gray-100 p-20">
+                <div id="cartNoPrdMain" class="bg-gray-100 p-20">
                     <div id="emptyCartDiv" class="bg-white m-auto p-2">
                         <div class="p-3">
                             <h4>My Cart</h4>
                         </div>
-                        <div class="p-3">
-                            <img class="w-58 h-48 m-auto" src="/img/cart.png" alt="emptyCart">
-                        </div>
-                        <div class="mx">
-                            <span class="block font-bold text-xl m-auto">Your cart is empty!</span>
-                            <span class="block text-base mx-3 my-3">Add items to it now.</span>
-                            <a href="/">
-                                <button id="emptyCartBtn"
-                                    class="bg-green-600 shadow text-white w-44 h-10 rounded mb-10">
-                                    Shop Now
-                                </button>
-                            </a>
+                        <div class="grid justify-items-center">
+                            <div class="p-3">
+                                <img class="w-58 h-48" src="/img/cart.png" alt="emptyCart">
+                            </div>
+                            <div class="">
+                                <span class="block font-bold text-xl">Your cart is empty!</span>
+                                <span class="block text-base mx-3 my-3">Add items to it now.</span>
+                                <a href="/shop">
+                                    <button id="emptyCartBtn"
+                                        class="bg-green-600 shadow text-white w-44 h-10 rounded mb-10">
+                                        Shop Now
+                                    </button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

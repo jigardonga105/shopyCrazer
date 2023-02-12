@@ -82,7 +82,12 @@ function CourierAgentDashboardController() {
                 if (result) {
 
                     if (req.user) {
-                        req.logout();
+                        req.logout((err) => {
+                            if (err) {
+                                let msg = 'serverErr';
+                                return res.redirect(`/courieAgeDashBoard/${msg}`);
+                            }
+                        })
                     }
 
                     req.session.courierAgents = courierAgents;
@@ -122,18 +127,20 @@ function CourierAgentDashboardController() {
                     })
                 }
 
-                Orders.updateOne({ _id: orderId }, { status: status }, async(err, data) => {
+                Orders.updateOne({ _id: orderId }, { status: status }, async (err, data) => {
                     if (err) {
                         return res.json({
                             msg: "notUpdated"
                         })
                     }
 
+                    let orderUpdated = await Orders.findById({ _id: orderId });
+                    // console.log(orderUpdated)
+
                     //Emit event
                     const eventEmitter = req.app.get('eventEmitter')
-                    eventEmitter.emit('orderUpdated', { id: orderId, status: status })
+                    eventEmitter.emit('orderUpdated', orderUpdated)
 
-                    let orderUpdated = await Orders.findById({ _id: orderId });
                     return res.json({
                         msg: "updated",
                         orderUpdated
@@ -144,7 +151,6 @@ function CourierAgentDashboardController() {
                     msg: "notUpdated"
                 })
             }
-
         },
     }
 }
