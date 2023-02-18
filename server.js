@@ -28,24 +28,8 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-//Store Image using Multer
-var storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, 'public/uploadedImages');
-    },
-    filename: (req, file, callback) => {
-        const match = ["image/png", "image/jpeg"];
 
-        if (match.indexOf(file.mimetype) === -1) {
-            var message = `${file.originalname} is invalid. Only accept png/jpeg.`;
-            return callback(message, null);
-        }
-
-        var filename = file.fieldname + '_' + Date.now() + path.extname(file.originalname);
-        callback(null, filename)
-    }
-})
-app.use(multer({ storage: storage }).any("image"))
+require('./app/helper/fileHandling')(app);
 
 //==============================================================================================
 
