@@ -1,6 +1,5 @@
 const User = require('../../models/user')
 const bcrypt = require('bcrypt')
-const passport = require('passport');
 const fs = require('fs');
 
 function authController() {
@@ -112,58 +111,51 @@ function authController() {
                 return res.redirect('/login')
             }
 
-            await User.exists({ email: email, role: 'seller' }, async (err, result) => {
-                if (err) {
-                    req.flash('error', 'Something went wrong')
-                    return res.redirect('/login')
-                }
-                if (result) {
-                    req.flash('error', 'User not found')
-                    return res.redirect('/login')
+            const isExist = await User.count({ email: email, role: 'customer' })
+            const isExist2 = await User.count({ email: email, role: 'courier' })
 
-                } else {
+            if (!isExist && !isExist2) {
+                req.flash('error', 'User not found')
+                return res.redirect('/login')
+            }
+
+            const user = await User.findOne({ email: email })
+            if (user) {
+                const result = await bcrypt.compare(password, user.password);
+                if (result) {
                     if (req.session.courierAgents) {
-                        req.session.destroy((err) => {
-                            if (err) {
-                                return console.log(err);
-                            }
-                        });
+                        delete req.session.courierAgents
                     }
-        
-                    await passport.authenticate('local', (err, user, info) => {
-                        if (err) {
-                            req.flash('error', info.message ? info.message : 'Internal Server Error');
-                            return res.redirect('/')
-                        }
-        
-                        if (!user) {
-                            req.flash('error', info.message ? info.message : 'Internal Server Error')
-                            return res.redirect('/login')
-                        }
-        
-                        req.login(user, (err) => {
+                    setTimeout(() => {
+                        req.session.regenerate((err) => {
                             if (err) {
-                                req.flash('error', info.message ? info.message : 'Internal Server Error')
-                                // return res.redirect('/login')
-                            } else {
-                                return res.redirect('/')
+                                console.log(err);
                             }
                         })
-                    })(req, res, next)
+                    }, 2000);
+
+                    req.session.user = user;
+
+                    return res.redirect('/')
+                } else {
+                    req.flash('error', 'Username or password incorrect')
+                    return res.redirect('/login')
                 }
-            })
+            } else {
+                req.flash('error', 'User not found...')
+                return res.redirect('/login')
+            }
         },
 
         logout(req, res) {
-            if (req.session.user) {
-                req.logout();
-                return res.redirect('/');
-            } else {
+            if (req.session) {
                 req.session.destroy((err) => {
                     if (err) {
-                        return console.log(err);
+                        console.log(err);
+                        return res.redirect('/');
+                    } else {
+                        return res.redirect('/');
                     }
-                    res.redirect('/');
                 });
             }
         },

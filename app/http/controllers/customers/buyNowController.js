@@ -95,7 +95,7 @@ function buyNowController() {
                 //When payment method is COD
                 //Add a new order
                 const order = new Order({
-                    customerId: req.user._id,
+                    customerId: req.session.user._id,
                     items: itemsObj,
                     phone: address["add-phone"],
                     address: JSON.stringify(address),
@@ -107,7 +107,7 @@ function buyNowController() {
                 //When payment method is Online
                 //Add a new order
                 const order = new Order({
-                    customerId: req.user._id,
+                    customerId: req.session.user._id,
                     items: itemsObj,
                     phone: address["add-phone"],
                     address: JSON.stringify(address),

@@ -7,7 +7,7 @@ const fs = require('fs');
 function prodController() {
     return {
         async index(req, res) {
-            const store = await Store.exists({ sellerId: req.user._id });
+            const store = await Store.exists({ sellerId: req.session.user._id });
             const storeData = await Store.find({ _id: req.params.strID });
             const product = await Product.find({ storeId: req.params.strID })
 

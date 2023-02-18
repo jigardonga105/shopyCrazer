@@ -1,5 +1,5 @@
 function notcouAge(req, res, next) {
-    if (req.isAuthenticated() && req.user.role === 'courierAgent') {
+    if (req.session.user._id && req.session.user.role === 'courierAgent') {
         return res.redirect('/courieAgeDashBoard/index')
     }
     return next()

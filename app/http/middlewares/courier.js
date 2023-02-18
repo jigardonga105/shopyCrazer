@@ -1,5 +1,5 @@
 function courier(req, res, next) {
-    if (req.isAuthenticated() && req.user.role === 'courier') {
+    if (req.session.user._id && req.session.user.role === 'courier') {
         return next()
     }
     return res.redirect('/')

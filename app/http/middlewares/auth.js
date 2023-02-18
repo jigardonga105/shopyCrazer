@@ -1,5 +1,5 @@
 function auth(req, res, next) {
-    if (req.isAuthenticated()) {
+    if (req.session.user._id) {
         return next();
     }
     return res.redirect('/login');

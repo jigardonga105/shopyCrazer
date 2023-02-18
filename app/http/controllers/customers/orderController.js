@@ -14,14 +14,14 @@ function orderController() {
         async payBill(req, res) {
             let add = req.params.add;
             let payMth = req.params.payMth;
-            let user = req.user;
-            let cart = req.user.cart;
+            let user = req.session.user;
+            let cart = req.session.user.cart;
             var totalAmount = 0;
             var totalDisAmount = 0;
 
             let prdArr = [];
             for (const key in cart) {
-                if (key == `custID_${req.user._id}_cart`) {
+                if (key == `custID_${req.session.user._id}_cart`) {
                     for (const itemKey in cart[key].items) {
                         prdArr.push(itemKey);
                     }
@@ -58,8 +58,8 @@ function orderController() {
             });
         },
         async showPlacedOrder(req, res) {
-            let userData = await User.findById({ _id: req.user._id });
-            let custOrders = await Order.find({ customerId: req.user._id }, null, { sort: { createdAt: -1 } });
+            let userData = await User.findById({ _id: req.session.user._id });
+            let custOrders = await Order.find({ customerId: req.session.user._id }, null, { sort: { createdAt: -1 } });
             let prdIDArr = [];
             let prdArr = [];
             let strIDArr = {};
@@ -110,7 +110,7 @@ function orderController() {
                                             const eventEmitter = req.app.get('eventEmitter')
                                             eventEmitter.emit('orderPlaced', { order: ord })
 
-                                            const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
+                                            const result = await User.updateOne({ _id: req.session.user._id }, { $unset: { cart: "" } });
                                             if (!result) {
                                                 res.redirect("/cart");
                                             }
@@ -130,7 +130,7 @@ function orderController() {
                                     const eventEmitter = req.app.get('eventEmitter')
                                     eventEmitter.emit('orderPlaced', { order: order })
 
-                                    const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
+                                    const result = await User.updateOne({ _id: req.session.user._id }, { $unset: { cart: "" } });
                                     if (!result) {
                                         res.redirect("/cart");
                                     }
@@ -141,7 +141,7 @@ function orderController() {
                             const eventEmitter = req.app.get('eventEmitter')
                             eventEmitter.emit('orderPlaced', { order: order })
 
-                            const result = await User.updateOne({ _id: req.user._id }, { $unset: { cart: "" } });
+                            const result = await User.updateOne({ _id: req.session.user._id }, { $unset: { cart: "" } });
                             if (!result) {
                                 res.redirect("/cart");
                             }
@@ -157,8 +157,8 @@ function orderController() {
             if (finalPayMth) { //if this is true then payment method will be COD
                 //Add a new order
                 const order = new Order({
-                    customerId: req.user._id,
-                    items: req.user.cart["custID_" + req.user._id + "_cart"].items,
+                    customerId: req.session.user._id,
+                    items: req.session.user.cart["custID_" + req.session.user._id + "_cart"].items,
                     phone: address["add-phone"],
                     address: JSON.stringify(address),
                     amount: parseInt(finalAmount),
@@ -168,8 +168,8 @@ function orderController() {
             } else {
                 //Add a new order
                 const order = new Order({
-                    customerId: req.user._id,
-                    items: req.user.cart["custID_" + req.user._id + "_cart"].items,
+                    customerId: req.session.user._id,
+                    items: req.session.user.cart["custID_" + req.session.user._id + "_cart"].items,
                     phone: address["add-phone"],
                     address: JSON.stringify(address),
                     paymentType: "online",

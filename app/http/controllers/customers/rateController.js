@@ -13,22 +13,22 @@ function rateController() {
 
             let rate = req.session.rate
 
-            if (!rate['custID_' + req.user._id + '_rate']) {
-                rate['custID_' + req.user._id + '_rate'] = {
+            if (!rate['custID_' + req.session.user._id + '_rate']) {
+                rate['custID_' + req.session.user._id + '_rate'] = {
                     products: {}
                 }
             }
 
-            if (!rate['custID_' + req.user._id + '_rate'].products[req.body.pdID]) {
+            if (!rate['custID_' + req.session.user._id + '_rate'].products[req.body.pdID]) {
 
-                rate['custID_' + req.user._id + '_rate'].products[req.body.pdID] = {
+                rate['custID_' + req.session.user._id + '_rate'].products[req.body.pdID] = {
                     item: product[0],
                     rate: req.body.rate
                 }
 
             } else {
 
-                rate['custID_' + req.user._id + '_rate'].products[req.body.pdID] = { item: product[0], rate: req.body.rate }
+                rate['custID_' + req.session.user._id + '_rate'].products[req.body.pdID] = { item: product[0], rate: req.body.rate }
             }
 
             //=========================================================================================================
@@ -72,8 +72,8 @@ function rateController() {
 
             //=========================================================================================================
 
-            let rateID = rate['custID_' + req.user._id + '_rate'].products[req.body.pdID].item._id
-            let rateRate = rate['custID_' + req.user._id + '_rate'].products[req.body.pdID].rate
+            let rateID = rate['custID_' + req.session.user._id + '_rate'].products[req.body.pdID].item._id
+            let rateRate = rate['custID_' + req.session.user._id + '_rate'].products[req.body.pdID].rate
 
             for (let i = 0; i >= 0; i++) {
 

@@ -13,7 +13,7 @@ const CourierAgentDashboardController = require('../app/http/controllers/courier
 const postCommentController = require('../app/http/controllers/customers/postCommentController')
 const buyNowController = require('../app/http/controllers/customers/buyNowController')
 
-const guest = require('../app/http/middlewares/guest')
+// const guest = require('../app/http/middlewares/guest')
 const admin = require('../app/http/middlewares/admin')
 const auth = require('../app/http/middlewares/auth')
 const customer = require('../app/http/middlewares/customer')
@@ -30,19 +30,19 @@ function initRoutes(app) {
     app.get('/shop', homeController().shop)
     app.get('/shop-single', homeController().shopSingle)
 
-    app.get('/login', guest, authController().login)
-    app.get('/signup', guest, authController().signup)
+    app.get('/login', authController().login)
+    app.get('/signup', authController().signup)
     app.post('/login', authController().loginPost)
     app.post('/signup', authController().signupPost)
     app.get('/logout', authController().logout)
     app.post('/deleteAcc/:id', authController().deleteAcc)
 
     //For Seller Registration
-    app.get('/sellerReg', guest, sellerAuthController().sellerSignup)
+    app.get('/sellerReg', sellerAuthController().sellerSignup)
     app.post('/sellerReg', sellerAuthController().sellerSignupPost)
 
     //For Seller Login
-    app.get('/sellerLog', guest, sellerAuthController().sellerLogin)
+    app.get('/sellerLog', sellerAuthController().sellerLogin)
     app.post('/sellerLog', sellerAuthController().sellerLoginPost)
 
     //For seller add it's store, customize it's store and delete

@@ -21,11 +21,11 @@ function postCommentController() {
             }
             // ======================================================================================
 
-            let rateHistory = req.user.rateHistory
+            let rateHistory = req.session.user.rateHistory
             let isPrdAvil = false;
             let isUpdateCommDataFuncCalled = false;
 
-            if (commTitle && commDesc && prdID && rating && req.user) {
+            if (commTitle && commDesc && prdID && rating && req.session.user) {
                 if (rating === 0) {
                     rating = 5;
                 }
@@ -58,7 +58,7 @@ function postCommentController() {
                     let obj = {
                         [prdID]: rating
                     }
-                    req.user.rateHistory = { ...req.user.rateHistory, ...obj }
+                    req.session.user.rateHistory = { ...req.session.user.rateHistory, ...obj }
 
                     let prdData = await Product.findById({ _id: prdID }, { vote: 1, rating: 1, storeId: 1, _id: 0 });
                     let vote = prdData.vote + 1;
@@ -82,10 +82,10 @@ function postCommentController() {
 
                 // ======================================================================================
                 if (Object.keys(rateHistory).length === 0) {
-                    // console.log("When 'req.user.rateHistory' is empty");
+                    // console.log("When 'req.session.user.rateHistory' is empty");
                     updateCommData();
                 } else {
-                    // console.log("When 'req.user.rateHistory' is already  present");
+                    // console.log("When 'req.session.user.rateHistory' is already  present");
                     for (const id in rateHistory) {
                         if (id === prdID) {
                             // console.log("User already gave rating to this product.");
@@ -110,12 +110,12 @@ function postCommentController() {
                         let all = 0;
                         allRatingsOfProduct.map(obj => all = all + obj.rating)
 
-                        let oldRating = req.user.rateHistory[prdID]
+                        let oldRating = req.session.user.rateHistory[prdID]
                         let newRating = all - oldRating;
                         newRating = newRating + parseInt(rating);
                         newRating = Math.round(newRating / prod.vote)
 
-                        req.user.rateHistory = {
+                        req.session.user.rateHistory = {
                             [prdID]: rating
                         }
                         await Product.updateOne({ _id: prdID }, { $set: { rating: newRating } });
@@ -124,7 +124,7 @@ function postCommentController() {
                     }
 
                 }
-                await Users.updateMany({ _id: req.user._id }, { $set: { rateHistory: req.user.rateHistory } });
+                await Users.updateMany({ _id: req.session.user._id }, { $set: { rateHistory: req.session.user.rateHistory } });
                 // ======================================================================================
 
                 // ======================================================================================
@@ -137,7 +137,7 @@ function postCommentController() {
                         title: commTitle,
                         desc: commDesc,
                         prdID: prdID,
-                        userID: req.user._id,
+                        userID: req.session.user._id,
                         image: productPictures,
                         rating
                     })
@@ -154,7 +154,7 @@ function postCommentController() {
                 } else {
                     // console.log("Product available. So, update existing comment.");
 
-                    let imageSet = await Comments.find({ prdID, userID: req.user._id }).select({ image: 1, _id: 0 })
+                    let imageSet = await Comments.find({ prdID, userID: req.session.user._id }).select({ image: 1, _id: 0 })
                     // console.log(imageSet[0].image.img);
 
                     if (imageSet[0]) {
@@ -169,12 +169,12 @@ function postCommentController() {
                         })
                     }
 
-                    let result = await Comments.updateOne({ prdID, userID: req.user._id }, {
+                    let result = await Comments.updateOne({ prdID, userID: req.session.user._id }, {
                         $set: {
                             title: commTitle,
                             desc: commDesc,
                             prdID: prdID,
-                            userID: req.user._id,
+                            userID: req.session.user._id,
                             image: productPictures,
                             rating
                         }

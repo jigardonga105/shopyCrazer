@@ -5,8 +5,8 @@ const fs = require('fs');
 function storeController() {
     return {
         async index(req, res) {
-            const store = await Store.exists({ sellerId: req.user._id })
-            const storeData = await Store.find({ sellerId: req.user._id });
+            const store = await Store.exists({ sellerId: req.session.user._id })
+            const storeData = await Store.find({ sellerId: req.session.user._id });
 
             if (store) {
                 return res.render('seller/sellerStr', { store: true, storeData })
@@ -37,7 +37,7 @@ function storeController() {
             }
 
             const store = new Store({
-                sellerId: req.user._id,
+                sellerId: req.session.user._id,
                 storename,
                 owner: storeownername,
                 phone: storecontact,

@@ -1,5 +1,5 @@
 function seller(req, res, next) {
-    if (req.isAuthenticated() && req.user.role === 'seller') {
+    if (req.session.user._id && req.session.user.role === 'seller') {
         return next()
     }
     return res.redirect('/')

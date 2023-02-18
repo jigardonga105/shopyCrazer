@@ -1,5 +1,5 @@
 function couAge(req, res, next) {
-    if (req.isAuthenticated() && req.session.courierAgents.role === 'courierAgent') {
+    if (req.session.courierAgents._id && req.session.courierAgents.role === 'courierAgent') {
         return next()
     }
     return res.redirect('/')

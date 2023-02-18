@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 
 function CourierAgentDashboardController() {
     return {
+
         async getAgentDashboard(req, res) {
 
             let msg = req.params.msg;
@@ -61,6 +62,7 @@ function CourierAgentDashboardController() {
                 return res.render('courier/CouAgeDashboard', { msg, cAg: false });
             }
         },
+
         async couAgeLogin(req, res, next) {
             const { email, password, role } = req.body;
 
@@ -69,29 +71,30 @@ function CourierAgentDashboardController() {
                 return res.redirect(`/courieAgeDashBoard/${msg}`);
             }
 
-            CourierAgents.exists({ email, role }, (err, result) => {
-                if (!result) {
-                    let msg = 'existed';
-                    return res.redirect(`/courieAgeDashBoard/${msg}`);
-                }
-            })
+            const isExist = await CourierAgents.count({ email: email, role: 'courierAgent' })
+            if (!isExist) {
+                let msg = 'existed';
+                return res.redirect(`/courieAgeDashBoard/${msg}`);
+            }
 
             const courierAgents = await CourierAgents.findOne({ email: email })
             if (courierAgents) {
                 const result = await bcrypt.compare(password, courierAgents.password);
                 if (result) {
-
-                    if (req.user) {
-                        req.logout((err) => {
+                    if (req.session.user) {
+                        delete req.session.user
+                    }
+                    setTimeout(() => {
+                        req.session.regenerate((err) => {
                             if (err) {
-                                let msg = 'serverErr';
-                                return res.redirect(`/courieAgeDashBoard/${msg}`);
+                                console.log(err);
                             }
                         })
-                    }
+                    }, 2000);
 
                     req.session.courierAgents = courierAgents;
-                    let msg = 'login';
+
+                    let msg = 'loggedIn';
                     return res.redirect(`/courieAgeDashBoard/${msg}`);
                 } else {
                     let msg = 'err';
@@ -102,6 +105,7 @@ function CourierAgentDashboardController() {
                 return res.redirect(`/courieAgeDashBoard/${msg}`);
             }
         },
+
         async couAgeChangeStatus(req, res) {
             // console.log("both");
             const { orderId, status } = req.body;

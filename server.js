@@ -10,7 +10,6 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('express-flash')
 const MongoDbStore = require('connect-mongo')
-const passport = require('passport');
 const Emitter = require('events')
 const multer = require("multer");
 
@@ -21,23 +20,6 @@ require('./app/helper/dbConn')
 const eventEmitter = new Emitter();
 app.set('eventEmitter', eventEmitter);
 
-//session config
-app.use(session({
-    secret: process.env.COOKIE_SECRET,
-    resave: false,
-    store: MongoDbStore.create({
-        mongoUrl: dbUrl,
-        // ttl: 30 * 24 * 60 * 60 // = 30 days
-    }),
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 3 } // 3 days
-}))
-
-//Passport config
-const passportInit = require('./app/config/passport')
-passportInit(passport);
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(flash())
 
@@ -67,10 +49,22 @@ app.use(multer({ storage: storage }).any("image"))
 
 //==============================================================================================
 
+//session config
+app.use(session({
+    secret: process.env.COOKIE_SECRET,
+    resave: false,
+    store: MongoDbStore.create({
+        mongoUrl: dbUrl,
+        // ttl: 30 * 24 * 60 * 60 // = 30 days
+    }),
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 3 } // 3 days
+}))
+
 //Global middlewares
 app.use((req, res, next) => {
     res.locals.session = req.session
-    res.locals.user = req.user
+    res.locals.user = req.session.user
     next()
 })
 

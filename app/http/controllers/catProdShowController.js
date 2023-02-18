@@ -16,9 +16,9 @@ const viewProdFunc = async (req, res) => {
     let isOrdered = false;
     let isOrderedOutdated = false;
 
-    if (req.user) {
+    if (req.session.user) {
         // console.log('User logged in')
-        const orders = await Orders.find({ customerId: req.user._id }, { items: 1, createdAt: 1, _id: 0 });
+        const orders = await Orders.find({ customerId: req.session.user._id }, { items: 1, createdAt: 1, _id: 0 });
         if (orders.length > 0) {
             for (let i = 0; i < orders.length; i++) {
                 for (let id in orders[i].items) {

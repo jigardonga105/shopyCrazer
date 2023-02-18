@@ -90,39 +90,39 @@ function sellerAuthController() {
                 return res.redirect('/sellerLog')
             }
 
-            await User.exists({ email: email, role: 'customer' }, (err, result) => {
-                if (err) {
-                    req.flash('error', 'Something went wrong')
-                    return res.redirect('/sellerLog')
-                }
+            const isExist = await User.count({ email: email, role: 'seller' })
+            if (!isExist) {
+                req.flash('error', 'Seller not found')
+                return res.redirect('/sellerLog')
+            }
 
+            const user = await User.findOne({ email: email })
+            if (user) {
+                const result = await bcrypt.compare(password, user.password);
                 if (result) {
-                    req.flash('error', 'User not found')
-                    return res.redirect('/sellerLog')
-
-                } else {
-                    passport.authenticate('local', (err, user, info) => {
-                        if (err) {
-                            req.flash('error', info.message)
-                            return res.redirect('/sellerLog')
-                        }
-        
-                        if (!user) {
-                            req.flash('error', info.message)
-                            return res.redirect('/sellerLog')
-                        }
-
-                        req.login(user, (err) => {
+                    if (req.session.courierAgents || req.session.user) {
+                        delete req.session.courierAgents
+                        delete req.session.user
+                    }
+                    setTimeout(() => {
+                        req.session.regenerate((err) => {
                             if (err) {
-                                req.flash('error', info.message)
-                                return res.redirect('/sellerLog')
-                            } else {
-                                return res.redirect('/')
+                                console.log(err);
                             }
                         })
-                    })(req, res, next)
+                    }, 2000);
+
+                    req.session.user = user;
+
+                    return res.redirect('/')
+                } else {
+                    req.flash('error', 'Username or password incorrect')
+                    return res.redirect('/login')
                 }
-            })
+            } else {
+                req.flash('error', 'User not found...')
+                return res.redirect('/login')
+            }
 
         }
     }
