@@ -83,16 +83,15 @@ function CourierAgentDashboardController() {
                 if (result) {
                     if (req.session.user) {
                         delete req.session.user
+                        // req.session.regenerate((err) => {
+                        //     if (err) {
+                        //         console.log(err);
+                        //     }
+                        // })
+                        req.session.courierAgents = courierAgents;
+                    } else {
+                        req.session.courierAgents = courierAgents;
                     }
-                    setTimeout(() => {
-                        req.session.regenerate((err) => {
-                            if (err) {
-                                console.log(err);
-                            }
-                        })
-                    }, 2000);
-
-                    req.session.courierAgents = courierAgents;
 
                     let msg = 'loggedIn';
                     return res.redirect(`/courieAgeDashBoard/${msg}`);

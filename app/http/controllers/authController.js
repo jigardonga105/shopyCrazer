@@ -125,16 +125,15 @@ function authController() {
                 if (result) {
                     if (req.session.courierAgents) {
                         delete req.session.courierAgents
+                        // req.session.regenerate((err) => {
+                        //     if (err) {
+                        //         console.log(err);
+                        //     }
+                        // })
+                        req.session.user = user;
+                    } else {
+                        req.session.user = user;
                     }
-                    setTimeout(() => {
-                        req.session.regenerate((err) => {
-                            if (err) {
-                                console.log(err);
-                            }
-                        })
-                    }, 2000);
-
-                    req.session.user = user;
 
                     return res.redirect('/')
                 } else {
