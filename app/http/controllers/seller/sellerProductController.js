@@ -4,7 +4,7 @@ const fs = require('fs');
 // const Noty = require('noty');
 
 
-function prodController() {
+function sellerProductController() {
     return {
         async index(req, res) {
             const store = await Store.exists({ sellerId: req.session.user._id });
@@ -272,4 +272,4 @@ function prodController() {
     }
 }
 
-module.exports = prodController;
+module.exports = sellerProductController;

@@ -113,8 +113,9 @@ function authController() {
 
             const isExist = await User.count({ email: email, role: 'customer' })
             const isExist2 = await User.count({ email: email, role: 'courier' })
+            const isExist3 = await User.count({ email: email, role: 'admin' })
 
-            if (!isExist && !isExist2) {
+            if (!isExist && !isExist2 && !isExist3) {
                 req.flash('error', 'User not found')
                 return res.redirect('/login')
             }

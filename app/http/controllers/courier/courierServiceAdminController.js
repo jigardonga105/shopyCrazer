@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt')
 const fs = require('fs');
 
 
-function courierSectionController() {
+function courierServiceAdminController() {
     return {
-        async courierSection(req, res) {
+        async courierServiceAdmin(req, res) {
             let msg = req.params.msg;
             let courierAgents = await CourierAgents.find();
             // let alreadyState = [];
@@ -14,7 +14,7 @@ function courierSectionController() {
 
             return res.render('courier/courierSection', { courierAgents, msg });
         },
-        async courierSectionSignupCrAg(req, res) {
+        async courierServiceAdminSignupCrAg(req, res) {
             const { fname, lname, email, phone, state, password, address, pincode, city } = req.body;
 
             let productPictures = [];
@@ -155,4 +155,4 @@ function courierSectionController() {
     }
 }
 
-module.exports = courierSectionController
+module.exports = courierServiceAdminController

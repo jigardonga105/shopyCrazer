@@ -161,7 +161,7 @@
                                             <h4 class="">Make an Account:</h4>
                                             <div id="formMainDiv" class="ml-5">
                                                 <div class="block p-6 rounded-lg shadow-lg bg-white">
-                                                    <form action="/signupCrAg" method="POST"
+                                                    <form action="/courierServiceAdmin/signupCrAg" method="POST"
                                                         enctype="multipart/form-data">
                                                         <div id="nameEmailPhone" class="grid grid-cols-4 gap-4">
                                                             <input type="hidden" name="role" value="courier">
@@ -390,7 +390,7 @@
                                         ${courierAgents[i].address[0].pin}
                                     </td>
                                     <td id="action-${courierAgents[i]._id}" class="flex flex-row gap-2 action text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                                        <form action="/courierSection/deleteAge" method="POST">
+                                        <form action="/courierServiceAdmin/deleteAge" method="POST">
                                             <input type="hidden" name="ageId" value="${courierAgents[i]._id}">
                                         
                                             <button id="${courierAgents[i]._id}" type="submit" onclick="delAge(this)" class="rounded inline-block px-3 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase hover:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-800 transition duration-150 ease-in-out"><i class="fa-solid fa-xmark"></i></button>
@@ -427,7 +427,7 @@
         let updateCourierAgeDataModalBody = document.getElementById('updateCourierAgeDataModalBody');
         if (updateCourierAgeDataModalBody) {
             updateCourierAgeDataModalBody.innerHTML = `<div class="updateCourAgeInfoForm block p-3 rounded-lg shadow bg-white">
-                                                        <form action="/courierSection/updateAge" method="POST" enctype="multipart/form-data">
+                                                        <form action="/courierServiceAdmin/updateAge" method="POST" enctype="multipart/form-data">
                                                             <div class="flex flex-column">
                                                                 <input type="hidden" name="id" value="${courierAgeData._id}">
                                                                 <div class="form-group mb-6">
