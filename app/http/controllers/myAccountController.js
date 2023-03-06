@@ -75,6 +75,7 @@ function myAccountController() {
                 // console.log(result);
                 if (result) {
                     const user = await User.findById({ _id: req.body.userID })
+                    req.session.user = user
                     res.send(user);
                 } else {
                     sendErr(res)
@@ -86,6 +87,7 @@ function myAccountController() {
                 // console.log(result);
                 if (result) {
                     const user = await User.findById({ _id: req.body.userID })
+                    req.session.user = user
                     res.send(user);
                 } else {
                     sendErr(res)
@@ -99,6 +101,7 @@ function myAccountController() {
                 // console.log(result);
                 if (result) {
                     const user = await User.findById({ _id: userID })
+                    req.session.user = user
                     res.send(user);
                 } else {
                     sendErr(res)
@@ -124,8 +127,9 @@ function myAccountController() {
                     })
                 }
 
-                const result = await User.updateOne({ _id: req.body.userID }, { $set: { image: productPictures } })
+                const result = await User.updateOne({ _id: req.body.userID }, { $set: { image: productPictures } }, { new: true })
                 if (result) {
+                    req.session.user = result
                     res.redirect(`/myAccount`)
                 } else {
                     res.redirect('/myAccount?unsuccessfull')
@@ -137,6 +141,7 @@ function myAccountController() {
                 // console.log(result);
                 if (result) {
                     const user = await User.findById({ _id: req.body.userID })
+                    req.session.user = user
                     res.send(user);
                 } else {
                     sendErr(res)
@@ -155,6 +160,7 @@ function myAccountController() {
                 });
                 if (result) {
                     const user = await User.findById({ _id: req.body.userID });
+                    req.session.user = user
                     res.send(user);
                 } else {
                     sendErr(res)
@@ -179,6 +185,7 @@ function myAccountController() {
                 });
                 if (result) {
                     const user = await User.findById({ _id: req.body.userID })
+                    req.session.user = user
                     res.send(user);
                 } else {
                     sendErr(res)
