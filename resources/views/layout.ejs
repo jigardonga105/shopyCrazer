@@ -458,7 +458,6 @@
         </footer>
         <!-- End Footer -->
 
-        <script src="/socket.io/socket.io.js"></script>
         <script>
             const setCartVal = (user, cartData) => {
                 let cartCounterSpan = document.getElementById('cartCounter');
@@ -489,21 +488,6 @@
             }
 
             // ======================================================================================================
-
-            let socket = io();
-            socket.on('cartUpdated', (data) => {
-                new Noty({
-                    type: 'success',
-                    timeout: 2000,
-                    text: 'Cart updated.',
-                    progressBar: false,
-                }).show();
-
-                setCartVal(data, data.cart)
-            })
-
-            // ======================================================================================================
-            // ======================================================================================================
             // ======================================================================================================
 
             document.getElementById('copyYear').innerHTML = new Date().getFullYear();
@@ -525,6 +509,7 @@
         </script>
 
         <!-- Start Script -->
+        <script src="/socket.io/socket.io.js"></script>
         <script src="/js/jquery-1.11.0.min.js"></script>
         <script src="/js/jquery-migrate-1.2.1.min.js"></script>
         <script src="/js/bootstrap.bundle.min.js"></script>
