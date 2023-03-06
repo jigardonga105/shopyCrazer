@@ -87,7 +87,7 @@
                     </div>
                     <div>
                         <i class="fa fa-phone mx-2"></i>
-                        <a class="navbar-sm-brand text-light text-decoration-none" href="tel:1234567890">1234567890</a>
+                        <a class="navbar-sm-brand text-light text-decoration-none" href="tel:9624233580">9624233580</a>
                     </div>
                 </div>
 
@@ -202,7 +202,7 @@
 
             <div id="profSerachNoti" class="navbar align-self-center d-flex">
                 <a class="nav-icon d-inline" href="/myAccount" style="text-decoration: none;">
-                    <% if(user){ %>
+                    <% if(user) { %>
                         <% if(user.image.length> 0) { %>
                             <span class="flex items-center">
                                 <img id="profImage" class="mr-2 w-10 h-10 rounded-full" name="<%= user.gender %>"
@@ -210,7 +210,7 @@
                                     width="35" height="35" style="border-radius: 9999px;">
 
                                 <script>
-                                    const userImgNotFound = (img) => {
+                                    function userImgNotFound(img) {
                                         let gender = document.getElementById('profImage').name;
 
                                         gender && gender == 'male' ?
@@ -245,9 +245,8 @@
                         <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>"
                             data-user="<%= JSON.stringify(user) %>">
                         <% } %>
-
                             <span id="cartCounter"
-                                class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                                class="cartIconMain position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                 </a>
                 <a class="nav-icon position-relative text-decoration-none" href="#">
                     <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -320,9 +319,8 @@
                             <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>"
                                 data-user="<%= JSON.stringify(user) %>">
                             <% } %>
-
                                 <span id="cartCounter"
-                                    class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                                    class="cartIconMain position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="#">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -460,24 +458,57 @@
         </footer>
         <!-- End Footer -->
 
+        <script src="/socket.io/socket.io.js"></script>
         <script>
+            const setCartVal = (user, cartData) => {
+                let cartCounterSpan = document.getElementById('cartCounter');
+
+                if (!cartData['custID_' + user['_id'] + '_cart']) {
+                    cartCounterSpan.innerHTML = '';
+                } else {
+                    let cartIconMain = document.getElementsByClassName('cartIconMain')
+                    for (let i = 0; i < cartIconMain.length; i++) {
+                        const cartIconMainSingle = cartIconMain[i];
+                        cartIconMainSingle.innerHTML = cartData['custID_' + user['_id'] + '_cart'].totalQty;
+                    }
+                }
+            }
+
+            // ======================================================================================================
+
             //set cart value
-            let cartCounterSpan = document.getElementById('cartCounter');
             let cartData = document.getElementById('cartData');
             if (cartData) {
                 let user = JSON.parse(cartData.dataset.user);
                 cartData = JSON.parse(cartData.value);
-
-                if (!cartData['custID_' + user['_id'] + '_cart']) {
-                    cartCounterSpan.innerText = '';
-                } else {
-                    cartCounterSpan.innerText = cartData['custID_' + user['_id'] + '_cart'].totalQty;
-                }
+                
+                setCartVal(user, cartData)
             } else {
-                cartCounterSpan.innerText = '';
+                let cartCounterSpan = document.getElementById('cartCounter');
+                cartCounterSpan.innerHTML = '';
             }
 
+            // ======================================================================================================
+
+            let socket = io();
+            socket.on('cartUpdated', (data) => {
+                new Noty({
+                    type: 'success',
+                    timeout: 2000,
+                    text: 'Cart updated.',
+                    progressBar: false,
+                }).show();
+
+                setCartVal(data, data.cart)
+            })
+
+            // ======================================================================================================
+            // ======================================================================================================
+            // ======================================================================================================
+
             document.getElementById('copyYear').innerHTML = new Date().getFullYear();
+
+            // ======================================================================================================
 
             const loadVideoLogo = () => {
                 document.getElementById('logoSection').innerHTML = `<video width="200" height="50" autoplay loop>
@@ -501,7 +532,6 @@
         <script src="/js/custom.js"></script>
 
 
-        <script src="/socket.io/socket.io.js"></script>
         <script src="/js/app.js"></script>
         <!-- End Script -->
 

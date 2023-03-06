@@ -123,6 +123,10 @@ function cartController() {
 
                         }
 
+                        req.session.user = await User.findById(req.session.user._id);
+                        const eventEmitter = req.app.get('eventEmitter')
+                        eventEmitter.emit('cartUpdated', req.session.user)
+
                         return res.json({
                             totalQty: req.session.user.cart["custID_" + req.session.user._id + "_cart"].totalQty,
                         });
@@ -170,6 +174,9 @@ function cartController() {
                     }
                 }
                 const result = await User.updateOne({ _id: req.session.user._id }, { $set: { cart: req.session.user.cart} });
+                req.session.user = await User.findById(req.session.user._id);
+                const eventEmitter = req.app.get('eventEmitter')
+                eventEmitter.emit('cartUpdated', req.session.user)
                 return res.json({
                     qty,
                     totalQty,
@@ -201,6 +208,9 @@ function cartController() {
                     }
                 }
                 const result = await User.updateOne({ _id: req.session.user._id }, { $set: { cart: req.session.user.cart} });
+                req.session.user = await User.findById(req.session.user._id);
+                const eventEmitter = req.app.get('eventEmitter')
+                eventEmitter.emit('cartUpdated', req.session.user)
                 return res.json({
                     qty,
                     totalQty,
@@ -248,6 +258,9 @@ function cartController() {
                 isSave ? cart[`custID_${req.session.user._id}_cart`].items[removePrdId].feature = featureArr : null;
 
                 const result = await User.updateOne({ _id: req.session.user._id }, { $set: { cart: req.session.user.cart} });
+                req.session.user = await User.findById(req.session.user._id);
+                const eventEmitter = req.app.get('eventEmitter')
+                eventEmitter.emit('cartUpdated', req.session.user)
                 if (haveToRedirect == true || haveToRedirect == 'true') {
                     return res.redirect('/cart');
                 } else {

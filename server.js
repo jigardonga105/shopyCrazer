@@ -86,4 +86,8 @@ eventEmitter.on('orderPlaced', (data) => {
     io.to(`${JSON.parse(data.order.address)['add-state']}'s_Room`).emit('orderPlaced', data);
 });
 
+eventEmitter.on('cartUpdated', (data) => {
+    io.to(`${data._id}'s_cart`).emit('cartUpdated', data);
+});
+
 // neclify
